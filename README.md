@@ -42,9 +42,13 @@ use the docker-compose proxy for running all commands, it hooks in a base config
 ```bash
 # turning it on and off
 ./docker/compose up # turns everythign on
+./docker/compose up control-center # turn particular services on (includes dependencies)
 ./docker/compose up -d # turns everything on in the background
 ./docker/compose down # turns everything off
 ./docker/compose ps # list running things
+
+# control-center (overview of kafka information)
+open http://localhost:9021/clusters
 
 # rails api
 ./docker/compose run api rake spec # run specs
