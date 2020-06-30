@@ -51,8 +51,8 @@ use the docker-compose proxy for running all commands, it hooks in a base config
 open http://localhost:9021/clusters
 
 # rails api
-./docker/compose run api rake spec # run specs
-./docker/compose run api <command> # run arbitrary command in api container
+./docker/compose run --rm api rake spec # run specs
+./docker/compose run --rm api <command> # run arbitrary command in api container
 
 open http://localhost:3001 # docker binds the api to port 3001 to avoid conflicting with the same running on the host
 ```
