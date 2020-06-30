@@ -1,0 +1,16 @@
+# using version 2 because we have to match the kafka one
+version: "2"
+services:
+  api:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3001:3001"
+    command: bash -c "rake about && bin/rails server -b '0.0.0.0' -p 3001"
+    volumes:
+      - ..:/code
+      - /code/tmp
+      - /code/log
+volumes:
+  pgdata:

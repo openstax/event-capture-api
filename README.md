@@ -35,24 +35,23 @@ Run the tests with `rspec` or `rake`.
 
 ## Using Docker Development Environment
 
-Setup the kafka environment
-```.env
-git clone https://github.com/confluentinc/cp-all-in-one
-cd cp-all-in-one
-git checkout 5.5.1-post
-```
+You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/#install-compose) installed.
 
-Start the kafka environment
-```
-docker-compose up -d
-```
+use the docker-compose proxy for running all commands, it hooks in a base config file for kafka
 
-Stop the kafka environment
-```
-docker container stop $(docker container ls -a -q -f "label=io.confluent.docker")
-```
+```bash
+# turning it on and off
+./docker/compose up # turns everythign on
+./docker/compose up -d # turns everything on in the background
+./docker/compose down # turns everything off
+./docker/compose ps # list running things
 
-### Test
+# rails api
+./docker/compose run api rake spec # run specs
+./docker/compose run api <command> # run arbitrary command in api container 
+
+open http://localhost:3001 # docker binds the api to port 3001 to avoid conflicting with the same running on the host
+```
 
 </details>
 
