@@ -1,0 +1,18 @@
+sudo: false
+dist: trusty
+language: ruby
+rvm: 2.6.5
+cache: bundler
+bundler_args: --retry=6
+services:
+addons:
+branches:
+  only:
+    - master
+    - /^int-.*$/
+    - /^release-.*$/
+script:
+  - bundle exec rake spec
+before_script:
+before_install:
+  - gem install bundler
