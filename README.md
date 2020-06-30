@@ -75,7 +75,7 @@ After starting it you will see new topics and information available in the contr
 
 and this to stop it:
 ```
-curl -X DELETE -H "Content-Type: application/json" http://local.com:8083/connectors/datagen-pageviews
+curl -X DELETE -H "Content-Type: application/json" http://localhost:8083/connectors/datagen-pageviews
 ```
 
 ## Swagger, Clients, and Bindings
