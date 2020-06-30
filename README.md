@@ -59,6 +59,25 @@ open http://localhost:3001 # docker binds the api to port 3001 to avoid conflict
 
 </details>
 
+## Test data in Kafka
+
+### Kafka Connect Datagen
+The docker compose environment includes [kafka-connect-datagen](https://github.com/confluentinc/kafka-connect-datagen) which is a utility for
+creating and dispatching test events. A list of sample event configurations are available [here](https://github.com/confluentinc/kafka-connect-datagen/tree/master/config). If you download one of those json configs you can run this to start it.
+```
+curl -X POST -H "Content-Type: application/json" --data @connector_pageviews.config http://localhost:8083/connectors
+```
+
+After starting it you will see new topics and information available in the control-center ui, you can also run this command to watch the events:
+```
+./docker/compose exec connect kafka-console-consumer --topic pageviews --bootstrap-server broker:29092
+```
+
+and this to stop it:
+```
+curl -X DELETE -H "Content-Type: application/json" http://local.com:8083/connectors/datagen-pageviews
+```
+
 ## Swagger, Clients, and Bindings
 
 The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.
