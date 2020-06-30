@@ -12,5 +12,3 @@ services:
       - ..:/code
       - /code/tmp
       - /code/log
-volumes:
-  pgdata:
