@@ -8,6 +8,8 @@ COPY . /code
 
 WORKDIR /code
 
+RUN cp -n config/secrets.yml.example config/secrets.yml
+
 RUN bundle install
 
 CMD ["rails", "s"]

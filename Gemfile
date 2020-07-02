@@ -21,6 +21,12 @@ gem 'sentry-raven'
 # Profiling
 gem 'scout_apm', '~> 3.0.x'
 
+# Kafka stuff
+gem 'ruby-kafka'
+
+# Versioned API tools
+gem 'versionist'
+
 # CORS
 gem 'rack-cors'
 

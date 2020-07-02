@@ -64,6 +64,7 @@ GEM
     concurrent-ruby (1.1.6)
     crass (1.0.6)
     diff-lcs (1.4.3)
+    digest-crc (0.5.1)
     dotenv (2.7.5)
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
@@ -176,6 +177,8 @@ GEM
       unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-ast (0.1.0)
       parser (>= 2.7.0.1)
+    ruby-kafka (1.1.0)
+      digest-crc
     ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     scout_apm (3.0.0.pre28)
@@ -197,9 +200,14 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
+    versionist (2.0.1)
+      activesupport (>= 3)
+      railties (>= 3)
+      yard (~> 0.9.20)
     websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    yard (0.9.25)
 
 PLATFORMS
   ruby
@@ -219,11 +227,13 @@ DEPENDENCIES
   rspec-json_expectations
   rspec-rails (~> 3.8)
   rubocop
+  ruby-kafka
   scout_apm (~> 3.0.x)
   sentry-raven
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  versionist
 
 RUBY VERSION
    ruby 2.6.5p114
