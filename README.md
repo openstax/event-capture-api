@@ -12,7 +12,7 @@ This app captures events from apps within OpenStax into kafka
 ```.env
 bundle exec rails s
 ```
-  
+
 ### Configuration
 
 copy the secrets.yml.example to secrets.yml
@@ -35,26 +35,48 @@ Run the tests with `rspec` or `rake`.
 
 ## Using Docker Development Environment
 
-Setup the kafka environment
-```.env
-git clone https://github.com/confluentinc/cp-all-in-one
-cd cp-all-in-one
-git checkout 5.5.1-post
-```
+You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/#install-compose) installed.
 
-Start the kafka environment
-```
-docker-compose up -d
-```
+use the docker-compose proxy for running all commands, it hooks in a base config file for kafka
 
-Stop the kafka environment
-```
-docker container stop $(docker container ls -a -q -f "label=io.confluent.docker")
-```
+```bash
+# turning it on and off
+./docker/compose up # turns everything on
+./docker/compose up control-center # turn particular services on (includes dependencies)
+./docker/compose up -d # turns everything on in the background
+./docker/compose down # turns everything off
+./docker/compose ps # list running things
 
-### Test
+# control-center (overview of kafka information)
+open http://localhost:9021/clusters
+
+# rails api
+./docker/compose run --rm api rake spec # run specs
+./docker/compose run --rm api <command> # run arbitrary command in api container
+
+open http://localhost:3001 # docker binds the api to port 3001 to avoid conflicting with the same running on the host
+```
 
 </details>
+
+## Test data in Kafka
+
+### Kafka Connect Datagen
+The docker compose environment includes [kafka-connect-datagen](https://github.com/confluentinc/kafka-connect-datagen) which is a utility for
+creating and dispatching test events. A list of sample event configurations are available [here](https://github.com/confluentinc/kafka-connect-datagen/tree/master/config). If you download one of those json configs you can run this to start it.
+```
+curl -X POST -H "Content-Type: application/json" --data @connector_pageviews.config http://localhost:8083/connectors
+```
+
+After starting it you will see new topics and information available in the control-center ui, you can also run this command to watch the events:
+```
+./docker/compose exec connect kafka-console-consumer --topic pageviews --bootstrap-server broker:29092
+```
+
+and this to stop it:
+```
+curl -X DELETE http://localhost:8083/connectors/datagen-pageviews
+```
 
 ## Swagger, Clients, and Bindings
 

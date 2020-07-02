@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+kafka_filename="docker-compose.kafka.yml"
+main_filename="docker-compose.yml"
+
+# https://stackoverflow.com/a/246128 
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+kafka_filepath="$dir/$kafka_filename"
+main_filepath="$dir/$main_filename"
+
+if [ ! -f "$kafka_filepath" ]; then
+  curl -s https://raw.githubusercontent.com/confluentinc/cp-all-in-one/5.5.1-post/cp-all-in-one/docker-compose.yml > "$kafka_filepath"
+fi;
+
+docker-compose -f "$kafka_filepath" -f "$main_filepath" "$@"
