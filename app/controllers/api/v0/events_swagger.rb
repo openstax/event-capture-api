@@ -3,7 +3,14 @@ class Api::V0::EventsSwagger
   include OpenStax::Swagger::SwaggerBlocksExtensions
 
   swagger_schema :NewEvent do
-    key :type, :object
+    property :data do
+      key :type, :object
+      key :description, 'The kafka object.  This object is schema checked thru the schema registry.'
+    end
+    property :topic do
+      key :type, :string
+      key :description, 'The kafka topic'
+    end
   end
 
   swagger_path '/events' do
@@ -15,6 +22,7 @@ class Api::V0::EventsSwagger
         'application/json'
       ]
       key :tags, [
+
         'Events'
       ]
       parameter do
