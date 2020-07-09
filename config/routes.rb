@@ -5,7 +5,10 @@ Rails.application.routes.draw do
       path: { value: 'v0' },
       defaults: { format: :json }
     ) do
+
       resources :events, only: :create
+
+      get :swagger, to: 'swagger#json'
     end
   end
 end

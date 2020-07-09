@@ -30,6 +30,8 @@ gem 'versionist'
 # CORS
 gem 'rack-cors'
 
+gem "openstax_swagger", github: 'openstax/swagger-rails', ref: '9bff4962b31e142debbc62390f1fd3adab3af055'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
