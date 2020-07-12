@@ -13,26 +13,21 @@ Swagger Codegen version: 2.4.9
 require 'date'
 
 module Api::V0::Bindings
-  class NewEvent
-    # The kafka object.  This object is schema checked thru the schema registry.
-    attr_accessor :data
-
-    # The kafka topic
-    attr_accessor :topic
+  class Events
+    # Array of Events
+    attr_accessor :events
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'data' => :'data',
-        :'topic' => :'topic'
+        :'events' => :'events'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Object',
-        :'topic' => :'String'
+        :'events' => :'Array<Event>'
       }
     end
 
@@ -44,12 +39,10 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'data')
-        self.data = attributes[:'data']
-      end
-
-      if attributes.has_key?(:'topic')
-        self.topic = attributes[:'topic']
+      if attributes.has_key?(:'events')
+        if (value = attributes[:'events']).is_a?(Array)
+          self.events = value
+        end
       end
     end
 
@@ -71,8 +64,7 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          data == o.data &&
-          topic == o.topic
+          events == o.events
     end
 
     # @see the `==` method
@@ -84,7 +76,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, topic].hash
+      [events].hash
     end
 
     # Builds the object from hash
