@@ -2,14 +2,28 @@ class Api::V0::EventsSwagger
   include Swagger::Blocks
   include OpenStax::Swagger::SwaggerBlocksExtensions
 
-  swagger_schema :NewEvent do
+  swagger_schema :Event do
     property :data do
       key :type, :object
       key :description, 'The kafka object.  This object is schema checked thru the schema registry.'
     end
+    property :type do
+      key :type, :string
+      key :description, 'The type of the data object. Type is used for schema validation.'
+    end
     property :topic do
       key :type, :string
       key :description, 'The kafka topic'
+    end
+  end
+
+  swagger_schema :Events do
+    property :events do
+      key :type, :array
+      key :description, 'Array of Events'
+      items do
+        key :'$ref', :Event
+      end
     end
   end
 
@@ -22,16 +36,15 @@ class Api::V0::EventsSwagger
         'application/json'
       ]
       key :tags, [
-
         'Events'
       ]
       parameter do
-        key :name, :event
+        key :name, :events
         key :in, :body
         key :description, 'The event data'
         key :required, true
         schema do
-          key :'$ref', :NewEvent
+          key :'$ref', :Events
         end
       end
       response 201 do
