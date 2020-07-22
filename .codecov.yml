@@ -13,3 +13,6 @@ coverage:
         threshold: 2%          # allowed to drop X% and still result in a "success" commit status
 
 comment: false                 # to disable comments
+
+ignore:
+  - "app/lib/rescue_from_unless_local.rb"
