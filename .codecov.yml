@@ -15,4 +15,4 @@ coverage:
 comment: false                 # to disable comments
 
 ignore:
-  - "app/lib/rescue_from_unless_local.rb"
+  - "app/services/rescue_from_unless_local.rb"
