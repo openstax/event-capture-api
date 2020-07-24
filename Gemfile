@@ -32,6 +32,9 @@ gem 'rack-cors'
 
 gem "openstax_swagger", github: 'openstax/swagger-rails', ref: '9bff4962b31e142debbc62390f1fd3adab3af055'
 
+# More concise, one-liner logs (better for production)
+gem 'lograge'
+
 group :test do
   # Code Climate integration
   # gem "codeclimate-test-reporter", require: false
