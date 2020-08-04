@@ -6,6 +6,13 @@ class Api::V0::EventsController < Api::V0::BaseController
     render(json: error, status: error.status_code) and return if error
 
     inbound_binding.events.each do |event|
+      # first, schema validate the event.data object
+
+      # second, inject the user_uuid if present
+      if current_user_uuid && !event.data.key?(:user_uuid)
+        event.data[:user_uuid] = current_user_uuid
+      end
+
       KafkaClient.produce(data: event.data, topic: event.topic)
     end
 
