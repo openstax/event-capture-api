@@ -41,7 +41,8 @@ task :install_secrets, [] do
     response.parameters.each do |parameter|
       # break out the flattened keys and ignore the env name and namespace
       keys = parameter.name.split('/').reject(&:blank?)[num_ignored_key_levels..-1]
-      deep_populate(secrets, keys, parameter.value)
+      value = parameter.type == "StringList" ? parameter.value.split(",") : parameter.value
+      deep_populate(secrets, keys, cast_to_number_if_number(value))
     end
   end
 
@@ -49,7 +50,7 @@ task :install_secrets, [] do
   write_yaml_file("config/scout_apm.yml", {
     production: {
       key: scout_secrets[:license_key],
-      name: "highlights (#{env_name})",
+      name: "quasar-api (#{env_name})",
       # crude way to disable scout by environment
       monitor: !/noscout/.match?(env_name),
       ignore: %w(/ping)
@@ -82,5 +83,18 @@ def deep_populate(hash, keys, value)
   else
     hash[keys[0]] ||= {}
     deep_populate(hash[keys[0]], keys[1..-1], value)
+  end
+end
+
+def cast_to_number_if_number(string_or_array)
+  if string_or_array.is_a?(Array)
+    string_or_array.map{|string| cast_to_number_if_number(string)}
+  else
+    string = string_or_array
+    if /\A[+-]?\d+(\.[\d]+)?\z/.match(string)
+       (string.to_f % 1) > 0 ? string.to_f : string.to_i
+    else
+      string
+    end
   end
 end
