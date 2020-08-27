@@ -8,10 +8,7 @@ class Api::V0::EventsController < Api::V0::BaseController
     inbound_binding.events.each do |event|
       # first, schema validate the event.data object
 
-      # second, inject the user_uuid if present
-      if current_user_uuid && !event.data.key?(:user_uuid)
-        event.data[:user_uuid] = current_user_uuid
-      end
+      event.data[:user_uuid] = current_user_uuid if current_user_uuid
 
       KafkaClient.produce(data: event.data, topic: event.topic)
     end
