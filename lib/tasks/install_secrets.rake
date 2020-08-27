@@ -50,7 +50,7 @@ task :install_secrets, [] do
   write_yaml_file("config/scout_apm.yml", {
     production: {
       key: scout_secrets[:license_key],
-      name: "quasar-api (#{env_name})",
+      name: "event-capture-api (#{env_name})",
       # crude way to disable scout by environment
       monitor: !/noscout/.match?(env_name),
       ignore: %w(/ping)
