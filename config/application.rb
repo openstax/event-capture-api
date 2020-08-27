@@ -33,5 +33,12 @@ module EventCaptureApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    def load_testing?
+      Rails.application.secrets[:loadtesting_active] == 'true'
+    end
   end
 end
+
+# Load system-wide env vars, will be set on EC2 instances, ignored otherwise
+Dotenv.load('/etc/.env')

@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/openstax/auth-rails.git
+  revision: ed2d7da86ca226b93376955b9474c4cf115c611f
+  ref: ed2d7da86ca226b93376955b9474c4cf115c611f
+  specs:
+    openstax_auth (0.1.0)
+      activesupport
+      json-jwt
+
+GIT
   remote: https://github.com/openstax/swagger-rails.git
   revision: 9bff4962b31e142debbc62390f1fd3adab3af055
   ref: 9bff4962b31e142debbc62390f1fd3adab3af055
@@ -53,6 +62,7 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    aes_key_wrap (1.1.0)
     arel (9.0.0)
     ast (2.4.1)
     aws-eventstream (1.1.0)
@@ -67,6 +77,7 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.2.1)
       aws-eventstream (~> 1, >= 1.0.2)
+    bindata (2.4.8)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -96,6 +107,10 @@ GEM
       concurrent-ruby (~> 1.0)
     jmespath (1.4.0)
     json (2.3.1)
+    json-jwt (1.13.0)
+      activesupport (>= 4.2)
+      aes_key_wrap
+      bindata
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -252,6 +267,7 @@ DEPENDENCIES
   dotenv-rails
   listen (>= 3.0.5, < 3.2)
   lograge
+  openstax_auth!
   openstax_healthcheck
   openstax_swagger!
   pry-rails
