@@ -13,7 +13,7 @@ class AsyncKafkaProducer
   def self.instance
     @@instance ||=
       begin
-        kafka = Kafka.new([Rails.application.secrets.kafka[:broker_host]],
+          kafka = Kafka.new(Rails.application.secrets.kafka[:broker_host].split(','),
                           logger: Rails.logger)
         kafka.async_producer(
           delivery_interval: Rails.application.secrets.kafka[:delivery_interval],
