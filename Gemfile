@@ -25,6 +25,7 @@ gem 'scout_apm', '~> 3.0.x'
 
 # Kafka stuff
 gem 'ruby-kafka'
+gem 'avro_turf'
 
 # Versioned API tools
 gem 'versionist'
