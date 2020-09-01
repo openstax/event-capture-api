@@ -29,7 +29,10 @@ class KafkaAvroTurf
   def self.instance
     @@instance ||=
       begin
-        AvroTurf::Messaging.new(registry_url: Rails.application.secrets.kafka[:schema_url])
+        AvroTurf::Messaging.new(
+          registry_url: Rails.application.secrets.kafka[:schema_url],
+          schemas_path: Rails.application.secrets.kafka[:schemas_path]
+        )
       end
   end
 end
