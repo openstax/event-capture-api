@@ -4,7 +4,7 @@
   "fields": [
     {
       "name": "uuid",
-      "type": "string"
+      "type": { "name": "uuid", "type": "fixed", "size": 16 }
     },
     {
       "name": "app",
@@ -27,7 +27,7 @@
       "type": "string"
     },
     {
-      "name": "at_time",
+      "name": "occurred_at_time_in_browser",
       "type": "string"
     }
   ]

@@ -6,7 +6,7 @@ class Api::V0::EventsController < Api::V0::BaseController
     render(json: error, status: error.status_code) and return if error
 
     inbound_binding.events.each do |event|
-      event.data[:user_uuid] = current_user_uuid if current_user_uuid
+      event.data[:uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
 
       avro_encoded_data = KafkaAvroTurf.instance.encode(event.data, schema_name: event.type)
 
