@@ -14,7 +14,7 @@ class Api::V0::EventsController < Api::V0::BaseController
         avro_encoded_data = KafkaAvroTurf.instance.encode(event.data, schema_name: event.schema_type)
       end
 
-      AsyncKafkaClient.produce(data: avro_encoded_data, topic: event.topic)
+      KafkaClient.async_produce(data: avro_encoded_data, topic: event.topic)
     end
 
     render nothing: true, status: 201

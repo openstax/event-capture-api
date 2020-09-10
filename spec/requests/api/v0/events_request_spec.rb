@@ -43,7 +43,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
     end
 
     it 'successfully calls the API and sends a data message to kafka' do
-      expect(AsyncKafkaClient).to receive(:produce).twice
+      expect(KafkaClient).to receive(:async_produce).twice
 
       post api_v0_events_path, params: attributes
 
@@ -58,7 +58,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
       before { stub_current_user_uuid(user_id) }
 
       it 'is sent to kafka with a user_id' do
-        expect(AsyncKafkaClient).to receive(:produce)
+        expect(KafkaClient).to receive(:async_produce)
 
         post api_v0_events_path, params: attributes_short
 
@@ -69,7 +69,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
     context 'submits an event without a logged in user' do
       let(:data) { { 'action': 'quiz 1' } }
       it 'is sent to kafka w/out a user id' do
-        expect(AsyncKafkaClient).to receive(:produce)
+        expect(KafkaClient).to receive(:async_produce)
 
         post api_v0_events_path, params: attributes_short
 
