@@ -17,8 +17,11 @@ module Api::V0::Bindings
     # The kafka object.  This object is schema checked thru the schema registry.
     attr_accessor :data
 
-    # The type of the data object. Type is used for schema validation.
-    attr_accessor :type
+    # The schema type of the data object. This is used for schema validation.
+    attr_accessor :schema_type
+
+    # The version of the schema type. This is used for schema validation.
+    attr_accessor :schema_version
 
     # The kafka topic
     attr_accessor :topic
@@ -27,7 +30,8 @@ module Api::V0::Bindings
     def self.attribute_map
       {
         :'data' => :'data',
-        :'type' => :'type',
+        :'schema_type' => :'schema_type',
+        :'schema_version' => :'schema_version',
         :'topic' => :'topic'
       }
     end
@@ -36,7 +40,8 @@ module Api::V0::Bindings
     def self.swagger_types
       {
         :'data' => :'Object',
-        :'type' => :'String',
+        :'schema_type' => :'String',
+        :'schema_version' => :'Integer',
         :'topic' => :'String'
       }
     end
@@ -53,8 +58,12 @@ module Api::V0::Bindings
         self.data = attributes[:'data']
       end
 
-      if attributes.has_key?(:'type')
-        self.type = attributes[:'type']
+      if attributes.has_key?(:'schema_type')
+        self.schema_type = attributes[:'schema_type']
+      end
+
+      if attributes.has_key?(:'schema_version')
+        self.schema_version = attributes[:'schema_version']
       end
 
       if attributes.has_key?(:'topic')
@@ -81,7 +90,8 @@ module Api::V0::Bindings
       return true if self.equal?(o)
       self.class == o.class &&
           data == o.data &&
-          type == o.type &&
+          schema_type == o.schema_type &&
+          schema_version == o.schema_version &&
           topic == o.topic
     end
 
@@ -94,7 +104,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, type, topic].hash
+      [data, schema_type, schema_version, topic].hash
     end
 
     # Builds the object from hash

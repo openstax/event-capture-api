@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe KafkaClient do
+RSpec.describe AsyncKafkaClient do
   describe '.produce' do
     it 'sends a message to the async kafka producer' do
       expect_any_instance_of(Kafka::AsyncProducer).to receive(:produce).once

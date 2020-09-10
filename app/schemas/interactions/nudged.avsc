@@ -3,8 +3,8 @@
   "type": "record",
   "fields": [
     {
-      "name": "uuid",
-      "type": { "name": "uuid", "type": "fixed", "size": 16 }
+      "name": "user_uuid",
+      "type": { "name": "user_uuid", "type": "fixed", "size": 16 }
     },
     {
       "name": "app",
