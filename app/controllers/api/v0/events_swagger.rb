@@ -7,9 +7,13 @@ class Api::V0::EventsSwagger
       key :type, :object
       key :description, 'The kafka object.  This object is schema checked thru the schema registry.'
     end
-    property :type do
+    property :schema_type do
       key :type, :string
-      key :description, 'The type of the data object. Type is used for schema validation.'
+      key :description, 'The schema type of the data object. This is used for schema validation.'
+    end
+    property :schema_version do
+      key :type, :integer
+      key :description, 'The version of the schema type. This is used for schema validation.'
     end
     property :topic do
       key :type, :string

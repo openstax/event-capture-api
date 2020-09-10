@@ -1,0 +1,34 @@
+{
+  "name": "interactions.nudged",
+  "type": "record",
+  "fields": [
+    {
+      "name": "user_uuid",
+      "type": { "name": "user_uuid", "type": "fixed", "size": 16 }
+    },
+    {
+      "name": "app",
+      "type": "string"
+    },
+    {
+      "name": "target",
+      "type": "string"
+    },
+    {
+      "name": "context",
+      "type": "string"
+    },
+    {
+      "name": "flavor",
+      "type": "string"
+    },
+    {
+      "name": "medium",
+      "type": "string"
+    },
+    {
+      "name": "occurred_at_time_in_browser",
+      "type": "string"
+    }
+  ]
+}

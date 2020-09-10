@@ -6,11 +6,15 @@ class Api::V0::EventsController < Api::V0::BaseController
     render(json: error, status: error.status_code) and return if error
 
     inbound_binding.events.each do |event|
-      # first, schema validate the event.data object
+      event.data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
 
-      event.data[:user_uuid] = current_user_uuid if current_user_uuid
+      if event.schema_version > 0
+        avro_encoded_data = KafkaAvroTurf.instance.encode(event.data, schema_name: event.schema_type, version: event.schema_version)
+      else
+        avro_encoded_data = KafkaAvroTurf.instance.encode(event.data, schema_name: event.schema_type)
+      end
 
-      KafkaClient.produce(data: event.data, topic: event.topic)
+      KafkaClient.async_produce(data: avro_encoded_data, topic: event.topic)
     end
 
     render nothing: true, status: 201

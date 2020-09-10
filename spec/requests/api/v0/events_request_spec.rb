@@ -11,12 +11,14 @@ RSpec.describe Api::V0::EventsController, type: :request do
         'events': [
           {
             'data': { 'action': 'quiz 1 finished' },
-            'type': 'tutor quiz',
+            'schema_type': 'tutor quiz',
+            'schema_version': 1,
             'topic': 'exercises'
           },
           {
             'data': { 'action': 'quiz 2 finished' },
-            'type': 'tutor quiz',
+            'schema_type': 'tutor quiz',
+            'schema_version': 1,
             'topic': 'exercises'
           }
         ]
@@ -28,15 +30,20 @@ RSpec.describe Api::V0::EventsController, type: :request do
         'events': [
           {
             'data': data,
-            'type': 'tutor quiz',
+            'schema_type': 'tutor quiz',
+            'schema_version': 1,
             'topic': 'exercises'
           }
         ]
       }
     end
 
+    before do
+      allow_any_instance_of(AvroTurf::Messaging).to receive(:encode)
+    end
+
     it 'successfully calls the API and sends a data message to kafka' do
-      expect(KafkaClient).to receive(:produce).twice
+      expect(KafkaClient).to receive(:async_produce).twice
 
       post api_v0_events_path, params: attributes
 
@@ -45,13 +52,13 @@ RSpec.describe Api::V0::EventsController, type: :request do
 
     context 'when a logged-in user submits an event' do
       let(:data) { { 'action': 'quiz 1' } }
-      let(:user_id) { 1 }
+      let(:user_id) { 'd8388680-80cf-4fdb-95bb-829a46342115' }
       let(:user_data) { { 'user_uuid': user_id } }
 
       before { stub_current_user_uuid(user_id) }
 
       it 'is sent to kafka with a user_id' do
-        expect(KafkaClient).to receive(:produce).with(data: data.merge(user_data), topic: anything)
+        expect(KafkaClient).to receive(:async_produce)
 
         post api_v0_events_path, params: attributes_short
 
@@ -62,7 +69,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
     context 'submits an event without a logged in user' do
       let(:data) { { 'action': 'quiz 1' } }
       it 'is sent to kafka w/out a user id' do
-        expect(KafkaClient).to receive(:produce).with(data: data, topic: anything)
+        expect(KafkaClient).to receive(:async_produce)
 
         post api_v0_events_path, params: attributes_short
 

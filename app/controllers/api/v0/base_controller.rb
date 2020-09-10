@@ -6,6 +6,10 @@ class Api::V0::BaseController < ApplicationController
     render json: binding_error(status_code: 500, messages: [ex.message]), status: 500
   end
 
+  rescue_from_unless_local AvroTurf::SchemaNotFoundError, Avro::IO::AvroTypeError do |ex|
+    render json: binding_error(status_code: 422, messages: [ex.message]), status: 422
+  end
+
   protected
 
   def binding_error(status_code:, messages:)
