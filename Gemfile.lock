@@ -67,6 +67,8 @@ GEM
     ast (2.4.1)
     avro (1.10.0)
       multi_json (~> 1)
+    avro-builder (0.17.0)
+      avro (>= 1.7.0, < 1.11)
     avro_turf (1.2.0)
       avro (>= 1.7.7, < 1.11)
       excon (~> 0.71)
@@ -267,6 +269,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  avro-builder
   avro_turf
   aws-sdk-ssm
   bootsnap (>= 1.1.0)
@@ -296,7 +299,7 @@ DEPENDENCIES
   versionist
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.6.6p146
 
 BUNDLED WITH
    2.1.4
