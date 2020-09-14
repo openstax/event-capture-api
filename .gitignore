@@ -13,9 +13,6 @@
 
 .byebug_history
 
-# Ignore generate avro schemas
-avro/schema/*
-
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 

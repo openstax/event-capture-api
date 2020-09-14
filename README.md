@@ -78,6 +78,21 @@ and this to stop it:
 curl -X DELETE http://localhost:8083/connectors/datagen-pageviews
 ```
 
+## Schema Registry
+
+The schema registry is used to encode/decode events stored in kafka.  This repository stores the schemas from the 'ec' namespace.  To modify the schemas, change the schema dsl in 'avro/dsl/*', regenerate the avsc files thru the following rake task
+```
+bundle exec rake avro:generate
+```    
+
+Handy local schema registry http interactions
+```
+GET http://localhost:8081/subjects
+GET http://localhost:8081/subjects/org.openstax.ec.nudged/versions
+DELETE http://localhost:8081/subjects/org.openstax.ec.nudged
+DELETE http://localhost:8081/subjects/org.openstax.ec.nudged?permanent=true
+```
+
 ## Swagger, Clients, and Bindings
 
 The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.

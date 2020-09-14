@@ -14,15 +14,15 @@ task :install_secrets, [] do
   #
   # This script would take the following Parameter Store values:
   #
-  #   /qa/interactions/secret_key = 123456
-  #   /qa/interactions/redis/namespace = interactions-dev
+  #   /qa/ec/secret_key = 123456
+  #   /qa/ec/redis/namespace = ec-dev
   #
   # and (over)write the following to config/secrets.yml:
   #
   #   production:
   #     secret_key: 123456
   #     redis:
-  #       namespace: interactions-dev
+  #       namespace: ec-dev
 
   region = get_env_var!('REGION')
   env_name = get_env_var!('ENV_NAME')

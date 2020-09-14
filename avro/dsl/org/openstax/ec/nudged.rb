@@ -1,4 +1,4 @@
-namespace 'org.openstax.interactions'
+namespace 'org.openstax.ec'
 
 fixed :uuid, 16
 
