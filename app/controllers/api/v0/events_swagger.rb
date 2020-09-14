@@ -2,10 +2,43 @@ class Api::V0::EventsSwagger
   include Swagger::Blocks
   include OpenStax::Swagger::SwaggerBlocksExtensions
 
+  swagger_schema :Nudge do
+    key :required, [:user_uuid, :app, :target, :context, :flavor, :medium, :occurred_at_time_in_browser]
+    property :user_uuid do
+      key :type, :object
+      key :format, 'uuid'
+      key :description, 'The User uuid.  Identifies the user in accounts.'
+    end
+    property :app do
+      key :type, :string
+      key :description, 'The app sourcing the nudge (e.g., tutor.'
+    end
+    property :target do
+      key :type, :string
+      key :description, 'The target of the nudge (e.g., study_guides).'
+    end
+    property :context do
+      key :type, :string
+      key :description, 'The nudge context (e.g., a book uuid).'
+    end
+    property :flavor do
+      key :type, :string
+      key :description, 'The nudge flavor (e.g., full screen v2).'
+    end
+    property :medium do
+      key :type, :string
+      key :description, 'The nudge medium (e.g., email).'
+    end
+    property :occurred_at_time_in_browser do
+      key :type, :string
+      key :description, 'The unix time (ms since epoc) when nudge occurred.'
+    end
+  end
+
   swagger_schema :Event do
     property :data do
       key :type, :object
-      key :description, 'The kafka object.  This object is schema checked thru the schema registry.'
+      key :description, 'The kafka data object.  Should be of type Nudge.'
     end
     property :schema_type do
       key :type, :string

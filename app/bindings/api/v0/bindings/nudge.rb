@@ -13,36 +13,51 @@ Swagger Codegen version: 2.4.9
 require 'date'
 
 module Api::V0::Bindings
-  class Event
-    # The kafka data object.  Should be of type Nudge.
-    attr_accessor :data
+  class Nudge
+    # The User uuid.  Identifies the user in accounts.
+    attr_accessor :user_uuid
 
-    # The schema type of the data object. This is used for schema validation.
-    attr_accessor :schema_type
+    # The app sourcing the nudge (e.g., tutor.
+    attr_accessor :app
 
-    # The version of the schema type. This is used for schema validation.
-    attr_accessor :schema_version
+    # The target of the nudge (e.g., study_guides).
+    attr_accessor :target
 
-    # The kafka topic
-    attr_accessor :topic
+    # The nudge context (e.g., a book uuid).
+    attr_accessor :context
+
+    # The nudge flavor (e.g., full screen v2).
+    attr_accessor :flavor
+
+    # The nudge medium (e.g., email).
+    attr_accessor :medium
+
+    # The unix time (ms since epoc) when nudge occurred.
+    attr_accessor :occurred_at_time_in_browser
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'data' => :'data',
-        :'schema_type' => :'schema_type',
-        :'schema_version' => :'schema_version',
-        :'topic' => :'topic'
+        :'user_uuid' => :'user_uuid',
+        :'app' => :'app',
+        :'target' => :'target',
+        :'context' => :'context',
+        :'flavor' => :'flavor',
+        :'medium' => :'medium',
+        :'occurred_at_time_in_browser' => :'occurred_at_time_in_browser'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Object',
-        :'schema_type' => :'String',
-        :'schema_version' => :'Integer',
-        :'topic' => :'String'
+        :'user_uuid' => :'Object',
+        :'app' => :'String',
+        :'target' => :'String',
+        :'context' => :'String',
+        :'flavor' => :'String',
+        :'medium' => :'String',
+        :'occurred_at_time_in_browser' => :'String'
       }
     end
 
@@ -54,20 +69,32 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'data')
-        self.data = attributes[:'data']
+      if attributes.has_key?(:'user_uuid')
+        self.user_uuid = attributes[:'user_uuid']
       end
 
-      if attributes.has_key?(:'schema_type')
-        self.schema_type = attributes[:'schema_type']
+      if attributes.has_key?(:'app')
+        self.app = attributes[:'app']
       end
 
-      if attributes.has_key?(:'schema_version')
-        self.schema_version = attributes[:'schema_version']
+      if attributes.has_key?(:'target')
+        self.target = attributes[:'target']
       end
 
-      if attributes.has_key?(:'topic')
-        self.topic = attributes[:'topic']
+      if attributes.has_key?(:'context')
+        self.context = attributes[:'context']
+      end
+
+      if attributes.has_key?(:'flavor')
+        self.flavor = attributes[:'flavor']
+      end
+
+      if attributes.has_key?(:'medium')
+        self.medium = attributes[:'medium']
+      end
+
+      if attributes.has_key?(:'occurred_at_time_in_browser')
+        self.occurred_at_time_in_browser = attributes[:'occurred_at_time_in_browser']
       end
     end
 
@@ -75,12 +102,47 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if @user_uuid.nil?
+        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
+      end
+
+      if @app.nil?
+        invalid_properties.push('invalid value for "app", app cannot be nil.')
+      end
+
+      if @target.nil?
+        invalid_properties.push('invalid value for "target", target cannot be nil.')
+      end
+
+      if @context.nil?
+        invalid_properties.push('invalid value for "context", context cannot be nil.')
+      end
+
+      if @flavor.nil?
+        invalid_properties.push('invalid value for "flavor", flavor cannot be nil.')
+      end
+
+      if @medium.nil?
+        invalid_properties.push('invalid value for "medium", medium cannot be nil.')
+      end
+
+      if @occurred_at_time_in_browser.nil?
+        invalid_properties.push('invalid value for "occurred_at_time_in_browser", occurred_at_time_in_browser cannot be nil.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      return false if @user_uuid.nil?
+      return false if @app.nil?
+      return false if @target.nil?
+      return false if @context.nil?
+      return false if @flavor.nil?
+      return false if @medium.nil?
+      return false if @occurred_at_time_in_browser.nil?
       true
     end
 
@@ -89,10 +151,13 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          data == o.data &&
-          schema_type == o.schema_type &&
-          schema_version == o.schema_version &&
-          topic == o.topic
+          user_uuid == o.user_uuid &&
+          app == o.app &&
+          target == o.target &&
+          context == o.context &&
+          flavor == o.flavor &&
+          medium == o.medium &&
+          occurred_at_time_in_browser == o.occurred_at_time_in_browser
     end
 
     # @see the `==` method
@@ -104,7 +169,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, schema_type, schema_version, topic].hash
+      [user_uuid, app, target, context, flavor, medium, occurred_at_time_in_browser].hash
     end
 
     # Builds the object from hash
