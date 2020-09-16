@@ -8,15 +8,18 @@ class Api::V0::EventsController < Api::V0::BaseController
     inbound_binding.events.each do |event|
       event.data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
 
-      if event.schema_version > 0
-        avro_encoded_data = KafkaAvroTurf.instance.encode(event.data, schema_name: event.schema_type, version: event.schema_version)
-      else
-        avro_encoded_data = KafkaAvroTurf.instance.encode(event.data, schema_name: event.schema_type)
-      end
+      avro_schema_type = data_schema_version(data: event.data)
+      avro_encoded_data = KafkaAvroTurf.instance.encode(event.data, schema_name: avro_schema_type, version: version)
 
       KafkaClient.async_produce(data: avro_encoded_data, topic: event.topic)
     end
 
     render nothing: true, status: 201
+  end
+
+  private
+  def data_schema_version(data:)
+    split = data.type.split('.')
+    "#{data.type}.v#{data.version}.#{split.last}"
   end
 end
