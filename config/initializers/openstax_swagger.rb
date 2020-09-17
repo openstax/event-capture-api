@@ -1,7 +1,7 @@
 OpenStax::Swagger.configure do |config|
   config.json_proc = -> (api_major_version) {
     Swagger::Blocks.build_root_json(
-      "Api::V#{api_major_version}::SwaggerController::SWAGGERED_CLASSES".constantize
+      "Api::V#{api_major_version}::SwaggerController".constantize.swagger_classes
     )
   }
   config.client_language_configs = {

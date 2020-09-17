@@ -1,4 +1,4 @@
-class Nudge::V1::NudgeSwagger
+class Ec::Nudged::V1::NudgedSwagger
   include Swagger::Blocks
   include OpenStax::Swagger::SwaggerBlocksExtensions
 
@@ -35,13 +35,13 @@ class Nudge::V1::NudgeSwagger
     end
     property :type do
       key :type, :string
-      key :description, 'The data object type. Used to locate the avro and swagger schemas.'
+      key :description, 'The data object type. Used to locate the datum and swagger schemas.'
       key :description, <<~DESC
-        The data object type. Used to locate the avro and swagger schemas
+        The data object type. Used to locate the datum and swagger schemas
 
         This type will be prepended to '.v<version>' and suffixed with the last
-        portion of the type to create the full length avro schema name used by 
-        avro turf to locate the avro schema in the API's code repository.  
+        portion of the type to create the full length datum schema name used by 
+        datum turf to locate the datum schema in the API's code repository.  
 
         e.g., for version == 1, the full (avroturf) schema name would be built as
            'org.openstax.ec.nudged.v1.nudged'
@@ -51,7 +51,7 @@ class Nudge::V1::NudgeSwagger
     end
     property :version do
       key :type, :integer
-      key :description, 'The data object version. Used to locate the avro and swagger schemas. See details in the type description.'
+      key :description, 'The data object version. Used to locate the datum and swagger schemas. See details in the type description.'
       key :default, 1
     end
   end

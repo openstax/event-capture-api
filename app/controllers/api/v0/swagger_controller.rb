@@ -37,14 +37,16 @@ class Api::V0::SwaggerController < ApplicationController
     key :produces, ['application/json']
   end
 
-  SWAGGERED_CLASSES = [
-    Api::V0::SwaggerResponses,
-    Api::V0::EventsSwagger,
-    # dynamically include the swaggered event files here
-    self
-  ].freeze
+  def self.swagger_classes
+    list = [
+      Api::V0::SwaggerResponses,
+      Api::V0::EventsSwagger,
+      self
+    ]
+    list.concat(DatumSwaggerFinder.new.datum_classes)
+  end
 
   def json
-    render json: Swagger::Blocks.build_root_json(SWAGGERED_CLASSES)
+    render json: Swagger::Blocks.build_root_json(self.class.swagger_classes)
   end
 end
