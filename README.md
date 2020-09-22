@@ -97,11 +97,50 @@ DELETE http://localhost:8081/subjects/org.openstax.ec.nudged?permanent=true
 
 The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.
 
+Note: The contents of the data packet is swagger validated in addition to avro validation.  The *_swagger file for the datum lives alongside the generated avsc file in the same versioned directory. 
+
 ### Autogenerating bindings
 
 Within the baseline, we use Swagger-generated Ruby code to serve as bindings for request and response data.  Calling
 `rake openstax_swagger:generate_model_bindings[X]` will create version X request and response model bindings in `app/bindings/api/vX`.
 See the documentation at https://github.com/openstax/swagger-rails for more information.
+
+## Updating a kafka event
+For example...say you want to change the field app to "initialing_app" for the event 'nudged'
+  1. Create a new version, a new directory, for nudged datum 
+     ```
+        mkdir datum/schema/org/openstax/ec/nudged/v2
+     ```
+  1. Create a new nudged avro dsl 
+      ```
+         touch datum/dsl/org/openstax/ec/nudged/v2/nudged.rb
+      ```
+  1. Copy v1 nudged dsl to this file and change the app field
+  1. Run the avsc generator 
+      ```
+         bundle exec rake avro:generate
+      ```
+  1. Add a new swagger file for nudged, for new v2 namespace 
+      ```
+         touch datum/schema/org/openstax/ec/nudged/v2/nudged_swagger.rb
+      ``` 
+  1. Generate the swagger model 
+      ```
+         `rake openstax_swagger:generate_model_bindings[X]
+      ``` 
+  1. Client users the v2 version of nudged for the data object
+      ```
+         `       "data" : {
+                  "app": "tutor",
+                  "target": "study_guides",
+                  "context": "bookuuid",
+                  "flavor": "full-screen-v2",
+                  "medium": "in-app",
+                  "occurred_at_time_in_browser": "1599173657",
+                  "type": "org.openstax.ec.nudged",
+                  "version": "2"
+                 },
+      ``` 
 
 ## Contributing
 

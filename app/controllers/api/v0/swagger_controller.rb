@@ -43,6 +43,10 @@ class Api::V0::SwaggerController < ApplicationController
       Api::V0::EventsSwagger,
       self
     ]
+    # dyamically add the (avro) datum classes to the swagger. this will result
+    # in the ability for the client to use the generated swagger to build the
+    # correct payload for the event data. Another result is that there are two
+    # levels of validation: incoming in swagger, and thru avro schema validation.
     list.concat(DatumSwaggerFinder.new.datum_classes)
   end
 

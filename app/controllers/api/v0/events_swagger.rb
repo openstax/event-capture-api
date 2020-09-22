@@ -5,7 +5,7 @@ class Api::V0::EventsSwagger
   swagger_schema :Event do
     property :data do
       key :type, :object
-      key :description, 'The kafka data object.  Should be of type Nudge.'
+      key :description, 'The kafka data object.  Will be of a type that lives a swagger file inside the datum schema directory.'
     end
     property :topic do
       key :type, :string
