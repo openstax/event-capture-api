@@ -1,4 +1,4 @@
-namespace 'org.openstax.ec'
+namespace 'org.openstax.ec.nudged.v1'
 
 fixed :uuid, 16
 

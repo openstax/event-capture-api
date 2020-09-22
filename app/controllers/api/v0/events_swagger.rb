@@ -7,14 +7,6 @@ class Api::V0::EventsSwagger
       key :type, :object
       key :description, 'The kafka data object.  Should be of type Nudge.'
     end
-    property :schema_type do
-      key :type, :string
-      key :description, 'The schema type of the data object. This is used for schema validation.'
-    end
-    property :schema_version do
-      key :type, :integer
-      key :description, 'The version of the schema type. This is used for schema validation.'
-    end
     property :topic do
       key :type, :string
       key :description, 'The kafka topic'

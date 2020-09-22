@@ -9,9 +9,9 @@ Rails.application.config.to_prepare do
     end
 
     def data=(data_object)
-      @data = case data_object.type
+      @data = case data_object[:type]
               when 'org.openstax.ec.nudged'
-                Api::V0::Bindings::Nudge.new(data)
+                Api::V0::Bindings::Nudged.new(data_object)
               end
     end
   end

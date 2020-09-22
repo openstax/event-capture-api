@@ -35,6 +35,16 @@
     {
       "name": "occurred_at_time_in_browser",
       "type": "string"
+    },
+    {
+      "name": "type",
+      "doc": "Required--Used as a avsc locator, schema registry, and swagger schema binding.",
+      "type": "string"
+    },
+    {
+      "name": "version",
+      "doc": "Required--Used as a avsc locator, schema registry, and swagger schema binding.",
+      "type": "string"
     }
   ]
 }
