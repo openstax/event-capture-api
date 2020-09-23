@@ -126,7 +126,7 @@ For example...say you want to change the field app to "initialing_app" for the e
       ``` 
   1. Generate the swagger model 
       ```
-         `rake openstax_swagger:generate_model_bindings[X]
+         rake openstax_swagger:generate_model_bindings[0]
       ``` 
   1. Client users the v2 version of nudged for the data object
       ```

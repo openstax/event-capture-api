@@ -14,14 +14,8 @@ require 'date'
 
 module Api::V0::Bindings
   class Event
-    # The kafka data object.  Should be of type Nudge.
+    # The kafka data object.  Will be of a type that lives a swagger file inside the datum schema directory.
     attr_accessor :data
-
-    # The schema type of the data object. This is used for schema validation.
-    attr_accessor :schema_type
-
-    # The version of the schema type. This is used for schema validation.
-    attr_accessor :schema_version
 
     # The kafka topic
     attr_accessor :topic
@@ -30,8 +24,6 @@ module Api::V0::Bindings
     def self.attribute_map
       {
         :'data' => :'data',
-        :'schema_type' => :'schema_type',
-        :'schema_version' => :'schema_version',
         :'topic' => :'topic'
       }
     end
@@ -40,8 +32,6 @@ module Api::V0::Bindings
     def self.swagger_types
       {
         :'data' => :'Object',
-        :'schema_type' => :'String',
-        :'schema_version' => :'Integer',
         :'topic' => :'String'
       }
     end
@@ -56,14 +46,6 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'data')
         self.data = attributes[:'data']
-      end
-
-      if attributes.has_key?(:'schema_type')
-        self.schema_type = attributes[:'schema_type']
-      end
-
-      if attributes.has_key?(:'schema_version')
-        self.schema_version = attributes[:'schema_version']
       end
 
       if attributes.has_key?(:'topic')
@@ -90,8 +72,6 @@ module Api::V0::Bindings
       return true if self.equal?(o)
       self.class == o.class &&
           data == o.data &&
-          schema_type == o.schema_type &&
-          schema_version == o.schema_version &&
           topic == o.topic
     end
 
@@ -104,7 +84,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, schema_type, schema_version, topic].hash
+      [data, topic].hash
     end
 
     # Builds the object from hash
