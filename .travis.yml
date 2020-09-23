@@ -1,7 +1,7 @@
 sudo: false
 dist: trusty
 language: ruby
-rvm: 2.6.5
+rvm: 2.6.6
 cache: bundler
 bundler_args: --retry=6
 services:
