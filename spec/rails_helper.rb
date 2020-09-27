@@ -6,7 +6,7 @@ SimpleCov.start 'rails' do
 end
 
 require 'codecov'
-SimpleCov.formatter = SimpleCov::Formatter::Codecov
+SimpleCov.formatter = SimpleCov::Formatter::Codecov if ENV['CI'] == 'true'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
