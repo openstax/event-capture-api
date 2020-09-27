@@ -104,7 +104,7 @@ Note: The contents of the data packet is swagger validated in addition to avro v
 ### Autogenerating bindings
 
 Within the baseline, we use Swagger-generated Ruby code to serve as bindings for request and response data.  Calling
-`rake openstax_swagger:generate_model_bindings[X]` will create version X request and response model bindings in `app/bindings/api/vX`.  Prepend with `./docker/compose run --rm api` to run this in Docker.
+`./docker/compose run --rm api rake openstax_swagger:generate_model_bindings[X]` will create version X request and response model bindings in `app/bindings/api/vX`.  It is important to run this inside Docker so that the version of swagger-codegen is the same for everyone.
 See the documentation at https://github.com/openstax/swagger-rails for more information.
 
 ## Updating a kafka event

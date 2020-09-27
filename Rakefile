@@ -18,3 +18,8 @@ Rails.application.load_tasks
 # GemDebugger.break_at_line(gem_name: 'avro-builder',
 #                           file_in_gem: 'lib/avro/builder/rake/avro_generate_task.rb',
 #                           line: 37)
+#
+# require 'gem_debugger'
+# GemDebugger.break_at_line(gem_name: 'openstax_swagger',
+#                           file_in_gem: 'lib/tasks/generate_model_bindings.rake',
+#                           line: 15)
