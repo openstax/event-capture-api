@@ -1,4 +1,4 @@
-from ruby:2.6.5
+from ruby:2.6.6
 
 ### rails
 
@@ -23,6 +23,6 @@ RUN apt-get update && \
 ### swagger-codegen
 
 RUN mkdir /usr/lib/swagger-codegen && \
-  wget -q https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.13/swagger-codegen-cli-2.4.13.jar -O /usr/lib/swagger-codegen/swagger-codegen-cli.jar && \
+  wget -q https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.15/swagger-codegen-cli-2.4.15.jar -O /usr/lib/swagger-codegen/swagger-codegen-cli.jar && \
   echo "java -jar /usr/lib/swagger-codegen/swagger-codegen-cli.jar \$@" > /usr/bin/swagger-codegen && \
   chmod a+x /usr/bin/swagger-codegen

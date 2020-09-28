@@ -13,7 +13,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
         "flavor": "full-screen-v2",
         "medium": "in-app",
         "occurred_at_time_in_browser": "1599173657",
-        'type': 'org.openstax.ec.nudged',
+        'type': 'org.openstax.ec.nudged_v1',
         'version': '1'
       }
     }
@@ -26,7 +26,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
         "flavor": "full-screen-v2",
         "medium": "in-app",
         "occurred_at_time_in_browser": "1599173657",
-        'type': 'org.openstax.ec.nudged',
+        'type': 'org.openstax.ec.nudged_v1',
         'version': '1'
       }
     }

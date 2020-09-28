@@ -43,6 +43,8 @@ use the docker-compose proxy for running all commands, it hooks in a base config
 # turning it on and off
 ./docker/compose up # turns everything on
 ./docker/compose up control-center # turn particular services on (includes dependencies)
+./docker/compose up api # the rails API server only
+./docker/compose up -d api && docker attach docker_api_1 # run rails, watch output, and debug
 ./docker/compose up -d # turns everything on in the background
 ./docker/compose down # turns everything off
 ./docker/compose ps # list running things
@@ -83,7 +85,7 @@ curl -X DELETE http://localhost:8083/connectors/datagen-pageviews
 The schema registry is used to encode/decode events stored in kafka.  This repository stores the schemas from the 'ec' namespace.  To modify the schemas, change the schema dsl in 'avro/dsl/*', regenerate the avsc files thru the following rake task
 ```
 bundle exec rake avro:generate
-```    
+```
 
 Handy local schema registry http interactions
 ```
@@ -97,37 +99,37 @@ DELETE http://localhost:8081/subjects/org.openstax.ec.nudged?permanent=true
 
 The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.
 
-Note: The contents of the data packet is swagger validated in addition to avro validation.  The *_swagger file for the datum lives alongside the generated avsc file in the same versioned directory. 
+Note: The contents of the data packet is swagger validated in addition to avro validation.  The *_swagger file for the datum lives alongside the generated avsc file in the same versioned directory.
 
 ### Autogenerating bindings
 
 Within the baseline, we use Swagger-generated Ruby code to serve as bindings for request and response data.  Calling
-`rake openstax_swagger:generate_model_bindings[X]` will create version X request and response model bindings in `app/bindings/api/vX`.
+`./docker/compose run --rm api rake openstax_swagger:generate_model_bindings[X]` will create version X request and response model bindings in `app/bindings/api/vX`.  It is important to run this inside Docker so that the version of swagger-codegen is the same for everyone.
 See the documentation at https://github.com/openstax/swagger-rails for more information.
 
 ## Updating a kafka event
 For example...say you want to change the field app to "initialing_app" for the event 'nudged'
-  1. Create a new version, a new directory, for nudged datum 
+  1. Create a new version, a new directory, for nudged datum
      ```
         mkdir datum/schema/org/openstax/ec/nudged/v2
      ```
-  1. Create a new nudged avro dsl 
+  1. Create a new nudged avro dsl
       ```
          touch datum/dsl/org/openstax/ec/nudged/v2/nudged.rb
       ```
   1. Copy v1 nudged dsl to this file and change the app field
-  1. Run the avsc generator 
+  1. Run the avsc generator
       ```
          bundle exec rake avro:generate
       ```
-  1. Add a new swagger file for nudged, for new v2 namespace 
+  1. Add a new swagger file for nudged, for new v2 namespace
       ```
          touch datum/schema/org/openstax/ec/nudged/v2/nudged_swagger.rb
-      ``` 
-  1. Generate the swagger model 
+      ```
+  1. Generate the swagger model
       ```
          rake openstax_swagger:generate_model_bindings[0]
-      ``` 
+      ```
   1. Client users the v2 version of nudged for the data object
       ```
          `       "data" : {
@@ -140,7 +142,7 @@ For example...say you want to change the field app to "initialing_app" for the e
                   "type": "org.openstax.ec.nudged",
                   "version": "2"
                  },
-      ``` 
+      ```
 
 ## Contributing
 
