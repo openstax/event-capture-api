@@ -9,7 +9,7 @@ class Api::V0::EventsController < Api::V0::BaseController
       event.data.user_uuid = CompactUuid.pack(current_user_uuid) if current_user_uuid
 
       avro_schema_type = avroturf_path(data: event.data)
-      avro_encoded_data = KafkaAvroTurf.instance.encode(event.data.to_hash, schema_name: avro_schema_type, version: event.data.version)
+      avro_encoded_data = KafkaAvroTurf.instance.encode(event.data.to_hash, schema_name: avro_schema_type)
 
       KafkaClient.async_produce(data: avro_encoded_data, topic: event.topic)
     end
@@ -20,6 +20,7 @@ class Api::V0::EventsController < Api::V0::BaseController
   private
   def avroturf_path(data:)
     split = data.type.split('.')
-    "#{data.type}.v#{data.version}.#{split.last}"
+    type, version = split.last.split("_")
+    "#{type}.#{version}.avro"
   end
 end
