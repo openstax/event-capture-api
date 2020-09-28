@@ -4,10 +4,9 @@
 
 Rails.application.config.to_prepare do
 
-  # Don't try to monkey patch classes if they haven't been generated yet;
-  # and use 'next' instead of 'return' b/c this is called in a proc
-  # if we use return it gives an 'unexpected return' error
-  next if !Object.const_defined?("Api::V0::Bindings")
+  # If we're running the task to generate model bindings, there's nothing yet
+  # to monkey patch, so bail.
+  next if RakeUtils.running_task?(/generate_model_bindings/)
 
   Api::V0::Bindings::Event.class_exec do
     def valid_data?
@@ -15,6 +14,7 @@ Rails.application.config.to_prepare do
     end
 
     def data=(data_object)
+      debugger
       @data = case data_object[:type]
               when 'org.openstax.ec.nudged_v1'
                 Api::V0::Bindings::NudgedV1.new(data_object)
