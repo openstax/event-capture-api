@@ -2,6 +2,8 @@
 
 require 'avro/builder'
 
+Avro::Builder.add_load_path(File.join(Rails.root,'schemas'))
+
 desc <<-DESC.strip_heredoc
   Convert our Avro Builder DSL files to AVSC Avro files.
 DESC

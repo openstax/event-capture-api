@@ -1,7 +1,6 @@
 namespace 'org.openstax.ec'
 
-# TODO put this and other common types in a shared / imported file
-fixed :uuid, 16
+import 'common_schema_types'
 
 record :nudged_v1 do
   required :user_uuid, :uuid
