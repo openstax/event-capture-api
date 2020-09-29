@@ -1,6 +1,6 @@
 namespace 'org.openstax.ec'
 
-import 'common_schema_types'
+import 'types/uuid'
 
 record :nudged_v1 do
   required :user_uuid, :uuid
