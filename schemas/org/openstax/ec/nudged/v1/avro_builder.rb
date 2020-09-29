@@ -1,8 +1,8 @@
-namespace 'org.openstax.ec.nudged.v1'
+namespace 'org.openstax.ec'
 
 fixed :uuid, 16
 
-record :nudged do
+record :nudged_v1 do
   required :user_uuid, :uuid
   required :app, :string
   required :target, :string

@@ -2,7 +2,11 @@
 
 require 'rails_helper'
 
+include SchemaRegistryHelpers
+
 RSpec.describe Api::V0::EventsController, type: :request do
+  before { use_fake_schema_registry }
+
   describe 'POST /highlights' do
     let(:user_id) { '123' }
     let(:data1) {
@@ -55,10 +59,6 @@ RSpec.describe Api::V0::EventsController, type: :request do
           }
         ]
       }
-    end
-
-    before do
-      allow_any_instance_of(AvroTurf::Messaging).to receive(:encode)
     end
 
     it 'successfully calls the API and sends a data message to kafka' do

@@ -14,7 +14,6 @@ Rails.application.config.to_prepare do
     end
 
     def data=(data_object)
-      debugger
       @data = case data_object[:type]
               when 'org.openstax.ec.nudged_v1'
                 Api::V0::Bindings::NudgedV1.new(data_object)

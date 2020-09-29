@@ -1,14 +1,14 @@
 {
   "type": "record",
-  "name": "nudged",
-  "namespace": "org.openstax.ec.nudged.v1",
+  "name": "nudged_v1",
+  "namespace": "org.openstax.ec",
   "fields": [
     {
       "name": "user_uuid",
       "type": {
         "name": "uuid",
         "type": "fixed",
-        "namespace": "org.openstax.ec.nudged.v1",
+        "namespace": "org.openstax.ec",
         "size": 16
       }
     },

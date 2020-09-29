@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 #
 require 'avro_turf/messaging'
+require 'event_capture_schema_store'
 
 if Rails.env.development?
   ActiveSupport::Notifications.subscribe(/.*\.kafka$/) do |*args|
@@ -13,7 +14,7 @@ class AsyncKafkaProducer
   def self.instance
     @@instance ||=
       begin
-          kafka = Kafka.new(Rails.application.secrets.kafka[:broker_host].split(','),
+        kafka = Kafka.new(Rails.application.secrets.kafka[:broker_host].split(','),
                           logger: Rails.logger)
         kafka.async_producer(
           delivery_interval: Rails.application.secrets.kafka[:delivery_interval],
@@ -30,8 +31,11 @@ class KafkaAvroTurf
     @@instance ||=
       begin
         AvroTurf::Messaging.new(
+          namespace: 'org.openstax.ec',
+          schema_store: EventCaptureSchemaStore.new(
+            path: Rails.application.secrets.kafka[:schemas_path]
+          ),
           registry_url: Rails.application.secrets.kafka[:schema_url],
-          schemas_path: Rails.application.secrets.kafka[:schemas_path]
         )
       end
   end

@@ -45,6 +45,8 @@ group :test do
 
   gem 'codecov', require: false
   gem 'simplecov', require: false
+  gem 'sinatra'
+  gem 'webmock'
 end
 
 group :development, :test do
