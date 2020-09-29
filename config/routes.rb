@@ -11,4 +11,7 @@ Rails.application.routes.draw do
       get :swagger, to: 'swagger#json'
     end
   end
+
+  # Kill the Rails welcome page
+  root to: proc { [404, {}, ["Not found."]] }
 end

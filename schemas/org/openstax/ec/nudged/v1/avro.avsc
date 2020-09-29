@@ -1,10 +1,16 @@
 {
-  "name": "interactions.nudged",
   "type": "record",
+  "name": "nudged_v1",
+  "namespace": "org.openstax.ec",
   "fields": [
     {
       "name": "user_uuid",
-      "type": { "name": "user_uuid", "type": "fixed", "size": 16 }
+      "type": {
+        "name": "uuid",
+        "type": "fixed",
+        "namespace": "org.openstax.ec",
+        "size": 16
+      }
     },
     {
       "name": "app",

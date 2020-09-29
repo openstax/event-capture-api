@@ -2,23 +2,48 @@
 
 require 'rails_helper'
 
+include SchemaRegistryHelpers
+
 RSpec.describe Api::V0::EventsController, type: :request do
+  before { use_fake_schema_registry }
+
   describe 'POST /highlights' do
     let(:user_id) { '123' }
+    let(:data1) {
+      {
+        "app": "tutor",
+        "target": "study_guides",
+        "context": "bookuuid",
+        "flavor": "full-screen-v2",
+        "medium": "in-app",
+        "occurred_at_time_in_browser": "1599173657",
+        'type': 'org.openstax.ec.nudged_v1',
+        'version': '1'
+      }
+    }
+
+    let(:data2) {
+      {
+        "app": "foobar",
+        "target": "foo target",
+        "context": "foo uuid",
+        "flavor": "full-screen-v2",
+        "medium": "in-app",
+        "occurred_at_time_in_browser": "1599173657",
+        'type': 'org.openstax.ec.nudged_v1',
+        'version': '1'
+      }
+    }
 
     let(:attributes) do
       {
         'events': [
           {
-            'data': { 'action': 'quiz 1 finished' },
-            'schema_type': 'tutor quiz',
-            'schema_version': 1,
-            'topic': 'exercises'
+            'data': data1,
+           'topic': 'exercises'
           },
           {
-            'data': { 'action': 'quiz 2 finished' },
-            'schema_type': 'tutor quiz',
-            'schema_version': 1,
+            'data': data2,
             'topic': 'exercises'
           }
         ]
@@ -29,17 +54,11 @@ RSpec.describe Api::V0::EventsController, type: :request do
       {
         'events': [
           {
-            'data': data,
-            'schema_type': 'tutor quiz',
-            'schema_version': 1,
+            'data': data1 ,
             'topic': 'exercises'
           }
         ]
       }
-    end
-
-    before do
-      allow_any_instance_of(AvroTurf::Messaging).to receive(:encode)
     end
 
     it 'successfully calls the API and sends a data message to kafka' do
@@ -51,7 +70,6 @@ RSpec.describe Api::V0::EventsController, type: :request do
     end
 
     context 'when a logged-in user submits an event' do
-      let(:data) { { 'action': 'quiz 1' } }
       let(:user_id) { 'd8388680-80cf-4fdb-95bb-829a46342115' }
       let(:user_data) { { 'user_uuid': user_id } }
 
@@ -67,7 +85,6 @@ RSpec.describe Api::V0::EventsController, type: :request do
     end
 
     context 'submits an event without a logged in user' do
-      let(:data) { { 'action': 'quiz 1' } }
       it 'is sent to kafka w/out a user id' do
         expect(KafkaClient).to receive(:async_produce)
 

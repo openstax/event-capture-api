@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.5'
+ruby File.read('.ruby-version').strip
 
 gem 'rails', '~> 5.2.3'
 gem 'puma', '~> 3.11'
@@ -25,7 +25,8 @@ gem 'scout_apm', '~> 3.0.x'
 
 # Kafka stuff
 gem 'ruby-kafka'
-gem 'avro_turf'
+gem 'avro_turf', github: 'openstax/avro_turf', ref: '6b625753d65488a8b4171df23edc3b16a240af71'
+gem 'avro-builder'
 
 # Versioned API tools
 gem 'versionist'
@@ -44,6 +45,8 @@ group :test do
 
   gem 'codecov', require: false
   gem 'simplecov', require: false
+  gem 'sinatra'
+  gem 'webmock'
 end
 
 group :development, :test do

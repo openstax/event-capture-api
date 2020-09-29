@@ -8,6 +8,15 @@ GIT
       json-jwt
 
 GIT
+  remote: https://github.com/openstax/avro_turf.git
+  revision: 6b625753d65488a8b4171df23edc3b16a240af71
+  ref: 6b625753d65488a8b4171df23edc3b16a240af71
+  specs:
+    avro_turf (1.3.0)
+      avro (>= 1.7.7, < 1.11)
+      excon (~> 0.71)
+
+GIT
   remote: https://github.com/openstax/swagger-rails.git
   revision: 9bff4962b31e142debbc62390f1fd3adab3af055
   ref: 9bff4962b31e142debbc62390f1fd3adab3af055
@@ -62,14 +71,15 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.1.0)
     arel (9.0.0)
     ast (2.4.1)
     avro (1.10.0)
       multi_json (~> 1)
-    avro_turf (1.2.0)
-      avro (>= 1.7.7, < 1.11)
-      excon (~> 0.71)
+    avro-builder (0.17.0)
+      avro (>= 1.7.0, < 1.11)
     aws-eventstream (1.1.0)
     aws-partitions (1.337.0)
     aws-sdk-core (3.102.1)
@@ -94,6 +104,7 @@ GEM
     coderay (1.1.3)
     colorize (0.8.1)
     concurrent-ruby (1.1.6)
+    crack (0.4.4)
     crass (1.0.6)
     diff-lcs (1.4.3)
     digest-crc (0.5.1)
@@ -109,6 +120,7 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hashdiff (1.0.1)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
     jmespath (1.4.0)
@@ -141,6 +153,8 @@ GEM
     msgpack (1.3.3)
     multi_json (1.15.0)
     multipart-post (2.1.1)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -156,12 +170,15 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
+    public_suffix (4.0.6)
     puma (3.12.6)
     rack (2.2.3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
     rack-mini-profiler (2.0.2)
       rack (>= 1.2.0)
+    rack-protection (2.1.0)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.4.3)
@@ -229,6 +246,7 @@ GEM
     ruby-kafka (1.1.0)
       digest-crc
     ruby-progressbar (1.10.1)
+    ruby2_keywords (0.0.2)
     ruby_dep (1.5.0)
     scout_apm (3.0.0.pre28)
     sentry-raven (3.0.0)
@@ -237,6 +255,11 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.2)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -251,6 +274,7 @@ GEM
     swagger-blocks (3.0.0)
     thor (1.0.1)
     thread_safe (0.3.6)
+    tilt (2.0.10)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
@@ -258,6 +282,10 @@ GEM
       activesupport (>= 3)
       railties (>= 3)
       yard (~> 0.9.20)
+    webmock (3.9.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -267,7 +295,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  avro_turf
+  avro-builder
+  avro_turf!
   aws-sdk-ssm
   bootsnap (>= 1.1.0)
   byebug
@@ -290,13 +319,15 @@ DEPENDENCIES
   scout_apm (~> 3.0.x)
   sentry-raven
   simplecov
+  sinatra
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
   versionist
+  webmock
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.6.6p146
 
 BUNDLED WITH
    2.1.4

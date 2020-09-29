@@ -37,13 +37,19 @@ class Api::V0::SwaggerController < ApplicationController
     key :produces, ['application/json']
   end
 
-  SWAGGERED_CLASSES = [
-    Api::V0::SwaggerResponses,
-    Api::V0::EventsSwagger,
-    self
-  ].freeze
+  def self.swagger_classes
+    list = [
+      Api::V0::SwaggerResponses,
+      Api::V0::EventsSwagger,
+      self
+    ]
+    # dyamically add the event swagger, so that the client can to build the
+    # correct payload for the event data. Another result is that there are two
+    # levels of validation: incoming in swagger, and thru avro schema validation.
+    list.concat(SwaggerFinder.new.classes)
+  end
 
   def json
-    render json: Swagger::Blocks.build_root_json(SWAGGERED_CLASSES)
+    render json: Swagger::Blocks.build_root_json(self.class.swagger_classes)
   end
 end
