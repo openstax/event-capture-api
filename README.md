@@ -102,7 +102,7 @@ The event payload JSON and Avro schemas are defined in `schemas/org/openstax/ec/
 
 ### Schema Registry
 
-The Schema Registry and client gems for it are used to encode/decode events stored in Kafka.  This code repository stores the schemas from the 'org.openstax.ec' namespace ("ec" == "event capture").  To modify the schemas, change the schema DSL in 'schemas/org/openstax/ec/[event name]/v[major version]/avro_builder.rb', then regenerate the avsc files thru the following rake task
+The Schema Registry and client gems for it are used to encode/decode events stored in Kafka.  Schemas are sent to the registry when encoding happens.  This code repository stores the schemas from the 'org.openstax.ec' namespace ("ec" == "event capture").  To modify the schemas, change the schema DSL in 'schemas/org/openstax/ec/[event name]/v[major version]/avro_builder.rb', then regenerate the avsc files thru the following rake task
 
 ```bash
 $> bundle exec rake generate_avro

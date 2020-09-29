@@ -1,5 +1,6 @@
 namespace 'org.openstax.ec'
 
+# TODO put this and other common types in a shared / imported file
 fixed :uuid, 16
 
 record :nudged_v1 do

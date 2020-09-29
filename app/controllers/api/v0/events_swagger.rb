@@ -5,7 +5,7 @@ class Api::V0::EventsSwagger
   swagger_schema :Event do
     property :data do
       key :type, :object
-      key :description, 'The kafka data object.  Will be of a type that lives a swagger file inside the datum schema directory.'
+      key :description, 'The event payload object.  Will be of a type that lives in a swagger file inside the schemas directory.'
     end
     property :topic do
       key :type, :string
@@ -25,8 +25,8 @@ class Api::V0::EventsSwagger
 
   swagger_path '/events' do
     operation :post do
-      key :summary, 'Capture a event'
-      key :description, 'Capture a event into kafka'
+      key :summary, 'Captures events'
+      key :description, 'Capture one or more events'
       key :operationId, 'addEvent'
       key :produces, [
         'application/json'
@@ -37,14 +37,13 @@ class Api::V0::EventsSwagger
       parameter do
         key :name, :events
         key :in, :body
-        key :description, 'The event data'
         key :required, true
         schema do
           key :'$ref', :Events
         end
       end
-      response 201 do
-        key :description, 'Created.  Returns the created highlight.'
+      response 200 do
+        key :description, 'Success.'
       end
       # extend Api::V0::SwaggerResponses::AuthenticationError
       # extend Api::V0::SwaggerResponses::UnprocessableEntityError
