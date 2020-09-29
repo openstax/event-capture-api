@@ -4,7 +4,7 @@ class Api::V0::SwaggerController < ApplicationController
   include ::Swagger::Blocks
 
   ACCEPT_HEADER = 'application/json'
-  BASE_PATH = '/api/v1/events'
+  BASE_PATH = '/api/v0/events'
 
   swagger_root do
     key :swagger, '2.0'
