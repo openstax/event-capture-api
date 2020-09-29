@@ -14,10 +14,17 @@ Rails.application.config.to_prepare do
     end
 
     def data=(data_object)
-      @data = case data_object[:type]
-              when 'org.openstax.ec.nudged_v1'
-                Api::V0::Bindings::NudgedV1.new(data_object)
-              end
+      *_, record_name = data_object[:type].split('.')
+      swagger_class = swagger_class_for_record_name(record_name)
+      @data = swagger_class.new(data_object)
+    end
+
+    def swagger_class_for_record_name(record_name)
+      # memoizing in case constantize is not super fast
+      @record_name_to_swagger_class_map ||= {}
+      @record_name_to_swagger_class_map[record_name] ||= begin
+        "Api::V0::Bindings::#{record_name.camelize}".constantize
+      end
     end
   end
 end

@@ -36,6 +36,7 @@ class KafkaAvroTurf
             path: Rails.application.secrets.kafka[:schemas_path]
           ),
           registry_url: Rails.application.secrets.kafka[:schema_url],
+          logger: Rails.logger
         )
       end
   end

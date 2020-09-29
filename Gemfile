@@ -25,7 +25,7 @@ gem 'scout_apm', '~> 3.0.x'
 
 # Kafka stuff
 gem 'ruby-kafka'
-gem 'avro_turf'
+gem 'avro_turf', github: 'openstax/avro_turf', ref: '6b625753d65488a8b4171df23edc3b16a240af71'
 gem 'avro-builder'
 
 # Versioned API tools

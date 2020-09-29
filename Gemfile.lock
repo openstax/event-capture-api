@@ -8,6 +8,15 @@ GIT
       json-jwt
 
 GIT
+  remote: https://github.com/openstax/avro_turf.git
+  revision: 6b625753d65488a8b4171df23edc3b16a240af71
+  ref: 6b625753d65488a8b4171df23edc3b16a240af71
+  specs:
+    avro_turf (1.3.0)
+      avro (>= 1.7.7, < 1.11)
+      excon (~> 0.71)
+
+GIT
   remote: https://github.com/openstax/swagger-rails.git
   revision: 9bff4962b31e142debbc62390f1fd3adab3af055
   ref: 9bff4962b31e142debbc62390f1fd3adab3af055
@@ -71,9 +80,6 @@ GEM
       multi_json (~> 1)
     avro-builder (0.17.0)
       avro (>= 1.7.0, < 1.11)
-    avro_turf (1.2.0)
-      avro (>= 1.7.7, < 1.11)
-      excon (~> 0.71)
     aws-eventstream (1.1.0)
     aws-partitions (1.337.0)
     aws-sdk-core (3.102.1)
@@ -290,7 +296,7 @@ PLATFORMS
 
 DEPENDENCIES
   avro-builder
-  avro_turf
+  avro_turf!
   aws-sdk-ssm
   bootsnap (>= 1.1.0)
   byebug
