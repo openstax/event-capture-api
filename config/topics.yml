@@ -1,0 +1,22 @@
+topics: [
+  {
+    name: 'foo',
+    schemas: [
+        'org.openstax.ec.foo1',
+        'org.openstax.ec.foo2'
+    ],
+    config: {
+      replication: 3
+    }
+  },
+  {
+    name: 'bar',
+    schemas: [
+        'org.openstax.ec.bar1',
+        'org.openstax.ec.bar2'
+    ],
+    config: {
+      replication: 3
+    }
+  }
+]
