@@ -135,6 +135,15 @@ If you want to make a non-breaking change to an event payload, e.g. adding an op
 
 If however you wanted to make a breaking change to a payload, e.g. for the `nudged` event, you'd copy the contents of the `schemas/org/openstax/ec/nudged/v1` directory to a new `schemas/org/openstax/ec/nudged/v2` directory.  Then make your changes in the `v2` directory and run the rake tasks.
 
+#### Registering topics
+
+In order to use kafka (non-locally) you will need to first register your topics with kafka.  To do this, first make
+sure that `config/topics.yml` has the topics you need, then run this rake task to create these within kafka: 
+
+```
+bundle exece rake populate_topics
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md)
