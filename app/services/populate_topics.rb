@@ -1,6 +1,7 @@
 class PopulateTopics
   def call
     add_to_kafka(topics_to_add)
+    topics_to_add
   end
 
   def topics_to_add

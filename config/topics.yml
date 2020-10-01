@@ -1,22 +1,11 @@
 topics: [
   {
-    name: 'foo',
+    name: 'nudged',
     schemas: [
-        'org.openstax.ec.foo1',
-        'org.openstax.ec.foo2'
+        'org.openstax.ec.nudged_v1'
     ],
     config: {
-      replication: 3
-    }
-  },
-  {
-    name: 'bar',
-    schemas: [
-        'org.openstax.ec.bar1',
-        'org.openstax.ec.bar2'
-    ],
-    config: {
-      replication: 3
+      replication: 1
     }
   }
 ]
