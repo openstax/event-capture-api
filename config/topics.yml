@@ -1,0 +1,11 @@
+topics: [
+  {
+    name: 'nudged',
+    schemas: [
+        'org.openstax.ec.nudged_v1'
+    ],
+    config: {
+      replication: 1
+    }
+  }
+]

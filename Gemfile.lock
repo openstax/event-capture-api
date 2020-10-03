@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/dasch/avro_turf.git
+  revision: 6ef7a6b5458a61a9d57307ee0bb1a7fdfb3ed170
+  ref: 6ef7a6b5458a61a9d57307ee0bb1a7fdfb3ed170
+  specs:
+    avro_turf (1.3.0)
+      avro (>= 1.7.7, < 1.11)
+      excon (~> 0.71)
+
+GIT
   remote: https://github.com/openstax/auth-rails.git
   revision: ed2d7da86ca226b93376955b9474c4cf115c611f
   ref: ed2d7da86ca226b93376955b9474c4cf115c611f
@@ -6,15 +15,6 @@ GIT
     openstax_auth (0.1.0)
       activesupport
       json-jwt
-
-GIT
-  remote: https://github.com/openstax/avro_turf.git
-  revision: 6b625753d65488a8b4171df23edc3b16a240af71
-  ref: 6b625753d65488a8b4171df23edc3b16a240af71
-  specs:
-    avro_turf (1.3.0)
-      avro (>= 1.7.7, < 1.11)
-      excon (~> 0.71)
 
 GIT
   remote: https://github.com/openstax/swagger-rails.git

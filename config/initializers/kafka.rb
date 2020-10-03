@@ -10,13 +10,20 @@ if Rails.env.development?
   end
 end
 
+class OxKafka
+  def self.instance
+    @@instance ||=
+      begin
+        Kafka.new(Rails.application.secrets.kafka[:broker_host].split(','), logger: Rails.logger)
+      end
+  end
+end
+
 class AsyncKafkaProducer
   def self.instance
     @@instance ||=
       begin
-        kafka = Kafka.new(Rails.application.secrets.kafka[:broker_host].split(','),
-                          logger: Rails.logger)
-        kafka.async_producer(
+        OxKafka.instance.async_producer(
           delivery_interval: Rails.application.secrets.kafka[:delivery_interval],
           delivery_threshold: Rails.application.secrets.kafka[:delivery_threshold]
         )
