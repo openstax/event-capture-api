@@ -32,8 +32,11 @@ module Api::V0::Bindings
     # The nudge medium (e.g., email).
     attr_accessor :medium
 
-    # The unix time (ms since epoc) when nudge occurred.
-    attr_accessor :occurred_at_time_in_browser
+    # The RFC 3339 section 5.6 date-time when nudge actually occurred.
+    attr_accessor :occurred_at
+
+    # The RFC 3339 section 5.6 date-time when nudge event was sent to the server.
+    attr_accessor :sent_at
 
     # The data's type.
     attr_accessor :type
@@ -69,7 +72,8 @@ module Api::V0::Bindings
         :'context' => :'context',
         :'flavor' => :'flavor',
         :'medium' => :'medium',
-        :'occurred_at_time_in_browser' => :'occurred_at_time_in_browser',
+        :'occurred_at' => :'occurred_at',
+        :'sent_at' => :'sent_at',
         :'type' => :'type'
       }
     end
@@ -83,7 +87,8 @@ module Api::V0::Bindings
         :'context' => :'String',
         :'flavor' => :'String',
         :'medium' => :'String',
-        :'occurred_at_time_in_browser' => :'String',
+        :'occurred_at' => :'DateTime',
+        :'sent_at' => :'DateTime',
         :'type' => :'String'
       }
     end
@@ -120,8 +125,12 @@ module Api::V0::Bindings
         self.medium = attributes[:'medium']
       end
 
-      if attributes.has_key?(:'occurred_at_time_in_browser')
-        self.occurred_at_time_in_browser = attributes[:'occurred_at_time_in_browser']
+      if attributes.has_key?(:'occurred_at')
+        self.occurred_at = attributes[:'occurred_at']
+      end
+
+      if attributes.has_key?(:'sent_at')
+        self.sent_at = attributes[:'sent_at']
       end
 
       if attributes.has_key?(:'type')
@@ -157,8 +166,12 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "medium", medium cannot be nil.')
       end
 
-      if @occurred_at_time_in_browser.nil?
-        invalid_properties.push('invalid value for "occurred_at_time_in_browser", occurred_at_time_in_browser cannot be nil.')
+      if @occurred_at.nil?
+        invalid_properties.push('invalid value for "occurred_at", occurred_at cannot be nil.')
+      end
+
+      if @sent_at.nil?
+        invalid_properties.push('invalid value for "sent_at", sent_at cannot be nil.')
       end
 
       invalid_properties
@@ -173,7 +186,8 @@ module Api::V0::Bindings
       return false if @context.nil?
       return false if @flavor.nil?
       return false if @medium.nil?
-      return false if @occurred_at_time_in_browser.nil?
+      return false if @occurred_at.nil?
+      return false if @sent_at.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
       return false unless type_validator.valid?(@type)
       true
@@ -200,7 +214,8 @@ module Api::V0::Bindings
           context == o.context &&
           flavor == o.flavor &&
           medium == o.medium &&
-          occurred_at_time_in_browser == o.occurred_at_time_in_browser &&
+          occurred_at == o.occurred_at &&
+          sent_at == o.sent_at &&
           type == o.type
     end
 
@@ -213,7 +228,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [user_uuid, app, target, context, flavor, medium, occurred_at_time_in_browser, type].hash
+      [user_uuid, app, target, context, flavor, medium, occurred_at, sent_at, type].hash
     end
 
     # Builds the object from hash

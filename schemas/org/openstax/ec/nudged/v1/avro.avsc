@@ -33,8 +33,11 @@
       "type": "string"
     },
     {
-      "name": "occurred_at_time_in_browser",
-      "type": "string"
+      "name": "occurred_at",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
     }
   ]
 }
