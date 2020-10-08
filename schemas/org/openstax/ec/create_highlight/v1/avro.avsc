@@ -1,0 +1,35 @@
+{
+  "type": "record",
+  "name": "create_highlight_v1",
+  "namespace": "org.openstax.ec",
+  "fields": [
+    {
+      "name": "user_uuid",
+      "type": {
+        "name": "uuid",
+        "type": "fixed",
+        "namespace": "org.openstax.ec",
+        "size": 16
+      }
+    },
+    {
+      "name": "contents",
+      "type": "string"
+    },
+    {
+      "name": "location",
+      "type": "string"
+    },
+    {
+      "name": "color",
+      "type": "string"
+    },
+    {
+      "name": "occurred_at",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}
