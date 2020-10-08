@@ -18,9 +18,14 @@ class Api::V0::EventsController < Api::V0::BaseController
   private
 
   def patch_data(event_data:)
-    event_data.except(:sent_at).tap do |data|
+    event_data.except(:client_clock_sent_at).tap do |data|
+      # Set the user uuid according to the currently logged in user
       data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
-      data[:occurred_at] = TimeUtil.apply_offset(normalize_at: event_data[:occurred_at], sent_at: event_data[:sent_at])
+
+      # Adjust the client's occurred at time by a device sent at adjustment
+      data[:occurred_at] = TimeUtil.device_adjust(
+        normalize_at: event_data[:client_clock_occurred_at],
+        sent_at: event_data[:client_clock_sent_at]).to_i
     end
   end
 end

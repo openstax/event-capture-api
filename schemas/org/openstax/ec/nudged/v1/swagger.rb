@@ -30,12 +30,12 @@ module Ec::Nudged::V1
         key :type, :string
         key :description, 'The nudge medium (e.g., email).'
       end
-      property :occurred_at do
+      property :client_clock_occurred_at do
         key :type, :string
         key :format, 'date-time'
         key :description, 'The RFC 3339 section 5.6 date-time when nudge actually occurred.'
       end
-      property :sent_at do
+      property :client_clock_sent_at do
         key :type, :string
         key :format, 'date-time'
         key :description, 'The RFC 3339 section 5.6 date-time when nudge event was sent to the server.'
