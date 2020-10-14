@@ -12,6 +12,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
+require_relative '../app/middlewares/request_received_at'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,6 +25,8 @@ module EventCaptureApi
 
     config.eager_load_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join("schemas", "org", "openstax")
+
+    config.middleware.insert 0, RequestReceivedAt
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

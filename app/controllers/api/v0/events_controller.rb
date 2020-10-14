@@ -6,10 +6,10 @@ class Api::V0::EventsController < Api::V0::BaseController
     render(json: error, status: error.status_code) and return if error
 
     inbound_binding.events.each do |event|
-      avro_data = patch_data(event_data: event.data.to_hash)
-      avro_encoded_data = KafkaAvroTurf.instance.encode(avro_data, schema_name: event.data.type)
+      raw_kafka_data = convert_api_data_to_kafka_data(api_data: event.data.to_hash)
+      avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data, schema_name: event.data.type)
 
-      KafkaClient.async_produce(data: avro_encoded_data, topic: event.topic)
+      KafkaClient.async_produce(data: avro_kafka_data, topic: event.topic)
     end
 
     render nothing: true, status: 201
@@ -17,15 +17,16 @@ class Api::V0::EventsController < Api::V0::BaseController
 
   private
 
-  def patch_data(event_data:)
-    event_data.except(:client_clock_sent_at).tap do |data|
+  def convert_api_data_to_kafka_data(api_data:)
+    api_data.except(:client_clock_sent_at, :client_clock_occurred_at).tap do |data|
       # Set the user uuid according to the currently logged in user
       data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
 
       # Adjust the client's occurred at time by a device sent at adjustment
-      data[:occurred_at] = TimeUtil.device_adjust(
-        normalize_at: event_data[:client_clock_occurred_at],
-        sent_at: event_data[:client_clock_sent_at]).to_i
+      data[:occurred_at] = TimeUtil.infer_actual_occurred_at_from_client_timestamp(
+        request_received_at: request.env[:received_at],
+        client_clock_occurred_at: api_data[:client_clock_occurred_at],
+        client_clock_sent_at: api_data[:client_clock_sent_at]).to_i
     end
   end
 end

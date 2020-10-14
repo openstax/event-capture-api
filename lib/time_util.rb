@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class TimeUtil
-
   # Normalize a timestamp to a more accurate time based on an offset of sent time
   # vs now time.
   #
   # Return a unix time (ms since epoch)
   #
-  # see https://images.zenhubusercontent.com/5c75601cce38d251a29ce098/bf41aa5b-c908-4b08-a738-5e940d007170
-  def self.device_adjust(normalize_at:, sent_at:)
-    offset_secs = Time.now - Time.parse(sent_at)
-    Time.parse(normalize_at) - offset_secs
+  # see Designing Data-Intensive Applications by Martin Kleppman, Chapter 11: Stream Processing (p. 471)
+  def self.infer_actual_occurred_at_from_client_timestamp(request_received_at:,
+                                                          client_clock_occurred_at:,
+                                                          client_clock_sent_at:)
+    offset_secs = request_received_at - Time.parse(client_clock_sent_at)
+    Time.parse(client_clock_occurred_at) + offset_secs
   end
 end

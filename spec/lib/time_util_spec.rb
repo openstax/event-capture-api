@@ -3,23 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe TimeUtil do
-  let!(:client_occurred_at) { '2020-10-07T23:30:06+00:00' }
-  let!(:client_sent_at) { '2020-10-07T23:47:06+00:00' }
-  let!(:server_at) { Time.parse('2020-10-07T23:58:06+00:00') }
+  let(:client_occurred_at) { Time.at(42).iso8601 }
+  let(:client_sent_at) { Time.at(45).iso8601 }
+  let(:server_at) { Time.at(38) }
 
   before do
     allow(Time).to receive(:now).and_return(server_at)
   end
 
-  describe '.device_adjust' do
-    let(:expected_offset_rfc3339) { '2020-10-07T23:19:06+00:00' }
-    let(:expected_offset_unix) { 1602112746 }
+  describe '.infer_actual_occurred_at_from_client_timestamps' do
+    subject(:actual_occurred_at_time) {
+      described_class.infer_actual_occurred_at_from_client_timestamp(
+        request_received_at: server_at,
+        client_clock_occurred_at: client_occurred_at,
+        client_clock_sent_at: client_sent_at)
+    }
 
-    subject(:offset) { described_class.device_adjust(normalize_at: client_occurred_at, sent_at: client_sent_at) }
-
-    it 'correctly offsets the normalized time' do
-      expect(offset.to_i).to eq expected_offset_unix
-      expect(offset.rfc3339).to eq expected_offset_rfc3339
+    it 'calculates the actual occurred at time based on client server offset' do
+      expect(actual_occurred_at_time).to eq Time.at(35)
     end
   end
 end
