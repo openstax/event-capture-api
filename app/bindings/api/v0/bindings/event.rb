@@ -17,22 +17,17 @@ module Api::V0::Bindings
     # The event payload object.  Will be of a type that lives in a swagger file inside the schemas directory.
     attr_accessor :data
 
-    # The kafka topic
-    attr_accessor :topic
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'data' => :'data',
-        :'topic' => :'topic'
+        :'data' => :'data'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Object',
-        :'topic' => :'String'
+        :'data' => :'Object'
       }
     end
 
@@ -46,10 +41,6 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'data')
         self.data = attributes[:'data']
-      end
-
-      if attributes.has_key?(:'topic')
-        self.topic = attributes[:'topic']
       end
     end
 
@@ -71,8 +62,7 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          data == o.data &&
-          topic == o.topic
+          data == o.data
     end
 
     # @see the `==` method
@@ -84,7 +74,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, topic].hash
+      [data].hash
     end
 
     # Builds the object from hash

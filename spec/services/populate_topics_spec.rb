@@ -3,29 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe PopulateTopics do
-  let(:topics_file_contents) do
-    { 'topics' => [
-      {
-        'name' => 'foo',
-        'schemas' => [
-                'org.openstax.ec.foo1',
-                'org.openstax.ec.foo2'
-              ],
-        'config' => {
-          'replication'=> 3
-        }
-      },
-      {
-        'name' => 'bar',
-        'schemas' => [
-                'org.openstax.ec.bar1',
-                'org.openstax.ec.bar2'
-              ],
-        'config' => {
-          'replication' => 3
-        }
-      } ]
-    }
+  let(:topics) do
+    [ 'foo', 'bar' ]
   end
 
   let(:mock_kafka) {
@@ -37,8 +16,8 @@ RSpec.describe PopulateTopics do
   }
 
   before do
-    allow(YAML).to receive(:load).and_return(topics_file_contents)
     allow(OxKafka).to receive(:instance).and_return(mock_kafka)
+    allow_any_instance_of(TopicsConfig).to receive(:uniq_topic_names).and_return(topics)
   end
 
   describe '#topics_to_add' do

@@ -9,13 +9,20 @@ class Api::V0::EventsController < Api::V0::BaseController
       raw_kafka_data = convert_api_data_to_kafka_data(api_data: event.data.to_hash)
       avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data, schema_name: event.data.type)
 
-      KafkaClient.async_produce(data: avro_kafka_data, topic: event.topic)
+      kafka_topic = topics_from_cofig[event.data.type]
+      raise TopicNotFound unless kafka_topic.present?
+
+      KafkaClient.async_produce(data: avro_kafka_data, topic: kafka_topic)
     end
 
     render nothing: true, status: 201
   end
 
   private
+
+  def topics_from_cofig
+    @topics_from_config ||= TopicsConfig.new.topic_names_by_schema
+  end
 
   def convert_api_data_to_kafka_data(api_data:)
     api_data.except(:client_clock_sent_at, :client_clock_occurred_at).tap do |data|
