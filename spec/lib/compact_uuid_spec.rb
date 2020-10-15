@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'CompactUuid' do
+RSpec.describe CompactUuid do
   let!(:uuid) { SecureRandom.uuid }
 
   describe '.pack' do

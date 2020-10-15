@@ -16,7 +16,8 @@ RSpec.describe Api::V0::EventsController, type: :request do
         "context": "bookuuid",
         "flavor": "full-screen-v2",
         "medium": "in-app",
-        "occurred_at_time_in_browser": "1599173657",
+        "client_clock_occurred_at": "2020-10-06T18:14:22Z",
+        "client_clock_sent_at": "2020-10-06T18:14:22Z",
         'type': 'org.openstax.ec.nudged_v1',
         'version': '1'
       }
@@ -29,7 +30,8 @@ RSpec.describe Api::V0::EventsController, type: :request do
         "context": "foo uuid",
         "flavor": "full-screen-v2",
         "medium": "in-app",
-        "occurred_at_time_in_browser": "1599173657",
+        "client_clock_occurred_at": "2020-10-06T18:14:22Z",
+        "client_clock_sent_at": "2020-10-06T18:14:22Z",
         'type': 'org.openstax.ec.nudged_v1',
         'version': '1'
       }
@@ -63,7 +65,6 @@ RSpec.describe Api::V0::EventsController, type: :request do
 
     it 'successfully calls the API and sends a data message to kafka' do
       expect(KafkaClient).to receive(:async_produce).twice
-
       post api_v0_events_path, params: attributes
 
       expect(response).to have_http_status(201)
