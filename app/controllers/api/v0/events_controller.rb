@@ -23,7 +23,7 @@ class Api::V0::EventsController < Api::V0::BaseController
       data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
 
       # Adjust the client's occurred at time by a device sent at adjustment
-      data[:occurred_at] = TimeUtil.infer_actual_occurred_at_from_client_timestamp(
+      data[:occurred_at] = TimeUtil.infer_actual_occurred_at_from_client_timestamps(
         request_received_at: request.env[:received_at],
         client_clock_occurred_at: api_data[:client_clock_occurred_at],
         client_clock_sent_at: api_data[:client_clock_sent_at]).to_i

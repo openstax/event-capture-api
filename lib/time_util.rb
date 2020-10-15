@@ -7,9 +7,9 @@ class TimeUtil
   # Return a unix time (ms since epoch)
   #
   # see Designing Data-Intensive Applications by Martin Kleppman, Chapter 11: Stream Processing (p. 471)
-  def self.infer_actual_occurred_at_from_client_timestamp(request_received_at:,
-                                                          client_clock_occurred_at:,
-                                                          client_clock_sent_at:)
+  def self.infer_actual_occurred_at_from_client_timestamps(request_received_at:,
+                                                           client_clock_occurred_at:,
+                                                           client_clock_sent_at:)
     offset_secs = request_received_at - Time.parse(client_clock_sent_at)
     Time.parse(client_clock_occurred_at) + offset_secs
   end

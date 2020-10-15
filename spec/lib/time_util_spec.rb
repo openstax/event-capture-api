@@ -13,7 +13,7 @@ RSpec.describe TimeUtil do
 
   describe '.infer_actual_occurred_at_from_client_timestamps' do
     subject(:actual_occurred_at_time) {
-      described_class.infer_actual_occurred_at_from_client_timestamp(
+      described_class.infer_actual_occurred_at_from_client_timestamps(
         request_received_at: server_at,
         client_clock_occurred_at: client_occurred_at,
         client_clock_sent_at: client_sent_at)

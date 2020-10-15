@@ -4,7 +4,7 @@ module Ec::Nudged::V1
     include OpenStax::Swagger::SwaggerBlocksExtensions
 
     swagger_schema :NudgedV1 do
-      key :required, [:user_uuid, :app, :target, :context, :flavor, :medium, :occurred_at, :sent_at]
+      key :required, [:user_uuid, :app, :target, :context, :flavor, :medium, :client_clock_occurred_at, :client_clock_sent_at, :type]
       property :user_uuid do
         key :type, :object
         key :format, 'uuid'

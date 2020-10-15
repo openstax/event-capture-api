@@ -166,6 +166,18 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "medium", medium cannot be nil.')
       end
 
+      if @client_clock_occurred_at.nil?
+        invalid_properties.push('invalid value for "client_clock_occurred_at", client_clock_occurred_at cannot be nil.')
+      end
+
+      if @client_clock_sent_at.nil?
+        invalid_properties.push('invalid value for "client_clock_sent_at", client_clock_sent_at cannot be nil.')
+      end
+
+      if @type.nil?
+        invalid_properties.push('invalid value for "type", type cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -178,6 +190,9 @@ module Api::V0::Bindings
       return false if @context.nil?
       return false if @flavor.nil?
       return false if @medium.nil?
+      return false if @client_clock_occurred_at.nil?
+      return false if @client_clock_sent_at.nil?
+      return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
       return false unless type_validator.valid?(@type)
       true
