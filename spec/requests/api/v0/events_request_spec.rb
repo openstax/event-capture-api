@@ -42,11 +42,9 @@ RSpec.describe Api::V0::EventsController, type: :request do
         'events': [
           {
             'data': data1,
-           'topic': 'exercises'
           },
           {
             'data': data2,
-            'topic': 'exercises'
           }
         ]
       }
@@ -57,10 +55,13 @@ RSpec.describe Api::V0::EventsController, type: :request do
         'events': [
           {
             'data': data1 ,
-            'topic': 'exercises'
           }
         ]
       }
+    end
+
+    before do
+      allow(TopicsConfig).to receive(:get_topic_for_event).and_return('foo_topic')
     end
 
     it 'successfully calls the API and sends a data message to kafka' do

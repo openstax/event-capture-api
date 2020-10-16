@@ -5,19 +5,11 @@ class PopulateTopics
   end
 
   def topics_to_add
-    ox_topics - kafka_topics
+    TopicsConfig.new.uniq_topic_names - existing_topics
   end
 
-  def kafka_topics
-    @kafka_topics ||= begin
-      OxKafka.instance.topics
-    end
-  end
-
-  def ox_topics
-    @ox_topics ||= begin
-      topics_from_yml
-    end
+  def existing_topics
+    @existing_topics ||= OxKafka.instance.topics
   end
 
   private
@@ -26,11 +18,5 @@ class PopulateTopics
     topics_to_add.each do |topic|
       OxKafka.instance.create_topic(topic)
     end
-  end
-
-  def topics_from_yml
-    topics_path = Rails.root.join('config','topics.yml')
-    topics = YAML.load(File.read(topics_path))
-    topics['topics'].map  {|topic| topic['name'] }
   end
 end

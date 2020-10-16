@@ -7,10 +7,6 @@ class Api::V0::EventsSwagger
       key :type, :object
       key :description, 'The event payload object.  Will be of a type that lives in a swagger file inside the schemas directory.'
     end
-    property :topic do
-      key :type, :string
-      key :description, 'The kafka topic'
-    end
   end
 
   swagger_schema :Events do
