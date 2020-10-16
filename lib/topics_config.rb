@@ -12,6 +12,11 @@ class TopicsConfig
     @uniq_topic_names = @topic_names_by_schema.values.uniq
   end
 
+  def self.get_topic_for_event(event)
+    @topics_from_config ||= TopicsConfig.new.topic_names_by_schema
+    @topics_from_config[event.data.type] || raise(TopicNotFound)
+  end
+
   private
 
   def data_from_config

@@ -5,13 +5,11 @@ class PopulateTopics
   end
 
   def topics_to_add
-    TopicsConfig.new.uniq_topic_names - kafka_topics
+    TopicsConfig.new.uniq_topic_names - existing_topics
   end
 
-  def kafka_topics
-    @kafka_topics ||= begin
-      OxKafka.instance.topics
-    end
+  def existing_topics
+    @existing_topics ||= OxKafka.instance.topics
   end
 
   private
