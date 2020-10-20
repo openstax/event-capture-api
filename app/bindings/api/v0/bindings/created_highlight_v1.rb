@@ -13,12 +13,18 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class AccessStudyguideV1
+  class CreatedHighlightV1
     # The User uuid.  Identifies the user in accounts.
     attr_accessor :user_uuid
 
-    # The book or page id.
-    attr_accessor :page_id
+    # The highlight contents.
+    attr_accessor :contents
+
+    # The highlight location (e.g., book uuid or anchor).
+    attr_accessor :location
+
+    # The highlight color.
+    attr_accessor :color
 
     # The RFC 3339 section 5.6 date-time when nudge actually occurred.
     attr_accessor :client_clock_occurred_at
@@ -55,7 +61,9 @@ module Api::V0::Bindings
     def self.attribute_map
       {
         :'user_uuid' => :'user_uuid',
-        :'page_id' => :'page_id',
+        :'contents' => :'contents',
+        :'location' => :'location',
+        :'color' => :'color',
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type'
@@ -66,7 +74,9 @@ module Api::V0::Bindings
     def self.swagger_types
       {
         :'user_uuid' => :'Object',
-        :'page_id' => :'String',
+        :'contents' => :'String',
+        :'location' => :'String',
+        :'color' => :'String',
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String'
@@ -85,8 +95,16 @@ module Api::V0::Bindings
         self.user_uuid = attributes[:'user_uuid']
       end
 
-      if attributes.has_key?(:'page_id')
-        self.page_id = attributes[:'page_id']
+      if attributes.has_key?(:'contents')
+        self.contents = attributes[:'contents']
+      end
+
+      if attributes.has_key?(:'location')
+        self.location = attributes[:'location']
+      end
+
+      if attributes.has_key?(:'color')
+        self.color = attributes[:'color']
       end
 
       if attributes.has_key?(:'client_clock_occurred_at')
@@ -110,10 +128,6 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
       end
 
-      if @page_id.nil?
-        invalid_properties.push('invalid value for "page_id", page_id cannot be nil.')
-      end
-
       if @client_clock_occurred_at.nil?
         invalid_properties.push('invalid value for "client_clock_occurred_at", client_clock_occurred_at cannot be nil.')
       end
@@ -133,11 +147,10 @@ module Api::V0::Bindings
     # @return true if the model is valid
     def valid?
       return false if @user_uuid.nil?
-      return false if @page_id.nil?
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1', 'org.openstax.ec.access_studyguide_v1'])
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
       return false unless type_validator.valid?(@type)
       true
     end
@@ -145,7 +158,7 @@ module Api::V0::Bindings
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1', 'org.openstax.ec.access_studyguide_v1'])
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
       unless validator.valid?(type)
         fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
       end
@@ -158,7 +171,9 @@ module Api::V0::Bindings
       return true if self.equal?(o)
       self.class == o.class &&
           user_uuid == o.user_uuid &&
-          page_id == o.page_id &&
+          contents == o.contents &&
+          location == o.location &&
+          color == o.color &&
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type
@@ -173,7 +188,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [user_uuid, page_id, client_clock_occurred_at, client_clock_sent_at, type].hash
+      [user_uuid, contents, location, color, client_clock_occurred_at, client_clock_sent_at, type].hash
     end
 
     # Builds the object from hash
