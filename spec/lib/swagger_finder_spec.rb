@@ -19,7 +19,7 @@ RSpec.describe SwaggerFinder do
     subject(:classes) { described_class.new.classes }
 
     it 'finds the classes' do
-      expect(classes.first.to_s.include?('Nudged::V1::Swagger')).to be_truthy
+      expect(classes).to include(Ec::Nudged::V1::Swagger)
     end
   end
 end
