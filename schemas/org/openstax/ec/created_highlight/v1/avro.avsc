@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "create_highlight_v1",
+  "name": "created_highlight_v1",
   "namespace": "org.openstax.ec",
   "fields": [
     {

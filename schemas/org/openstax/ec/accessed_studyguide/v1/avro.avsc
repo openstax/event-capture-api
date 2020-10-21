@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "access_studyguide_v1",
+  "name": "accessed_studyguide_v1",
   "namespace": "org.openstax.ec",
   "fields": [
     {
