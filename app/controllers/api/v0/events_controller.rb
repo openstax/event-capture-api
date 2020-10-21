@@ -6,7 +6,11 @@ class Api::V0::EventsController < Api::V0::BaseController
     render(json: error, status: error.status_code) and return if error
 
     inbound_binding.events.each do |event|
+      raw_kafka_data = convert_api_data_to_kafka_data(api_data: event.data.to_hash)
+      avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data, schema_name: event.data.type)
 
+      kafka_topic = TopicsConfig.get_topic_for_event(event)
+      KafkaClient.async_produce(data: avro_kafka_data, topic: kafka_topic)
     end
 
     render nothing: true, status: 201
