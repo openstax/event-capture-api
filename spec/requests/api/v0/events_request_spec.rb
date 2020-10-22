@@ -62,6 +62,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
 
     before do
       allow(TopicsConfig).to receive(:get_topic_for_event).and_return('foo_topic')
+      allow(KafkaAvroTurf).to receive(:instance).and_return(double({encode: nil}))
     end
 
     it 'successfully calls the API and sends a data message to kafka' do
