@@ -1,10 +1,9 @@
 module Ec::Nudged::V1
   class Swagger
-    include ::Swagger::Blocks
-    include OpenStax::Swagger::SwaggerBlocksExtensions
+    include SwaggerEventSchema1
 
-    swagger_schema :NudgedV1 do
-      key :required, [:user_uuid, :app, :target, :context, :flavor, :medium, :client_clock_occurred_at, :client_clock_sent_at, :type]
+    swagger_event_schema(:NudgedV1, type: 'org.openstax.ec.nudged_v1') do
+      key :required, [:user_uuid, :app, :target, :context, :flavor, :medium]
       property :user_uuid do
         key :type, :object
         key :format, 'uuid'
@@ -29,21 +28,6 @@ module Ec::Nudged::V1
       property :medium do
         key :type, :string
         key :description, 'The nudge medium (e.g., email).'
-      end
-      property :client_clock_occurred_at do
-        key :type, :string
-        key :format, 'date-time'
-        key :description, 'The RFC 3339 section 5.6 date-time when nudge actually occurred.'
-      end
-      property :client_clock_sent_at do
-        key :type, :string
-        key :format, 'date-time'
-        key :description, 'The RFC 3339 section 5.6 date-time when nudge event was sent to the server.'
-      end
-      property :type do
-        key :type, :string
-        key :description, 'The data\'s type.'
-        key :enum, ['org.openstax.ec.nudged_v1']
       end
     end
   end
