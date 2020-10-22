@@ -23,11 +23,11 @@ module Api::V0::Bindings
     # The data's type.
     attr_accessor :type
 
-    # The User uuid.  Identifies the user in accounts.
-    attr_accessor :user_uuid
-
-    # The book or page id.
+    # The page id.
     attr_accessor :page_id
+
+    # The book id.
+    attr_accessor :book_id
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -57,8 +57,8 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type',
-        :'user_uuid' => :'user_uuid',
-        :'page_id' => :'page_id'
+        :'page_id' => :'page_id',
+        :'book_id' => :'book_id'
       }
     end
 
@@ -68,8 +68,8 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String',
-        :'user_uuid' => :'Object',
-        :'page_id' => :'String'
+        :'page_id' => :'String',
+        :'book_id' => :'String'
       }
     end
 
@@ -93,12 +93,12 @@ module Api::V0::Bindings
         self.type = attributes[:'type']
       end
 
-      if attributes.has_key?(:'user_uuid')
-        self.user_uuid = attributes[:'user_uuid']
-      end
-
       if attributes.has_key?(:'page_id')
         self.page_id = attributes[:'page_id']
+      end
+
+      if attributes.has_key?(:'book_id')
+        self.book_id = attributes[:'book_id']
       end
     end
 
@@ -118,12 +118,12 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
-      if @user_uuid.nil?
-        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
-      end
-
       if @page_id.nil?
         invalid_properties.push('invalid value for "page_id", page_id cannot be nil.')
+      end
+
+      if @book_id.nil?
+        invalid_properties.push('invalid value for "book_id", book_id cannot be nil.')
       end
 
       invalid_properties
@@ -137,8 +137,8 @@ module Api::V0::Bindings
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
       return false unless type_validator.valid?(@type)
-      return false if @user_uuid.nil?
       return false if @page_id.nil?
+      return false if @book_id.nil?
       true
     end
 
@@ -160,8 +160,8 @@ module Api::V0::Bindings
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type &&
-          user_uuid == o.user_uuid &&
-          page_id == o.page_id
+          page_id == o.page_id &&
+          book_id == o.book_id
     end
 
     # @see the `==` method
@@ -173,7 +173,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, user_uuid, page_id].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, page_id, book_id].hash
     end
 
     # Builds the object from hash

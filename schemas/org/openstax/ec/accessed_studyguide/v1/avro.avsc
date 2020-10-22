@@ -17,6 +17,10 @@
       "type": "string"
     },
     {
+      "name": "book_id",
+      "type": "string"
+    },
+    {
       "name": "occurred_at",
       "type": {
         "type": "long",

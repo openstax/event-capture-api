@@ -23,9 +23,6 @@ module Api::V0::Bindings
     # The data's type.
     attr_accessor :type
 
-    # The User uuid.  Identifies the user in accounts.
-    attr_accessor :user_uuid
-
     # The highlight contents.
     attr_accessor :contents
 
@@ -63,7 +60,6 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type',
-        :'user_uuid' => :'user_uuid',
         :'contents' => :'contents',
         :'location' => :'location',
         :'color' => :'color'
@@ -76,7 +72,6 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String',
-        :'user_uuid' => :'Object',
         :'contents' => :'String',
         :'location' => :'String',
         :'color' => :'String'
@@ -101,10 +96,6 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'type')
         self.type = attributes[:'type']
-      end
-
-      if attributes.has_key?(:'user_uuid')
-        self.user_uuid = attributes[:'user_uuid']
       end
 
       if attributes.has_key?(:'contents')
@@ -136,10 +127,6 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
-      if @user_uuid.nil?
-        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
-      end
-
       if @contents.nil?
         invalid_properties.push('invalid value for "contents", contents cannot be nil.')
       end
@@ -163,7 +150,6 @@ module Api::V0::Bindings
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v1'])
       return false unless type_validator.valid?(@type)
-      return false if @user_uuid.nil?
       return false if @contents.nil?
       return false if @location.nil?
       return false if @color.nil?
@@ -188,7 +174,6 @@ module Api::V0::Bindings
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type &&
-          user_uuid == o.user_uuid &&
           contents == o.contents &&
           location == o.location &&
           color == o.color
@@ -203,7 +188,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, user_uuid, contents, location, color].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, contents, location, color].hash
     end
 
     # Builds the object from hash

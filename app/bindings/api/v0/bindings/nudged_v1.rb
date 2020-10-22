@@ -23,9 +23,6 @@ module Api::V0::Bindings
     # The data's type.
     attr_accessor :type
 
-    # The User uuid.  Identifies the user in accounts.
-    attr_accessor :user_uuid
-
     # The app sourcing the nudge (e.g., tutor.
     attr_accessor :app
 
@@ -69,7 +66,6 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type',
-        :'user_uuid' => :'user_uuid',
         :'app' => :'app',
         :'target' => :'target',
         :'context' => :'context',
@@ -84,7 +80,6 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String',
-        :'user_uuid' => :'Object',
         :'app' => :'String',
         :'target' => :'String',
         :'context' => :'String',
@@ -111,10 +106,6 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'type')
         self.type = attributes[:'type']
-      end
-
-      if attributes.has_key?(:'user_uuid')
-        self.user_uuid = attributes[:'user_uuid']
       end
 
       if attributes.has_key?(:'app')
@@ -154,10 +145,6 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
-      if @user_uuid.nil?
-        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
-      end
-
       if @app.nil?
         invalid_properties.push('invalid value for "app", app cannot be nil.')
       end
@@ -189,7 +176,6 @@ module Api::V0::Bindings
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
       return false unless type_validator.valid?(@type)
-      return false if @user_uuid.nil?
       return false if @app.nil?
       return false if @target.nil?
       return false if @context.nil?
@@ -216,7 +202,6 @@ module Api::V0::Bindings
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type &&
-          user_uuid == o.user_uuid &&
           app == o.app &&
           target == o.target &&
           context == o.context &&
@@ -233,7 +218,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, user_uuid, app, target, context, flavor, medium].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, app, target, context, flavor, medium].hash
     end
 
     # Builds the object from hash

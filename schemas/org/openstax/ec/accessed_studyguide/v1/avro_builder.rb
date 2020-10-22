@@ -6,5 +6,6 @@ import 'types/date_time'
 record :accessed_studyguide_v1 do
   required :user_uuid, :uuid
   required :page_id, :string
+  required :book_id, :string
   required :occurred_at, :timestamp
 end

@@ -3,12 +3,7 @@ module Ec::Nudged::V1
     include SwaggerEventSchema1
 
     swagger_event_schema(:NudgedV1, type: 'org.openstax.ec.nudged_v1') do
-      key :required, [:user_uuid, :app, :target, :context, :flavor, :medium]
-      property :user_uuid do
-        key :type, :object
-        key :format, 'uuid'
-        key :description, 'The User uuid.  Identifies the user in accounts.'
-      end
+      key :required, [:app, :target, :context, :flavor, :medium]
       property :app do
         key :type, :string
         key :description, 'The app sourcing the nudge (e.g., tutor.'
