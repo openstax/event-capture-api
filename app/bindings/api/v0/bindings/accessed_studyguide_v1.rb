@@ -14,12 +14,6 @@ require 'date'
 
 module Api::V0::Bindings
   class AccessedStudyguideV1
-    # The User uuid.  Identifies the user in accounts.
-    attr_accessor :user_uuid
-
-    # The book or page id.
-    attr_accessor :page_id
-
     # The RFC 3339 section 5.6 date-time when nudge actually occurred.
     attr_accessor :client_clock_occurred_at
 
@@ -28,6 +22,12 @@ module Api::V0::Bindings
 
     # The data's type.
     attr_accessor :type
+
+    # The User uuid.  Identifies the user in accounts.
+    attr_accessor :user_uuid
+
+    # The book or page id.
+    attr_accessor :page_id
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -54,22 +54,22 @@ module Api::V0::Bindings
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'user_uuid' => :'user_uuid',
-        :'page_id' => :'page_id',
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
-        :'type' => :'type'
+        :'type' => :'type',
+        :'user_uuid' => :'user_uuid',
+        :'page_id' => :'page_id'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'user_uuid' => :'Object',
-        :'page_id' => :'String',
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
-        :'type' => :'String'
+        :'type' => :'String',
+        :'user_uuid' => :'Object',
+        :'page_id' => :'String'
       }
     end
 
@@ -80,14 +80,6 @@ module Api::V0::Bindings
 
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
-
-      if attributes.has_key?(:'user_uuid')
-        self.user_uuid = attributes[:'user_uuid']
-      end
-
-      if attributes.has_key?(:'page_id')
-        self.page_id = attributes[:'page_id']
-      end
 
       if attributes.has_key?(:'client_clock_occurred_at')
         self.client_clock_occurred_at = attributes[:'client_clock_occurred_at']
@@ -100,20 +92,20 @@ module Api::V0::Bindings
       if attributes.has_key?(:'type')
         self.type = attributes[:'type']
       end
+
+      if attributes.has_key?(:'user_uuid')
+        self.user_uuid = attributes[:'user_uuid']
+      end
+
+      if attributes.has_key?(:'page_id')
+        self.page_id = attributes[:'page_id']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @user_uuid.nil?
-        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
-      end
-
-      if @page_id.nil?
-        invalid_properties.push('invalid value for "page_id", page_id cannot be nil.')
-      end
-
       if @client_clock_occurred_at.nil?
         invalid_properties.push('invalid value for "client_clock_occurred_at", client_clock_occurred_at cannot be nil.')
       end
@@ -126,26 +118,34 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
+      if @user_uuid.nil?
+        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
+      end
+
+      if @page_id.nil?
+        invalid_properties.push('invalid value for "page_id", page_id cannot be nil.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @user_uuid.nil?
-      return false if @page_id.nil?
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1', 'org.openstax.ec.access_studyguide_v1'])
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
       return false unless type_validator.valid?(@type)
+      return false if @user_uuid.nil?
+      return false if @page_id.nil?
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1', 'org.openstax.ec.access_studyguide_v1'])
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
       unless validator.valid?(type)
         fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
       end
@@ -157,11 +157,11 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          user_uuid == o.user_uuid &&
-          page_id == o.page_id &&
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
-          type == o.type
+          type == o.type &&
+          user_uuid == o.user_uuid &&
+          page_id == o.page_id
     end
 
     # @see the `==` method
@@ -173,7 +173,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [user_uuid, page_id, client_clock_occurred_at, client_clock_sent_at, type].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, user_uuid, page_id].hash
     end
 
     # Builds the object from hash

@@ -14,6 +14,15 @@ require 'date'
 
 module Api::V0::Bindings
   class CreatedHighlightV1
+    # The RFC 3339 section 5.6 date-time when nudge actually occurred.
+    attr_accessor :client_clock_occurred_at
+
+    # The RFC 3339 section 5.6 date-time when nudge event was sent to the server.
+    attr_accessor :client_clock_sent_at
+
+    # The data's type.
+    attr_accessor :type
+
     # The User uuid.  Identifies the user in accounts.
     attr_accessor :user_uuid
 
@@ -25,15 +34,6 @@ module Api::V0::Bindings
 
     # The highlight color.
     attr_accessor :color
-
-    # The RFC 3339 section 5.6 date-time when nudge actually occurred.
-    attr_accessor :client_clock_occurred_at
-
-    # The RFC 3339 section 5.6 date-time when nudge event was sent to the server.
-    attr_accessor :client_clock_sent_at
-
-    # The data's type.
-    attr_accessor :type
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -60,26 +60,26 @@ module Api::V0::Bindings
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'client_clock_occurred_at' => :'client_clock_occurred_at',
+        :'client_clock_sent_at' => :'client_clock_sent_at',
+        :'type' => :'type',
         :'user_uuid' => :'user_uuid',
         :'contents' => :'contents',
         :'location' => :'location',
-        :'color' => :'color',
-        :'client_clock_occurred_at' => :'client_clock_occurred_at',
-        :'client_clock_sent_at' => :'client_clock_sent_at',
-        :'type' => :'type'
+        :'color' => :'color'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
+        :'client_clock_occurred_at' => :'DateTime',
+        :'client_clock_sent_at' => :'DateTime',
+        :'type' => :'String',
         :'user_uuid' => :'Object',
         :'contents' => :'String',
         :'location' => :'String',
-        :'color' => :'String',
-        :'client_clock_occurred_at' => :'DateTime',
-        :'client_clock_sent_at' => :'DateTime',
-        :'type' => :'String'
+        :'color' => :'String'
       }
     end
 
@@ -90,6 +90,18 @@ module Api::V0::Bindings
 
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
+
+      if attributes.has_key?(:'client_clock_occurred_at')
+        self.client_clock_occurred_at = attributes[:'client_clock_occurred_at']
+      end
+
+      if attributes.has_key?(:'client_clock_sent_at')
+        self.client_clock_sent_at = attributes[:'client_clock_sent_at']
+      end
+
+      if attributes.has_key?(:'type')
+        self.type = attributes[:'type']
+      end
 
       if attributes.has_key?(:'user_uuid')
         self.user_uuid = attributes[:'user_uuid']
@@ -106,28 +118,12 @@ module Api::V0::Bindings
       if attributes.has_key?(:'color')
         self.color = attributes[:'color']
       end
-
-      if attributes.has_key?(:'client_clock_occurred_at')
-        self.client_clock_occurred_at = attributes[:'client_clock_occurred_at']
-      end
-
-      if attributes.has_key?(:'client_clock_sent_at')
-        self.client_clock_sent_at = attributes[:'client_clock_sent_at']
-      end
-
-      if attributes.has_key?(:'type')
-        self.type = attributes[:'type']
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @user_uuid.nil?
-        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
-      end
-
       if @client_clock_occurred_at.nil?
         invalid_properties.push('invalid value for "client_clock_occurred_at", client_clock_occurred_at cannot be nil.')
       end
@@ -140,25 +136,44 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
+      if @user_uuid.nil?
+        invalid_properties.push('invalid value for "user_uuid", user_uuid cannot be nil.')
+      end
+
+      if @contents.nil?
+        invalid_properties.push('invalid value for "contents", contents cannot be nil.')
+      end
+
+      if @location.nil?
+        invalid_properties.push('invalid value for "location", location cannot be nil.')
+      end
+
+      if @color.nil?
+        invalid_properties.push('invalid value for "color", color cannot be nil.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @user_uuid.nil?
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v1'])
       return false unless type_validator.valid?(@type)
+      return false if @user_uuid.nil?
+      return false if @contents.nil?
+      return false if @location.nil?
+      return false if @color.nil?
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v1'])
       unless validator.valid?(type)
         fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
       end
@@ -170,13 +185,13 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          client_clock_occurred_at == o.client_clock_occurred_at &&
+          client_clock_sent_at == o.client_clock_sent_at &&
+          type == o.type &&
           user_uuid == o.user_uuid &&
           contents == o.contents &&
           location == o.location &&
-          color == o.color &&
-          client_clock_occurred_at == o.client_clock_occurred_at &&
-          client_clock_sent_at == o.client_clock_sent_at &&
-          type == o.type
+          color == o.color
     end
 
     # @see the `==` method
@@ -188,7 +203,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [user_uuid, contents, location, color, client_clock_occurred_at, client_clock_sent_at, type].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, user_uuid, contents, location, color].hash
     end
 
     # Builds the object from hash
