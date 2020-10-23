@@ -31,8 +31,6 @@ class AsyncKafkaProducer
   end
 end
 
-at_exit { AsyncKafkaProducer.instance.shutdown }
-
 class KafkaAvroTurf
   def self.instance
     @@instance ||=
@@ -49,6 +47,8 @@ class KafkaAvroTurf
   end
 end
 
+# Initialize external clients after puma forks, but before it spawns threads
+
 # This is important because we are using the puma middleware, which uses both a
 # forking process model and threads to scale.
 
@@ -63,5 +63,12 @@ end
 
 # For #2, we're defining the class singletons in an initializer, we need to
 # instantiate the singleton here, at rails boot time, before the request cycles.
-AsyncKafkaProducer.instance
-KafkaAvroTurf.instance
+on_worker_boot do
+  AsyncKafkaProducer.instance
+
+  KafkaAvroTurf.instance
+end
+
+on_worker_shudown do
+  AsyncKafkaProducer.instance.shutdown
+end
