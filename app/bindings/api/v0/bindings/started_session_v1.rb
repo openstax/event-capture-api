@@ -13,7 +13,7 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class AccessedStudyguideV1
+  class StartedSessionV1
     # The RFC 3339 section 5.6 date-time when nudge actually occurred.
     attr_accessor :client_clock_occurred_at
 
@@ -29,11 +29,14 @@ module Api::V0::Bindings
     # The session order (0, 1, 2, 3...).
     attr_accessor :session_order
 
-    # The page id.
-    attr_accessor :page_id
+    # The session IP address.
+    attr_accessor :ip_address
 
-    # The book id.
-    attr_accessor :book_id
+    # The referrer.
+    attr_accessor :referrer
+
+    # The user agent.
+    attr_accessor :user_agent
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -65,8 +68,9 @@ module Api::V0::Bindings
         :'type' => :'type',
         :'session_uuid' => :'session_uuid',
         :'session_order' => :'session_order',
-        :'page_id' => :'page_id',
-        :'book_id' => :'book_id'
+        :'ip_address' => :'ip_address',
+        :'referrer' => :'referrer',
+        :'user_agent' => :'user_agent'
       }
     end
 
@@ -78,8 +82,9 @@ module Api::V0::Bindings
         :'type' => :'String',
         :'session_uuid' => :'String',
         :'session_order' => :'Integer',
-        :'page_id' => :'String',
-        :'book_id' => :'String'
+        :'ip_address' => :'String',
+        :'referrer' => :'String',
+        :'user_agent' => :'String'
       }
     end
 
@@ -111,12 +116,16 @@ module Api::V0::Bindings
         self.session_order = attributes[:'session_order']
       end
 
-      if attributes.has_key?(:'page_id')
-        self.page_id = attributes[:'page_id']
+      if attributes.has_key?(:'ip_address')
+        self.ip_address = attributes[:'ip_address']
       end
 
-      if attributes.has_key?(:'book_id')
-        self.book_id = attributes[:'book_id']
+      if attributes.has_key?(:'referrer')
+        self.referrer = attributes[:'referrer']
+      end
+
+      if attributes.has_key?(:'user_agent')
+        self.user_agent = attributes[:'user_agent']
       end
     end
 
@@ -144,12 +153,16 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
       end
 
-      if @page_id.nil?
-        invalid_properties.push('invalid value for "page_id", page_id cannot be nil.')
+      if @ip_address.nil?
+        invalid_properties.push('invalid value for "ip_address", ip_address cannot be nil.')
       end
 
-      if @book_id.nil?
-        invalid_properties.push('invalid value for "book_id", book_id cannot be nil.')
+      if @referrer.nil?
+        invalid_properties.push('invalid value for "referrer", referrer cannot be nil.')
+      end
+
+      if @user_agent.nil?
+        invalid_properties.push('invalid value for "user_agent", user_agent cannot be nil.')
       end
 
       invalid_properties
@@ -161,19 +174,20 @@ module Api::V0::Bindings
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.started_session_v1'])
       return false unless type_validator.valid?(@type)
       return false if @session_uuid.nil?
       return false if @session_order.nil?
-      return false if @page_id.nil?
-      return false if @book_id.nil?
+      return false if @ip_address.nil?
+      return false if @referrer.nil?
+      return false if @user_agent.nil?
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.started_session_v1'])
       unless validator.valid?(type)
         fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
       end
@@ -190,8 +204,9 @@ module Api::V0::Bindings
           type == o.type &&
           session_uuid == o.session_uuid &&
           session_order == o.session_order &&
-          page_id == o.page_id &&
-          book_id == o.book_id
+          ip_address == o.ip_address &&
+          referrer == o.referrer &&
+          user_agent == o.user_agent
     end
 
     # @see the `==` method
@@ -203,7 +218,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, page_id, book_id].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, ip_address, referrer, user_agent].hash
     end
 
     # Builds the object from hash

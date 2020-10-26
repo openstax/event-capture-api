@@ -15,4 +15,6 @@ record :created_highlight_v1 do
   required :location_strategies, :string
   required :scope_id, :string
   required :occurred_at, :timestamp
+  required :session_uuid, :string
+  required :session_order, :int
 end

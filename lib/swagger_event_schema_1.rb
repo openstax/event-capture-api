@@ -51,6 +51,14 @@ module SwaggerEventSchema1
           key :description, 'The data\'s type.'
           key :enum, [type]
         end
+        property :session_uuid do
+          key :type, :string
+          key :description, 'The session uuid.'
+        end
+        property :session_order do
+          key :type, :integer
+          key :description, 'The session order (0, 1, 2, 3...).'
+        end
       end
 
       # Run the block on the schema (to add the event-specific fields), but use a wrapper around
@@ -59,8 +67,11 @@ module SwaggerEventSchema1
       # on the schema.
       wrapper = RequiredKeyInterceptor.new(schema)
       wrapper.instance_eval(&block)
-      schema.key(:required, wrapper.required_fields + [:client_clock_sent_at, :client_clock_occurred_at, :type])
-
+      schema.key(:required, wrapper.required_fields + [:client_clock_sent_at,
+                                                       :client_clock_occurred_at,
+                                                       :type,
+                                                       :session_uuid,
+                                                       :session_order])
       schema
     end
   end

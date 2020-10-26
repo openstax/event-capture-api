@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "accessed_studyguide_v1",
+  "name": "started_session_v1",
   "namespace": "org.openstax.ec",
   "fields": [
     {
@@ -13,19 +13,16 @@
       }
     },
     {
-      "name": "page_id",
+      "name": "ip_address",
       "type": "string"
     },
     {
-      "name": "book_id",
+      "name": "referrer",
       "type": "string"
     },
     {
-      "name": "occurred_at",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      }
+      "name": "user_agent",
+      "type": "string"
     },
     {
       "name": "session_uuid",
@@ -34,6 +31,13 @@
     {
       "name": "session_order",
       "type": "int"
+    },
+    {
+      "name": "occurred_at",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
     }
   ]
 }

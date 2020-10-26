@@ -54,6 +54,14 @@
         "type": "long",
         "logicalType": "timestamp-millis"
       }
+    },
+    {
+      "name": "session_uuid",
+      "type": "string"
+    },
+    {
+      "name": "session_order",
+      "type": "int"
     }
   ]
 }

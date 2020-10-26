@@ -23,6 +23,12 @@ module Api::V0::Bindings
     # The data's type.
     attr_accessor :type
 
+    # The session uuid.
+    attr_accessor :session_uuid
+
+    # The session order (0, 1, 2, 3...).
+    attr_accessor :session_order
+
     # The highlight id.
     attr_accessor :highlight_id
 
@@ -78,6 +84,8 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type',
+        :'session_uuid' => :'session_uuid',
+        :'session_order' => :'session_order',
         :'highlight_id' => :'highlight_id',
         :'source_type' => :'source_type',
         :'source_id' => :'source_id',
@@ -96,6 +104,8 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String',
+        :'session_uuid' => :'String',
+        :'session_order' => :'Integer',
         :'highlight_id' => :'String',
         :'source_type' => :'String',
         :'source_id' => :'String',
@@ -126,6 +136,14 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'type')
         self.type = attributes[:'type']
+      end
+
+      if attributes.has_key?(:'session_uuid')
+        self.session_uuid = attributes[:'session_uuid']
+      end
+
+      if attributes.has_key?(:'session_order')
+        self.session_order = attributes[:'session_order']
       end
 
       if attributes.has_key?(:'highlight_id')
@@ -181,6 +199,14 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
+      if @session_uuid.nil?
+        invalid_properties.push('invalid value for "session_uuid", session_uuid cannot be nil.')
+      end
+
+      if @session_order.nil?
+        invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
+      end
+
       if @highlight_id.nil?
         invalid_properties.push('invalid value for "highlight_id", highlight_id cannot be nil.')
       end
@@ -228,6 +254,8 @@ module Api::V0::Bindings
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v1'])
       return false unless type_validator.valid?(@type)
+      return false if @session_uuid.nil?
+      return false if @session_order.nil?
       return false if @highlight_id.nil?
       return false if @source_type.nil?
       return false if @source_id.nil?
@@ -258,6 +286,8 @@ module Api::V0::Bindings
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type &&
+          session_uuid == o.session_uuid &&
+          session_order == o.session_order &&
           highlight_id == o.highlight_id &&
           source_type == o.source_type &&
           source_id == o.source_id &&
@@ -278,7 +308,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, highlight_id, source_type, source_id, source_metadata, annotation, anchor, color, location_strategies, scope_id].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, highlight_id, source_type, source_id, source_metadata, annotation, anchor, color, location_strategies, scope_id].hash
     end
 
     # Builds the object from hash
