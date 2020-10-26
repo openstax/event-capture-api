@@ -23,14 +23,32 @@ module Api::V0::Bindings
     # The data's type.
     attr_accessor :type
 
-    # The highlight contents.
-    attr_accessor :contents
+    # The highlight id.
+    attr_accessor :highlight_id
 
-    # The highlight location (e.g., book uuid or anchor).
-    attr_accessor :location
+    # The highlight source type (e.g., openstax_page).
+    attr_accessor :source_type
+
+    # The highlight source id (e.g., page uuid).
+    attr_accessor :source_id
+
+    # The highlight source metadata.
+    attr_accessor :source_metadata
+
+    # The highlight annotation.
+    attr_accessor :annotation
+
+    # The highlight anchor.
+    attr_accessor :anchor
 
     # The highlight color.
     attr_accessor :color
+
+    # The highlight location strategies (e.g., a text position selector).
+    attr_accessor :location_strategies
+
+    # The highlight location scope (container for the source, like a book uuid).
+    attr_accessor :scope_id
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -60,9 +78,15 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type',
-        :'contents' => :'contents',
-        :'location' => :'location',
-        :'color' => :'color'
+        :'highlight_id' => :'highlight_id',
+        :'source_type' => :'source_type',
+        :'source_id' => :'source_id',
+        :'source_metadata' => :'source_metadata',
+        :'annotation' => :'annotation',
+        :'anchor' => :'anchor',
+        :'color' => :'color',
+        :'location_strategies' => :'location_strategies',
+        :'scope_id' => :'scope_id'
       }
     end
 
@@ -72,9 +96,15 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String',
-        :'contents' => :'String',
-        :'location' => :'String',
-        :'color' => :'String'
+        :'highlight_id' => :'String',
+        :'source_type' => :'String',
+        :'source_id' => :'String',
+        :'source_metadata' => :'String',
+        :'annotation' => :'String',
+        :'anchor' => :'String',
+        :'color' => :'String',
+        :'location_strategies' => :'String',
+        :'scope_id' => :'String'
       }
     end
 
@@ -98,16 +128,40 @@ module Api::V0::Bindings
         self.type = attributes[:'type']
       end
 
-      if attributes.has_key?(:'contents')
-        self.contents = attributes[:'contents']
+      if attributes.has_key?(:'highlight_id')
+        self.highlight_id = attributes[:'highlight_id']
       end
 
-      if attributes.has_key?(:'location')
-        self.location = attributes[:'location']
+      if attributes.has_key?(:'source_type')
+        self.source_type = attributes[:'source_type']
+      end
+
+      if attributes.has_key?(:'source_id')
+        self.source_id = attributes[:'source_id']
+      end
+
+      if attributes.has_key?(:'source_metadata')
+        self.source_metadata = attributes[:'source_metadata']
+      end
+
+      if attributes.has_key?(:'annotation')
+        self.annotation = attributes[:'annotation']
+      end
+
+      if attributes.has_key?(:'anchor')
+        self.anchor = attributes[:'anchor']
       end
 
       if attributes.has_key?(:'color')
         self.color = attributes[:'color']
+      end
+
+      if attributes.has_key?(:'location_strategies')
+        self.location_strategies = attributes[:'location_strategies']
+      end
+
+      if attributes.has_key?(:'scope_id')
+        self.scope_id = attributes[:'scope_id']
       end
     end
 
@@ -127,16 +181,40 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
-      if @contents.nil?
-        invalid_properties.push('invalid value for "contents", contents cannot be nil.')
+      if @highlight_id.nil?
+        invalid_properties.push('invalid value for "highlight_id", highlight_id cannot be nil.')
       end
 
-      if @location.nil?
-        invalid_properties.push('invalid value for "location", location cannot be nil.')
+      if @source_type.nil?
+        invalid_properties.push('invalid value for "source_type", source_type cannot be nil.')
+      end
+
+      if @source_id.nil?
+        invalid_properties.push('invalid value for "source_id", source_id cannot be nil.')
+      end
+
+      if @source_metadata.nil?
+        invalid_properties.push('invalid value for "source_metadata", source_metadata cannot be nil.')
+      end
+
+      if @annotation.nil?
+        invalid_properties.push('invalid value for "annotation", annotation cannot be nil.')
+      end
+
+      if @anchor.nil?
+        invalid_properties.push('invalid value for "anchor", anchor cannot be nil.')
       end
 
       if @color.nil?
         invalid_properties.push('invalid value for "color", color cannot be nil.')
+      end
+
+      if @location_strategies.nil?
+        invalid_properties.push('invalid value for "location_strategies", location_strategies cannot be nil.')
+      end
+
+      if @scope_id.nil?
+        invalid_properties.push('invalid value for "scope_id", scope_id cannot be nil.')
       end
 
       invalid_properties
@@ -150,9 +228,15 @@ module Api::V0::Bindings
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v1'])
       return false unless type_validator.valid?(@type)
-      return false if @contents.nil?
-      return false if @location.nil?
+      return false if @highlight_id.nil?
+      return false if @source_type.nil?
+      return false if @source_id.nil?
+      return false if @source_metadata.nil?
+      return false if @annotation.nil?
+      return false if @anchor.nil?
       return false if @color.nil?
+      return false if @location_strategies.nil?
+      return false if @scope_id.nil?
       true
     end
 
@@ -174,9 +258,15 @@ module Api::V0::Bindings
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type &&
-          contents == o.contents &&
-          location == o.location &&
-          color == o.color
+          highlight_id == o.highlight_id &&
+          source_type == o.source_type &&
+          source_id == o.source_id &&
+          source_metadata == o.source_metadata &&
+          annotation == o.annotation &&
+          anchor == o.anchor &&
+          color == o.color &&
+          location_strategies == o.location_strategies &&
+          scope_id == o.scope_id
     end
 
     # @see the `==` method
@@ -188,7 +278,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, contents, location, color].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, highlight_id, source_type, source_id, source_metadata, annotation, anchor, color, location_strategies, scope_id].hash
     end
 
     # Builds the object from hash

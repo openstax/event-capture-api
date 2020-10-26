@@ -13,15 +13,39 @@
       }
     },
     {
-      "name": "contents",
+      "name": "highlights_id",
       "type": "string"
     },
     {
-      "name": "location",
+      "name": "source_type",
+      "type": "string"
+    },
+    {
+      "name": "source_id",
+      "type": "string"
+    },
+    {
+      "name": "source_metadata",
+      "type": "string"
+    },
+    {
+      "name": "annotation",
+      "type": "string"
+    },
+    {
+      "name": "anchor",
       "type": "string"
     },
     {
       "name": "color",
+      "type": "string"
+    },
+    {
+      "name": "location_strategies",
+      "type": "string"
+    },
+    {
+      "name": "scope_id",
       "type": "string"
     },
     {
