@@ -31,8 +31,6 @@ class AsyncKafkaProducer
   end
 end
 
-at_exit { AsyncKafkaProducer.instance.shutdown }
-
 class KafkaAvroTurf
   def self.instance
     @@instance ||=
@@ -48,20 +46,3 @@ class KafkaAvroTurf
       end
   end
 end
-
-# This is important because we are using the puma middleware, which uses both a
-# forking process model and threads to scale.
-
-# There are two concerns:
-# 1) thread safety of the avro_turf gem
-# 2) thread safety of the class singletons
-
-# For #1, the avro_turf gem author states:
-#  "If you eagerly set the instance at application boot time then it's fine –
-#   the async producer is thread safe, so multiple threads can produce using
-#   it. That's in fact one of the main use cases for the async producer."
-
-# For #2, we're defining the class singletons in an initializer, we need to
-# instantiate the singleton here, at rails boot time, before the request cycles.
-AsyncKafkaProducer.instance
-KafkaAvroTurf.instance

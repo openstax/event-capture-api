@@ -21,14 +21,40 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
 # before forking the application. This takes advantage of Copy On Write
 # process behavior so workers use less memory.
 #
-# preload_app!
+preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# Initialize external clients after puma forks, but before it spawns threads
+
+# This is important because we are using the puma middleware, which uses both a
+# forking process model and threads to scale.
+
+# There are two concerns:
+# 1) thread safety of the avro_turf gem
+# 2) thread safety of the class singletons
+
+# For #1, the avro_turf gem author states:
+#  "If you eagerly set the instance at application boot time then it's fine –
+#   the async producer is thread safe, so multiple threads can produce using
+#   it. That's in fact one of the main use cases for the async producer."
+
+# For #2, we're defining the class singletons in an initializer, we need to
+# instantiate the singleton here, at rails boot time, before the request cycles.
+on_worker_boot do
+  AsyncKafkaProducer.instance
+
+  KafkaAvroTurf.instance
+end
+
+on_worker_shutdown do
+  AsyncKafkaProducer.instance.shutdown
+end
