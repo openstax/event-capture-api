@@ -13,7 +13,7 @@
       }
     },
     {
-      "name": "highlights_id",
+      "name": "highlight_id",
       "type": "string"
     },
     {

@@ -143,7 +143,7 @@ In order to use kafka (non-locally) you will need to first register your topics 
 sure that `config/topics.yml` has the topics you need, then run this rake task to create these within kafka: 
 
 ```
-bundle exece rake populate_topics
+bundle exec rake populate_topics
 ```
 
 ## Contributing

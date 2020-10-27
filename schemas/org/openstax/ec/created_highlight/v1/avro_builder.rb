@@ -5,7 +5,7 @@ import 'types/date_time'
 
 record :created_highlight_v1 do
   required :user_uuid, :uuid
-  required :highlights_id, :string
+  required :highlight_id, :string
   required :source_type, :string
   required :source_id, :string
   required :source_metadata, :string
