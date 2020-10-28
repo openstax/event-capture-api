@@ -41,6 +41,7 @@ class Api::V0::SwaggerController < ApplicationController
     list = [
       Api::V0::SwaggerResponses,
       Api::V0::EventsSwagger,
+      Api::V0::InfoSwagger,
       self
     ]
     # dyamically add the event swagger, so that the client can to build the
