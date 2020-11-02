@@ -11,6 +11,6 @@ record :nudged_v1 do
   required :flavor, :string
   required :medium, :string
   required :occurred_at, :timestamp
-  required :session_uuid, :string
+  required :session_uuid, :uuid
   required :session_order, :int
 end

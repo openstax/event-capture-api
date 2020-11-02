@@ -41,7 +41,7 @@
     },
     {
       "name": "session_uuid",
-      "type": "string"
+      "type": "org.openstax.ec.uuid"
     },
     {
       "name": "session_order",

@@ -53,6 +53,7 @@ module SwaggerEventSchema1
         end
         property :session_uuid do
           key :type, :string
+          key :format, 'uuid'
           key :description, 'The session uuid.'
         end
         property :session_order do
