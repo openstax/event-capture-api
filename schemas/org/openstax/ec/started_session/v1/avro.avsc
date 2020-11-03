@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "nudged_v1",
+  "name": "started_session_v1",
   "namespace": "org.openstax.ec",
   "fields": [
     {
@@ -13,24 +13,20 @@
       }
     },
     {
-      "name": "app",
+      "name": "ip_address",
       "type": "string"
     },
     {
-      "name": "target",
+      "name": "referrer",
       "type": "string"
     },
     {
-      "name": "context",
+      "name": "user_agent",
       "type": "string"
     },
     {
-      "name": "flavor",
-      "type": "string"
-    },
-    {
-      "name": "medium",
-      "type": "string"
+      "name": "session_uuid",
+      "type": "org.openstax.ec.uuid"
     },
     {
       "name": "occurred_at",
@@ -38,14 +34,6 @@
         "type": "long",
         "logicalType": "timestamp-millis"
       }
-    },
-    {
-      "name": "session_uuid",
-      "type": "org.openstax.ec.uuid"
-    },
-    {
-      "name": "session_order",
-      "type": "int"
     }
   ]
 }

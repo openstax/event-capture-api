@@ -7,5 +7,32 @@ topics: [
     config: {
       replication: 1
     }
+  },
+  {
+    name: 'accessed_studyguide',
+    schemas: [
+        'org.openstax.ec.accessed_studyguide_v1'
+    ],
+    config: {
+      replication: 1
+    }
+  },
+  {
+    name: 'created_highlight',
+    schemas: [
+        'org.openstax.ec.created_highlight_v1'
+    ],
+    config: {
+      replication: 1
+    }
+  },
+  {
+    name: 'started_session',
+    schemas: [
+        'org.openstax.ec.started_session_v1'
+    ],
+    config: {
+      replication: 1
+    }
   }
 ]

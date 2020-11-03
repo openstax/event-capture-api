@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "nudged_v1",
+  "name": "created_highlight_v1",
   "namespace": "org.openstax.ec",
   "fields": [
     {
@@ -13,23 +13,39 @@
       }
     },
     {
-      "name": "app",
+      "name": "highlight_id",
       "type": "string"
     },
     {
-      "name": "target",
+      "name": "source_type",
       "type": "string"
     },
     {
-      "name": "context",
+      "name": "source_id",
       "type": "string"
     },
     {
-      "name": "flavor",
+      "name": "source_metadata",
       "type": "string"
     },
     {
-      "name": "medium",
+      "name": "annotation",
+      "type": "string"
+    },
+    {
+      "name": "anchor",
+      "type": "string"
+    },
+    {
+      "name": "color",
+      "type": "string"
+    },
+    {
+      "name": "location_strategies",
+      "type": "string"
+    },
+    {
+      "name": "scope_id",
       "type": "string"
     },
     {

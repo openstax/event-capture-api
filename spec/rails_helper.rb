@@ -1,9 +1,11 @@
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter %r{^/app\/bindings/}
-  add_filter { |src| src.filename =~ /swagger/ }
   add_filter { |src| src.filename =~ /gem_debugger/ }
   add_filter { |src| src.filename =~ /rescue_from_unless_local/ }
+  add_filter { |src| src.filename =~ /swagger.rb/ }
+  add_filter { |src| src.filename =~ /swagger_controller/ }
+  add_filter { |src| src.filename =~ /swagger_responses/ }
   add_filter { |src| src.filename =~ /scout/ }
 end
 

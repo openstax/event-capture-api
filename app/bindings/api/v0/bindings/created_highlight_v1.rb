@@ -13,7 +13,7 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class NudgedV1
+  class CreatedHighlightV1
     # The RFC 3339 section 5.6 date-time when nudge actually occurred.
     attr_accessor :client_clock_occurred_at
 
@@ -29,20 +29,32 @@ module Api::V0::Bindings
     # The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc.
     attr_accessor :session_order
 
-    # The app sourcing the nudge (e.g., tutor.
-    attr_accessor :app
+    # The highlight id.
+    attr_accessor :highlight_id
 
-    # The target of the nudge (e.g., study_guides).
-    attr_accessor :target
+    # The highlight source type (e.g., openstax_page).
+    attr_accessor :source_type
 
-    # The nudge context (e.g., a book uuid).
-    attr_accessor :context
+    # The highlight source id (e.g., page uuid).
+    attr_accessor :source_id
 
-    # The nudge flavor (e.g., full screen v2).
-    attr_accessor :flavor
+    # The highlight source metadata.
+    attr_accessor :source_metadata
 
-    # The nudge medium (e.g., email).
-    attr_accessor :medium
+    # The highlight annotation.
+    attr_accessor :annotation
+
+    # The highlight anchor.
+    attr_accessor :anchor
+
+    # The highlight color.
+    attr_accessor :color
+
+    # The highlight location strategies (e.g., a text position selector).
+    attr_accessor :location_strategies
+
+    # The highlight location scope (container for the source, like a book uuid).
+    attr_accessor :scope_id
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -74,11 +86,15 @@ module Api::V0::Bindings
         :'type' => :'type',
         :'session_uuid' => :'session_uuid',
         :'session_order' => :'session_order',
-        :'app' => :'app',
-        :'target' => :'target',
-        :'context' => :'context',
-        :'flavor' => :'flavor',
-        :'medium' => :'medium'
+        :'highlight_id' => :'highlight_id',
+        :'source_type' => :'source_type',
+        :'source_id' => :'source_id',
+        :'source_metadata' => :'source_metadata',
+        :'annotation' => :'annotation',
+        :'anchor' => :'anchor',
+        :'color' => :'color',
+        :'location_strategies' => :'location_strategies',
+        :'scope_id' => :'scope_id'
       }
     end
 
@@ -90,11 +106,15 @@ module Api::V0::Bindings
         :'type' => :'String',
         :'session_uuid' => :'String',
         :'session_order' => :'Integer',
-        :'app' => :'String',
-        :'target' => :'String',
-        :'context' => :'String',
-        :'flavor' => :'String',
-        :'medium' => :'String'
+        :'highlight_id' => :'String',
+        :'source_type' => :'String',
+        :'source_id' => :'String',
+        :'source_metadata' => :'String',
+        :'annotation' => :'String',
+        :'anchor' => :'String',
+        :'color' => :'String',
+        :'location_strategies' => :'String',
+        :'scope_id' => :'String'
       }
     end
 
@@ -126,24 +146,40 @@ module Api::V0::Bindings
         self.session_order = attributes[:'session_order']
       end
 
-      if attributes.has_key?(:'app')
-        self.app = attributes[:'app']
+      if attributes.has_key?(:'highlight_id')
+        self.highlight_id = attributes[:'highlight_id']
       end
 
-      if attributes.has_key?(:'target')
-        self.target = attributes[:'target']
+      if attributes.has_key?(:'source_type')
+        self.source_type = attributes[:'source_type']
       end
 
-      if attributes.has_key?(:'context')
-        self.context = attributes[:'context']
+      if attributes.has_key?(:'source_id')
+        self.source_id = attributes[:'source_id']
       end
 
-      if attributes.has_key?(:'flavor')
-        self.flavor = attributes[:'flavor']
+      if attributes.has_key?(:'source_metadata')
+        self.source_metadata = attributes[:'source_metadata']
       end
 
-      if attributes.has_key?(:'medium')
-        self.medium = attributes[:'medium']
+      if attributes.has_key?(:'annotation')
+        self.annotation = attributes[:'annotation']
+      end
+
+      if attributes.has_key?(:'anchor')
+        self.anchor = attributes[:'anchor']
+      end
+
+      if attributes.has_key?(:'color')
+        self.color = attributes[:'color']
+      end
+
+      if attributes.has_key?(:'location_strategies')
+        self.location_strategies = attributes[:'location_strategies']
+      end
+
+      if attributes.has_key?(:'scope_id')
+        self.scope_id = attributes[:'scope_id']
       end
     end
 
@@ -171,24 +207,40 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
       end
 
-      if @app.nil?
-        invalid_properties.push('invalid value for "app", app cannot be nil.')
+      if @highlight_id.nil?
+        invalid_properties.push('invalid value for "highlight_id", highlight_id cannot be nil.')
       end
 
-      if @target.nil?
-        invalid_properties.push('invalid value for "target", target cannot be nil.')
+      if @source_type.nil?
+        invalid_properties.push('invalid value for "source_type", source_type cannot be nil.')
       end
 
-      if @context.nil?
-        invalid_properties.push('invalid value for "context", context cannot be nil.')
+      if @source_id.nil?
+        invalid_properties.push('invalid value for "source_id", source_id cannot be nil.')
       end
 
-      if @flavor.nil?
-        invalid_properties.push('invalid value for "flavor", flavor cannot be nil.')
+      if @source_metadata.nil?
+        invalid_properties.push('invalid value for "source_metadata", source_metadata cannot be nil.')
       end
 
-      if @medium.nil?
-        invalid_properties.push('invalid value for "medium", medium cannot be nil.')
+      if @annotation.nil?
+        invalid_properties.push('invalid value for "annotation", annotation cannot be nil.')
+      end
+
+      if @anchor.nil?
+        invalid_properties.push('invalid value for "anchor", anchor cannot be nil.')
+      end
+
+      if @color.nil?
+        invalid_properties.push('invalid value for "color", color cannot be nil.')
+      end
+
+      if @location_strategies.nil?
+        invalid_properties.push('invalid value for "location_strategies", location_strategies cannot be nil.')
+      end
+
+      if @scope_id.nil?
+        invalid_properties.push('invalid value for "scope_id", scope_id cannot be nil.')
       end
 
       invalid_properties
@@ -200,22 +252,26 @@ module Api::V0::Bindings
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v1'])
       return false unless type_validator.valid?(@type)
       return false if @session_uuid.nil?
       return false if @session_order.nil?
-      return false if @app.nil?
-      return false if @target.nil?
-      return false if @context.nil?
-      return false if @flavor.nil?
-      return false if @medium.nil?
+      return false if @highlight_id.nil?
+      return false if @source_type.nil?
+      return false if @source_id.nil?
+      return false if @source_metadata.nil?
+      return false if @annotation.nil?
+      return false if @anchor.nil?
+      return false if @color.nil?
+      return false if @location_strategies.nil?
+      return false if @scope_id.nil?
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v1'])
       unless validator.valid?(type)
         fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
       end
@@ -232,11 +288,15 @@ module Api::V0::Bindings
           type == o.type &&
           session_uuid == o.session_uuid &&
           session_order == o.session_order &&
-          app == o.app &&
-          target == o.target &&
-          context == o.context &&
-          flavor == o.flavor &&
-          medium == o.medium
+          highlight_id == o.highlight_id &&
+          source_type == o.source_type &&
+          source_id == o.source_id &&
+          source_metadata == o.source_metadata &&
+          annotation == o.annotation &&
+          anchor == o.anchor &&
+          color == o.color &&
+          location_strategies == o.location_strategies &&
+          scope_id == o.scope_id
     end
 
     # @see the `==` method
@@ -248,7 +308,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, app, target, context, flavor, medium].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, highlight_id, source_type, source_id, source_metadata, annotation, anchor, color, location_strategies, scope_id].hash
     end
 
     # Builds the object from hash

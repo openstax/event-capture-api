@@ -13,7 +13,7 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class NudgedV1
+  class AccessedStudyguideV1
     # The RFC 3339 section 5.6 date-time when nudge actually occurred.
     attr_accessor :client_clock_occurred_at
 
@@ -29,20 +29,11 @@ module Api::V0::Bindings
     # The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc.
     attr_accessor :session_order
 
-    # The app sourcing the nudge (e.g., tutor.
-    attr_accessor :app
+    # The page id.
+    attr_accessor :page_id
 
-    # The target of the nudge (e.g., study_guides).
-    attr_accessor :target
-
-    # The nudge context (e.g., a book uuid).
-    attr_accessor :context
-
-    # The nudge flavor (e.g., full screen v2).
-    attr_accessor :flavor
-
-    # The nudge medium (e.g., email).
-    attr_accessor :medium
+    # The book id.
+    attr_accessor :book_id
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -74,11 +65,8 @@ module Api::V0::Bindings
         :'type' => :'type',
         :'session_uuid' => :'session_uuid',
         :'session_order' => :'session_order',
-        :'app' => :'app',
-        :'target' => :'target',
-        :'context' => :'context',
-        :'flavor' => :'flavor',
-        :'medium' => :'medium'
+        :'page_id' => :'page_id',
+        :'book_id' => :'book_id'
       }
     end
 
@@ -90,11 +78,8 @@ module Api::V0::Bindings
         :'type' => :'String',
         :'session_uuid' => :'String',
         :'session_order' => :'Integer',
-        :'app' => :'String',
-        :'target' => :'String',
-        :'context' => :'String',
-        :'flavor' => :'String',
-        :'medium' => :'String'
+        :'page_id' => :'String',
+        :'book_id' => :'String'
       }
     end
 
@@ -126,24 +111,12 @@ module Api::V0::Bindings
         self.session_order = attributes[:'session_order']
       end
 
-      if attributes.has_key?(:'app')
-        self.app = attributes[:'app']
+      if attributes.has_key?(:'page_id')
+        self.page_id = attributes[:'page_id']
       end
 
-      if attributes.has_key?(:'target')
-        self.target = attributes[:'target']
-      end
-
-      if attributes.has_key?(:'context')
-        self.context = attributes[:'context']
-      end
-
-      if attributes.has_key?(:'flavor')
-        self.flavor = attributes[:'flavor']
-      end
-
-      if attributes.has_key?(:'medium')
-        self.medium = attributes[:'medium']
+      if attributes.has_key?(:'book_id')
+        self.book_id = attributes[:'book_id']
       end
     end
 
@@ -171,24 +144,12 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
       end
 
-      if @app.nil?
-        invalid_properties.push('invalid value for "app", app cannot be nil.')
+      if @page_id.nil?
+        invalid_properties.push('invalid value for "page_id", page_id cannot be nil.')
       end
 
-      if @target.nil?
-        invalid_properties.push('invalid value for "target", target cannot be nil.')
-      end
-
-      if @context.nil?
-        invalid_properties.push('invalid value for "context", context cannot be nil.')
-      end
-
-      if @flavor.nil?
-        invalid_properties.push('invalid value for "flavor", flavor cannot be nil.')
-      end
-
-      if @medium.nil?
-        invalid_properties.push('invalid value for "medium", medium cannot be nil.')
+      if @book_id.nil?
+        invalid_properties.push('invalid value for "book_id", book_id cannot be nil.')
       end
 
       invalid_properties
@@ -200,22 +161,19 @@ module Api::V0::Bindings
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
       return false unless type_validator.valid?(@type)
       return false if @session_uuid.nil?
       return false if @session_order.nil?
-      return false if @app.nil?
-      return false if @target.nil?
-      return false if @context.nil?
-      return false if @flavor.nil?
-      return false if @medium.nil?
+      return false if @page_id.nil?
+      return false if @book_id.nil?
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.nudged_v1'])
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
       unless validator.valid?(type)
         fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
       end
@@ -232,11 +190,8 @@ module Api::V0::Bindings
           type == o.type &&
           session_uuid == o.session_uuid &&
           session_order == o.session_order &&
-          app == o.app &&
-          target == o.target &&
-          context == o.context &&
-          flavor == o.flavor &&
-          medium == o.medium
+          page_id == o.page_id &&
+          book_id == o.book_id
     end
 
     # @see the `==` method
@@ -248,7 +203,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, app, target, context, flavor, medium].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, page_id, book_id].hash
     end
 
     # Builds the object from hash

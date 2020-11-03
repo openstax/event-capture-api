@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "nudged_v1",
+  "name": "accessed_studyguide_v1",
   "namespace": "org.openstax.ec",
   "fields": [
     {
@@ -13,23 +13,11 @@
       }
     },
     {
-      "name": "app",
+      "name": "page_id",
       "type": "string"
     },
     {
-      "name": "target",
-      "type": "string"
-    },
-    {
-      "name": "context",
-      "type": "string"
-    },
-    {
-      "name": "flavor",
-      "type": "string"
-    },
-    {
-      "name": "medium",
+      "name": "book_id",
       "type": "string"
     },
     {
