@@ -9,6 +9,5 @@ record :started_session_v1 do
   required :referrer, :string
   required :user_agent, :string
   required :session_uuid, :uuid
-  required :session_order, :int
   required :occurred_at, :timestamp
 end

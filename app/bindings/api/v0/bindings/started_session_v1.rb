@@ -23,12 +23,6 @@ module Api::V0::Bindings
     # The data's type.
     attr_accessor :type
 
-    # The session uuid.
-    attr_accessor :session_uuid
-
-    # The session order (0, 1, 2, 3...).
-    attr_accessor :session_order
-
     # The session IP address.
     attr_accessor :ip_address
 
@@ -37,6 +31,9 @@ module Api::V0::Bindings
 
     # The user agent.
     attr_accessor :user_agent
+
+    # The client generates this UUID and references it for all future events in this session.
+    attr_accessor :session_uuid
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -66,11 +63,10 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type',
-        :'session_uuid' => :'session_uuid',
-        :'session_order' => :'session_order',
         :'ip_address' => :'ip_address',
         :'referrer' => :'referrer',
-        :'user_agent' => :'user_agent'
+        :'user_agent' => :'user_agent',
+        :'session_uuid' => :'session_uuid'
       }
     end
 
@@ -80,11 +76,10 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String',
-        :'session_uuid' => :'String',
-        :'session_order' => :'Integer',
         :'ip_address' => :'String',
         :'referrer' => :'String',
-        :'user_agent' => :'String'
+        :'user_agent' => :'String',
+        :'session_uuid' => :'String'
       }
     end
 
@@ -108,14 +103,6 @@ module Api::V0::Bindings
         self.type = attributes[:'type']
       end
 
-      if attributes.has_key?(:'session_uuid')
-        self.session_uuid = attributes[:'session_uuid']
-      end
-
-      if attributes.has_key?(:'session_order')
-        self.session_order = attributes[:'session_order']
-      end
-
       if attributes.has_key?(:'ip_address')
         self.ip_address = attributes[:'ip_address']
       end
@@ -126,6 +113,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'user_agent')
         self.user_agent = attributes[:'user_agent']
+      end
+
+      if attributes.has_key?(:'session_uuid')
+        self.session_uuid = attributes[:'session_uuid']
       end
     end
 
@@ -145,14 +136,6 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
-      if @session_uuid.nil?
-        invalid_properties.push('invalid value for "session_uuid", session_uuid cannot be nil.')
-      end
-
-      if @session_order.nil?
-        invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
-      end
-
       if @ip_address.nil?
         invalid_properties.push('invalid value for "ip_address", ip_address cannot be nil.')
       end
@@ -163,6 +146,10 @@ module Api::V0::Bindings
 
       if @user_agent.nil?
         invalid_properties.push('invalid value for "user_agent", user_agent cannot be nil.')
+      end
+
+      if @session_uuid.nil?
+        invalid_properties.push('invalid value for "session_uuid", session_uuid cannot be nil.')
       end
 
       invalid_properties
@@ -176,11 +163,10 @@ module Api::V0::Bindings
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.started_session_v1'])
       return false unless type_validator.valid?(@type)
-      return false if @session_uuid.nil?
-      return false if @session_order.nil?
       return false if @ip_address.nil?
       return false if @referrer.nil?
       return false if @user_agent.nil?
+      return false if @session_uuid.nil?
       true
     end
 
@@ -202,11 +188,10 @@ module Api::V0::Bindings
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type &&
-          session_uuid == o.session_uuid &&
-          session_order == o.session_order &&
           ip_address == o.ip_address &&
           referrer == o.referrer &&
-          user_agent == o.user_agent
+          user_agent == o.user_agent &&
+          session_uuid == o.session_uuid
     end
 
     # @see the `==` method
@@ -218,7 +203,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, session_uuid, session_order, ip_address, referrer, user_agent].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, ip_address, referrer, user_agent, session_uuid].hash
     end
 
     # Builds the object from hash
