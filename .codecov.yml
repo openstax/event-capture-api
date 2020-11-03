@@ -4,7 +4,7 @@ coverage:
   status:
     project:                   # measuring the overall project coverage
       default:                 # context, you can create multiple ones with custom titles
-        target: 80%            # specify the target coverage for each commit status
+        target: 90%            # specify the target coverage for each commit status
         threshold: 5%          # allowed to drop X% and still result in a "success" commit status
 
     patch:                     # pull requests only: this commit status will measure the
@@ -13,6 +13,3 @@ coverage:
         threshold: 2%          # allowed to drop X% and still result in a "success" commit status
 
 comment: false                 # to disable comments
-
-ignore:
-  - "lib/rescue_from_unless_local.rb"

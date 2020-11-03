@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
       resources :events, only: :create
 
+      get :info, to: 'info#info'
+
       get :swagger, to: 'swagger#json'
     end
   end

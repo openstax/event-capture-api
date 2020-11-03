@@ -2,6 +2,8 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter %r{^/app\/bindings/}
   add_filter { |src| src.filename =~ /swagger/ }
+  add_filter { |src| src.filename =~ /gem_debugger/ }
+  add_filter { |src| src.filename =~ /rescue_from_unless_local/ }
   add_filter { |src| src.filename =~ /scout/ }
 end
 
@@ -53,6 +55,8 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
 
+  config.include ResponseHelpers, type: :request
+  config.include ApiV0Helpers, api: :v0
   config.include UserHelpers, type: :request
   config.include UserHelpers, type: :controller
 end

@@ -1,6 +1,8 @@
 # OpenStax Event Capture API
 
 [![Build Status](https://travis-ci.com/openstax/open-search.svg?branch=master)](https://travis-ci.com/openstax/event-capture-api)
+[![codecov](https://codecov.io/gh/openstax/event-capture-api/branch/master/graph/badge.svg?token=OR0CJFKXI4)](https://codecov.io/gh/openstax/event-capture-api)
+
 
 The API interface to capture events within OpenStax
 
