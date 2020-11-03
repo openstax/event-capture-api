@@ -10,64 +10,12 @@ module ApiV0Helpers
     end
   end
 
-  def set_admin_api_token
-    set_api_token(Rails.application.secrets.admin_api_token)
-  end
-
-  def set_bad_admin_api_token
-    set_api_token("intentionally_bad_value")
-  end
-
-  def set_bad_api_id
-    set_api_id("intentionally_bad_value")
-  end
-
   def controller_spec?
     self.class.metadata[:type] == :controller
   end
 
   def request_spec?
     self.class.metadata[:type] == :request
-  end
-
-  def set_api_token(value)
-    set_authorization_header("Token #{value}")
-  end
-
-  def set_api_id(value)
-    set_authorization_header("ID #{value}")
-  end
-
-  def clear_api_token
-    header_hash.delete('Authorization') if header_hash['Authorization'].try(:starts_with?, "Token")
-  end
-
-  def clear_api_id
-    header_hash.delete('Authorization') if header_hash['Authorization'].try(:starts_with?, "ID")
-  end
-
-  def clear_origin
-    set_origin(nil)
-  end
-
-  def set_authorization_header(value)
-    set_header('Authorization', value)
-  end
-
-  def set_header(key, value)
-    header_hash[key] = value
-  end
-
-  def header_hash
-    if controller_spec?
-      @request.headers
-    elsif request_spec?
-      headers
-    end
-  end
-
-  def set_origin(value)
-    set_header('origin', value)
   end
 
   def headers
