@@ -16,7 +16,7 @@ class Api::V0::BaseController < ApplicationController
     return true if Rails.env.development?
     return false if Rails.application.secrets.admin_uuids.blank?
 
-    allowed_uuids = Rails.application.secrets.admin_uuids.split(',').map(&:strip)
+    allowed_uuids = Rails.application.secrets.admin_uuids.split(',').flatten.map(&:strip)
     allowed_uuids.include?(current_user_uuid)
   end
 
