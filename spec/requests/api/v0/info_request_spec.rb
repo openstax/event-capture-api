@@ -41,6 +41,16 @@ RSpec.describe 'api v0 info requsts', type: :request, api: :v0 do
           expect(json).to have_key(:data)
         end
 
+        context 'uuids as an array' do
+          let(:admin_uuids) { ["#{user_id}", 'b6200d06-4313-4bf3-b9b3-79720498fa94'] }
+
+          it 'allows authorized user' do
+            stub_current_user_uuid(user_id)
+            api_get '/info'
+            expect(response).to have_http_status(:ok)
+          end
+        end
+
         it 'disallows unauthorized user' do
           stub_current_user_uuid('foobar')
           api_get '/info'
