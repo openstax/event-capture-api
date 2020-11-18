@@ -4,13 +4,25 @@
   "namespace": "org.openstax.ec",
   "fields": [
     {
+      "name": "device_uuid",
+      "type": [
+        "null",
+        {
+          "name": "uuid",
+          "type": "fixed",
+          "namespace": "org.openstax.ec",
+          "size": 16
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "session_uuid",
+      "type": "org.openstax.ec.uuid"
+    },
+    {
       "name": "user_uuid",
-      "type": {
-        "name": "uuid",
-        "type": "fixed",
-        "namespace": "org.openstax.ec",
-        "size": 16
-      }
+      "type": "org.openstax.ec.uuid"
     },
     {
       "name": "ip_address",
@@ -23,10 +35,6 @@
     {
       "name": "user_agent",
       "type": "string"
-    },
-    {
-      "name": "session_uuid",
-      "type": "org.openstax.ec.uuid"
     },
     {
       "name": "occurred_at",

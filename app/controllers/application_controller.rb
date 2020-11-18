@@ -27,6 +27,21 @@ class ApplicationController < ActionController::API
   end
 
 
+  def current_device_uuid
+    @current_device_uuid ||= begin
+      if Rails.env.development? && ENV['STUBBED_DEVICE_UUID']
+        ENV['STUBBED_DEVICE_UUID']
+      else
+        if ENV['STUBBED_DEVICE_UUID']
+          Rails.logger.warn("`STUBBED_DEVICE_UUID` environment variable is set but not used in " \
+                            "the #{Rails.env} environment.")
+        end
+
+        request.cookies[Rails.application.secrets.accounts[:device_cookie_name]]
+      end
+    end
+  end
+
   def render_unauthorized_if_no_current_user
     head :unauthorized if current_user_uuid.nil?
   end

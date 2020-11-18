@@ -2,8 +2,12 @@ namespace 'org.openstax.ec'
 
 import 'types/uuid'
 import 'types/date_time'
+import 'types/device'
+import 'types/ordered_session'
 
 record :created_highlight_v1 do
+  extends :device
+  extends :ordered_session
   required :user_uuid, :uuid
   required :highlight_id, :string
   required :source_type, :string
@@ -15,6 +19,4 @@ record :created_highlight_v1 do
   required :location_strategies, :string
   required :scope_id, :string
   required :occurred_at, :timestamp
-  required :session_uuid, :uuid
-  required :session_order, :int
 end
