@@ -4,13 +4,33 @@
   "namespace": "org.openstax.ec",
   "fields": [
     {
+      "name": "device_uuid",
+      "type": [
+        "null",
+        {
+          "name": "uuid",
+          "type": "fixed",
+          "namespace": "org.openstax.ec",
+          "size": 16
+        }
+      ],
+      "default": null
+    },
+    {
       "name": "user_uuid",
-      "type": {
-        "name": "uuid",
-        "type": "fixed",
-        "namespace": "org.openstax.ec",
-        "size": 16
-      }
+      "type": [
+        "null",
+        "org.openstax.ec.uuid"
+      ],
+      "default": null
+    },
+    {
+      "name": "session_uuid",
+      "type": "org.openstax.ec.uuid"
+    },
+    {
+      "name": "session_order",
+      "type": "int"
     },
     {
       "name": "app",
@@ -38,14 +58,6 @@
         "type": "long",
         "logicalType": "timestamp-millis"
       }
-    },
-    {
-      "name": "session_uuid",
-      "type": "org.openstax.ec.uuid"
-    },
-    {
-      "name": "session_order",
-      "type": "int"
     }
   ]
 }

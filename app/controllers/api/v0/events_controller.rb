@@ -22,6 +22,7 @@ class Api::V0::EventsController < Api::V0::BaseController
     api_data.except(:client_clock_sent_at, :client_clock_occurred_at).tap do |data|
       # Set the user uuid according to the currently logged in user
       data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
+      data[:device_uuid] = CompactUuid.pack(current_device_uuid) if current_device_uuid
 
       # Adjust the client's occurred at time by a device sent at adjustment
       data[:occurred_at] = TimeUtil.infer_actual_occurred_at_from_client_timestamps(
