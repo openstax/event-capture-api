@@ -32,11 +32,6 @@ class ApplicationController < ActionController::API
       if Rails.env.development? && ENV['STUBBED_DEVICE_UUID']
         ENV['STUBBED_DEVICE_UUID']
       else
-        if ENV['STUBBED_DEVICE_UUID']
-          Rails.logger.warn("`STUBBED_DEVICE_UUID` environment variable is set but not used in " \
-                            "the #{Rails.env} environment.")
-        end
-
         request.cookies[Rails.application.secrets.accounts[:device_cookie_name]]
       end
     end

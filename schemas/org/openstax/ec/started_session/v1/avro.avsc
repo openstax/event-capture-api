@@ -17,11 +17,15 @@
       "default": null
     },
     {
-      "name": "session_uuid",
-      "type": "org.openstax.ec.uuid"
+      "name": "user_uuid",
+      "type": [
+        "null",
+        "org.openstax.ec.uuid"
+      ],
+      "default": null
     },
     {
-      "name": "user_uuid",
+      "name": "session_uuid",
       "type": "org.openstax.ec.uuid"
     },
     {
