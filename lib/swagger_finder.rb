@@ -1,11 +1,7 @@
 class SwaggerFinder
-  def initialize
-    @path = Rails.application.secrets.kafka[:schemas_path]
-  end
-
   def files
     @files ||= begin
-      file_mask = File.join(@path, "**", "swagger.rb")
+      file_mask = File.join("schemas", "**", "swagger.rb")
       Dir.glob(file_mask).each_with_object([]) do |filename,collection|
         collection << filename
       end
