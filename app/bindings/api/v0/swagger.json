@@ -1,0 +1,409 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "OpenStax Event Capture API",
+    "description": "The Event Capture API for OpenStax.\n\nRequests to this API should include `application/json` in the `Accept` header.\n\nThe desired API version is specified in the request URL, e.g. `[domain]/api/v0/events`. While the API does support a default version, that version will change over time and therefore should not be used in production code!\n",
+    "termsOfService": "https://openstax.org/tos",
+    "contact": {
+      "name": "support@openstax.org"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "Event Capture",
+      "description": "Event Capture endpoints"
+    }
+  ],
+  "basePath": "/api/v0/events",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/events": {
+      "post": {
+        "summary": "Captures events",
+        "description": "Capture one or more events",
+        "operationId": "addEvent",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "events",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Events"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success."
+          }
+        }
+      }
+    },
+    "/info": {
+      "get": {
+        "summary": "Get info on event capture",
+        "description": "Get info on event capture",
+        "operationId": "info",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Info"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.  Returns basic event capture metrics.",
+            "schema": {
+              "$ref": "#/definitions/InfoResults"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "properties": {
+        "status_code": {
+          "type": "integer",
+          "description": "The HTTP status code"
+        },
+        "messages": {
+          "type": "array",
+          "description": "The error messages, if any",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Event": {
+      "properties": {
+        "data": {
+          "type": "object",
+          "description": "The event payload object.  Will be of a type that lives in a swagger file inside the schemas directory."
+        }
+      }
+    },
+    "Events": {
+      "properties": {
+        "events": {
+          "type": "array",
+          "description": "Array of Events",
+          "items": {
+            "$ref": "#/definitions/Event"
+          }
+        }
+      }
+    },
+    "InfoData": {
+      "properties": {
+        "kafka_topics": {
+          "type": "array",
+          "description": "Topics in the kafka cluster",
+          "items": {
+            "type": "string"
+          }
+        },
+        "schema_registry_subjects": {
+          "type": "array",
+          "description": "Subjects in the schema registry",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "InfoResults": {
+      "properties": {
+        "overall_took_ms": {
+          "type": "integer",
+          "readOnly": true,
+          "description": "How long the request took (ms)"
+        },
+        "env_name": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Name of deployed environment"
+        },
+        "accounts_env_name": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Accounts environment name"
+        },
+        "ami_id": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Amazon machine image id"
+        },
+        "git_sha": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Git sha"
+        },
+        "data": {
+          "$ref": "#/definitions/InfoData"
+        }
+      }
+    },
+    "AccessedStudyguideV1": {
+      "properties": {
+        "client_clock_occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge actually occurred."
+        },
+        "client_clock_sent_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge event was sent to the server."
+        },
+        "type": {
+          "type": "string",
+          "description": "The data's type.",
+          "enum": [
+            "org.openstax.ec.accessed_studyguide_v1"
+          ]
+        },
+        "session_uuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The UUID of the current session, previously generated by the client and submitted in a \"session started\" event."
+        },
+        "session_order": {
+          "type": "integer",
+          "description": "The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc."
+        },
+        "page_id": {
+          "type": "string",
+          "description": "The page id."
+        },
+        "book_id": {
+          "type": "string",
+          "description": "The book id."
+        }
+      },
+      "required": [
+        "page_id",
+        "book_id",
+        "client_clock_sent_at",
+        "client_clock_occurred_at",
+        "type",
+        "session_uuid",
+        "session_order"
+      ]
+    },
+    "CreatedHighlightV1": {
+      "properties": {
+        "client_clock_occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge actually occurred."
+        },
+        "client_clock_sent_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge event was sent to the server."
+        },
+        "type": {
+          "type": "string",
+          "description": "The data's type.",
+          "enum": [
+            "org.openstax.ec.created_highlight_v1"
+          ]
+        },
+        "session_uuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The UUID of the current session, previously generated by the client and submitted in a \"session started\" event."
+        },
+        "session_order": {
+          "type": "integer",
+          "description": "The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc."
+        },
+        "highlight_id": {
+          "type": "string",
+          "description": "The highlight id."
+        },
+        "source_type": {
+          "type": "string",
+          "description": "The highlight source type (e.g., openstax_page)."
+        },
+        "source_id": {
+          "type": "string",
+          "description": "The highlight source id (e.g., page uuid)."
+        },
+        "source_metadata": {
+          "type": "string",
+          "description": "The highlight source metadata."
+        },
+        "annotation": {
+          "type": "string",
+          "description": "The highlight annotation."
+        },
+        "anchor": {
+          "type": "string",
+          "description": "The highlight anchor."
+        },
+        "color": {
+          "type": "string",
+          "description": "The highlight color."
+        },
+        "location_strategies": {
+          "type": "string",
+          "description": "The highlight location strategies (e.g., a text position selector)."
+        },
+        "scope_id": {
+          "type": "string",
+          "description": "The highlight location scope (container for the source, like a book uuid)."
+        }
+      },
+      "required": [
+        "highlight_id",
+        "source_type",
+        "source_id",
+        "source_metadata",
+        "anchor",
+        "annotation",
+        "color",
+        "location_strategies",
+        "scope_id",
+        "client_clock_sent_at",
+        "client_clock_occurred_at",
+        "type",
+        "session_uuid",
+        "session_order"
+      ]
+    },
+    "NudgedV1": {
+      "properties": {
+        "client_clock_occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge actually occurred."
+        },
+        "client_clock_sent_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge event was sent to the server."
+        },
+        "type": {
+          "type": "string",
+          "description": "The data's type.",
+          "enum": [
+            "org.openstax.ec.nudged_v1"
+          ]
+        },
+        "session_uuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The UUID of the current session, previously generated by the client and submitted in a \"session started\" event."
+        },
+        "session_order": {
+          "type": "integer",
+          "description": "The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc."
+        },
+        "app": {
+          "type": "string",
+          "description": "The app sourcing the nudge (e.g., tutor."
+        },
+        "target": {
+          "type": "string",
+          "description": "The target of the nudge (e.g., study_guides)."
+        },
+        "context": {
+          "type": "string",
+          "description": "The nudge context (e.g., a book uuid)."
+        },
+        "flavor": {
+          "type": "string",
+          "description": "The nudge flavor (e.g., full screen v2)."
+        },
+        "medium": {
+          "type": "string",
+          "description": "The nudge medium (e.g., email)."
+        }
+      },
+      "required": [
+        "app",
+        "target",
+        "context",
+        "flavor",
+        "medium",
+        "client_clock_sent_at",
+        "client_clock_occurred_at",
+        "type",
+        "session_uuid",
+        "session_order"
+      ]
+    },
+    "StartedSessionV1": {
+      "properties": {
+        "client_clock_occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge actually occurred."
+        },
+        "client_clock_sent_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when nudge event was sent to the server."
+        },
+        "type": {
+          "type": "string",
+          "description": "The data's type.",
+          "enum": [
+            "org.openstax.ec.started_session_v1"
+          ]
+        },
+        "ip_address": {
+          "type": "string",
+          "description": "The session IP address."
+        },
+        "referrer": {
+          "type": "string",
+          "description": "The referrer."
+        },
+        "user_agent": {
+          "type": "string",
+          "description": "The user agent."
+        },
+        "session_uuid": {
+          "type": "string",
+          "description": "The client generates this UUID and references it for all future events in this session."
+        }
+      },
+      "required": [
+        "ip_address",
+        "referrer",
+        "user_agent",
+        "client_clock_sent_at",
+        "client_clock_occurred_at",
+        "type",
+        "session_uuid",
+        "session_order"
+      ]
+    }
+  }
+}

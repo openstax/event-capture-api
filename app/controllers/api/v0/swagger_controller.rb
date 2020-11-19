@@ -37,6 +37,8 @@ class Api::V0::SwaggerController < ApplicationController
     key :produces, ['application/json']
   end
 
+  # Used by swagger-rails to generate bindings, and our local generate_swagger_json
+  # rake task
   def self.swagger_classes
     list = [
       Api::V0::SwaggerResponses,
@@ -51,6 +53,6 @@ class Api::V0::SwaggerController < ApplicationController
   end
 
   def json
-    render json: Swagger::Blocks.build_root_json(self.class.swagger_classes)
+    render json: File.read("#{Rails.root}/app/bindings/api/v0/swagger.json")
   end
 end

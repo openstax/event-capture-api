@@ -19,10 +19,6 @@ $> bundle install
 $> bundle exec rails s
 ```
 
-### Generating files with the Swagger JSON
-
-Run `rake write_swagger_json` to write Swagger JSON files to `tmp/swagger` for each major API version.
-
 ### Tests
 
 Run the tests with `rspec` or `rake`.
@@ -121,13 +117,17 @@ DELETE http://localhost:8081/subjects/org.openstax.ec.nudged?permanent=true
 
 ### Swagger, Clients, and Bindings
 
-The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.
+The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.  The Swagger JSON file must be generated before it can be served.  Do so with `./docker/compose run --rm api rake generate_swagger[X]` (which will also generate the bindings), where `X` is the version of the outer API you want to generate.
+
+Note that there is a separate `generate_swagger_json[X]` task that generates just the Swagger JSON and not the bindings, but this should generally not be used as it puts us at risk of our JSON and bindings getting out of sync.
 
 Note: Event payloads are swagger validated and avro validation.  The `swagger.rb` file for the event lives alongside the generated avsc file in the same versioned directory.
 
-#### Autogenerating bindings
+#### Autogenerating bindings and Swagger JSON.
 
-Within the baseline, we use Swagger-generated Ruby code to serve as bindings for request and response data.  Calling `./docker/compose run --rm api rake openstax_swagger:generate_model_bindings[X]` will create version `X` request and response model bindings in `app/bindings/api/vX`.  Note that this `X` is the version of the outer API, and its bindings will include all available versions of the inner event data (see the section above about the different kinds of versions we deal with).  It is important to run this inside Docker so that the version of swagger-codegen is the same for everyone.
+Within the baseline, we use Swagger-generated Ruby code to serve as bindings for request and response data.  Calling `./docker/compose run --rm api rake generate_swagger[X]` will create version `X` request and response model bindings in `app/bindings/api/vX` (it will also create the Swagger JSON file).  Note that this `X` is the version of the outer API, and its bindings will include all available versions of the inner event data (see the section above about the different kinds of versions we deal with).  It is important to run this inside Docker so that the version of swagger-codegen is the same for everyone.
+
+Note that there is a separate `openstax_swagger:generate_model_bindings[X]` task that generates just the Ruby bindings and not the Swagger JSON, but this should generally not be used as it puts us at risk of our JSON and bindings getting out of sync.
 
 See the documentation at https://github.com/openstax/swagger-rails for more information.
 
@@ -140,7 +140,7 @@ If however you wanted to make a breaking change to a payload, e.g. for the `nudg
 #### Registering topics
 
 In order to use kafka (non-locally) you will need to first register your topics with kafka.  To do this, first make
-sure that `config/topics.yml` has the topics you need, then run this rake task to create these within kafka: 
+sure that `config/topics.yml` has the topics you need, then run this rake task to create these within kafka:
 
 ```
 bundle exec rake populate_topics
