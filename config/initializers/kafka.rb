@@ -38,7 +38,7 @@ class KafkaAvroTurf
         AvroTurf::Messaging.new(
           namespace: 'org.openstax.ec',
           schema_store: EventCaptureSchemaStore.new(
-            path: Rails.application.secrets.kafka[:schemas_path]
+            path: 'schemas'
           ),
           registry_url: Rails.application.secrets.kafka[:schema_url],
           logger: Rails.logger
