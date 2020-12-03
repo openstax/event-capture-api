@@ -24,8 +24,12 @@ class AsyncKafkaProducer
     @@instance ||=
       begin
         OxKafka.instance.async_producer(
-          delivery_interval: Rails.application.secrets.kafka[:delivery_interval],
-          delivery_threshold: Rails.application.secrets.kafka[:delivery_threshold]
+          # Max msg count for kafka queue
+          max_buffer_size: 10_000,
+          # Trigger a delivery once N messages have been buffered.
+          delivery_threshold: Rails.application.secrets.kafka[:delivery_threshold],
+          # Trigger a delivery every N seconds.
+          delivery_interval: Rails.application.secrets.kafka[:delivery_interval]
         )
       end
   end
