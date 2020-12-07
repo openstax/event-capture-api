@@ -5,7 +5,7 @@ topics: [
         'org.openstax.ec.nudged_v1'
     ],
     config: {
-      replication: 1
+      replication: 3
     }
   },
   {
@@ -14,7 +14,7 @@ topics: [
         'org.openstax.ec.accessed_studyguide_v1'
     ],
     config: {
-      replication: 1
+      replication: 3
     }
   },
   {
@@ -23,7 +23,7 @@ topics: [
         'org.openstax.ec.created_highlight_v1'
     ],
     config: {
-      replication: 1
+      replication: 3
     }
   },
   {
@@ -32,7 +32,7 @@ topics: [
         'org.openstax.ec.started_session_v1'
     ],
     config: {
-      replication: 1
+      replication: 3
     }
   }
 ]
