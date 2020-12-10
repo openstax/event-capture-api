@@ -20,6 +20,11 @@ class Api::V0::EventsController < Api::V0::BaseController
 
   def convert_api_data_to_kafka_data(api_data:)
     api_data.except(:client_clock_sent_at, :client_clock_occurred_at).tap do |data|
+      if data[:type].include?('org.openstax.ec.started_session')
+        data[:ip_address] = request.remote_ip
+        data[:user_agent] = request.headers['User-Agent']
+      end
+
       # Set the user uuid according to the currently logged in user
       data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
       data[:device_uuid] = CompactUuid.pack(current_device_uuid) if current_device_uuid
