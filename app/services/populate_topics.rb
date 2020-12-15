@@ -16,13 +16,15 @@ class PopulateTopics
 
   def add_to_kafka(topics_to_add)
     topics_to_add.each do |topic_name|
-      # replication happens across brokers.  So, calculate the min of # brokers and replication factor
+      # replication happens across brokers.  So, calculate the min of # brokers and
+      # replication and partitions.  Both should not exceed #brokers
       replication = [OxKafka.instance.brokers.length, topics_config.replication_by_topic[topic_name]].min
+      partitions = [OxKafka.instance.brokers.length, topics_config.partitions_by_topic[topic_name]].min
 
       OxKafka.instance.create_topic(
         topic_name,
         replication_factor: replication,
-        num_partitions: replication
+        num_partitions: partitions
       )
     end
   end
