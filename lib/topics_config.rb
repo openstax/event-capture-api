@@ -1,10 +1,16 @@
 class TopicsConfig
   attr_reader :topic_names_by_schema
   attr_reader :uniq_topic_names
+  attr_reader :replication_by_topic
+  attr_reader :partitions_by_topic
 
   def initialize
     @topic_names_by_schema = {}
+    @replication_by_topic = {}
+    @partitions_by_topic = {}
     data_from_config['topics'].each do |topic|
+      @replication_by_topic[topic['name']] = topic['config']['replication']
+      @partitions_by_topic[topic['name']] = topic['config']['partitions']
       topic['schemas'].each do |schema|
         @topic_names_by_schema[schema] = topic['name']
       end
