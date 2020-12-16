@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V0::EventsController < Api::V0::BaseController
+  def foobar
+    
+  end
   def create
     inbound_binding, error = bind(params.extract!(:events), Api::V0::Bindings::Events)
     render(json: error, status: error.status_code) and return if error
