@@ -62,16 +62,62 @@ RSpec.describe Api::V0::EventsController, type: :request do
       }
     end
 
+    let(:agent) { 'agent' }
+    let(:ip_address) { '1.1.1.1' }
+
+    let(:avro_turf) {
+      double({encode: nil})
+    }
+
     before do
       allow(TopicsConfig).to receive(:get_topic_for_event).and_return('foo_topic')
-      allow(KafkaAvroTurf).to receive(:instance).and_return(double({encode: nil}))
+      allow(KafkaAvroTurf).to receive(:instance).and_return(avro_turf)
     end
 
     it 'successfully calls the API and sends a data message to kafka' do
       expect(KafkaClient).to receive(:async_produce).twice
+      expect(avro_turf).to receive(:encode).
+        with(hash_excluding( user_agent: agent, ip_address: ip_address), anything)
+
       post api_v0_events_path, params: attributes
 
       expect(response).to have_http_status(201)
+    end
+
+    context 'when the request is a started_session' do
+      let(:data) do
+        {
+          'type': 'org.openstax.ec.started_session_v1',
+          'session_uuid': 'ed3cdd93-6688-4fcb-b5b3-da3e71052454',
+          'client_clock_occurred_at': '2020-10-06T18:14:22Z',
+          'client_clock_sent_at': '2020-10-06T18:14:22Z',
+        }
+      end
+      let(:event_attributes) do
+        {
+          'events': [ { 'data': data } ]
+        }
+      end
+      let(:headers) {
+        {
+          'User-Agent' => agent
+        }
+      }
+
+      before do
+        allow_any_instance_of(ActionDispatch::Request).
+          to receive(:remote_ip).
+            and_return(ip_address)
+
+        allow(KafkaClient).to receive(:async_produce)
+      end
+
+      it 'sets the ip address and user agent' do
+        expect(avro_turf).to receive(:encode).
+          with(hash_including( user_agent: agent, ip_address: ip_address), anything)
+
+        post api_v0_events_path, params: event_attributes, headers: headers
+      end
     end
 
     context 'when a logged-in user submits an event' do

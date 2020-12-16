@@ -3,18 +3,10 @@ module Ec::StartedSession::V1
     include SwaggerEventSchema1
 
     swagger_event_schema(:StartedSessionV1, skip_session_fields: true, type: 'org.openstax.ec.started_session_v1') do
-      key :required, [:ip_address, :referrer, :user_agent]
-      property :ip_address do
-        key :type, :string
-        key :description, 'The session IP address.'
-      end
+      key :required, [:referrer, :session_uuid]
       property :referrer do
         key :type, :string
         key :description, 'The referrer.'
-      end
-      property :user_agent do
-        key :type, :string
-        key :description, 'The user agent.'
       end
       property :session_uuid do
         key :type, :string
