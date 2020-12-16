@@ -29,3 +29,9 @@ jobs:
           bundle install
           bundle exec rake setup
           bundle exec rspec
+      - name: Upload coverage results
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
