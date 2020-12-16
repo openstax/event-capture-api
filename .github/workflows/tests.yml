@@ -1,0 +1,31 @@
+name: Tests
+
+env:
+  RUBY_VERSION: 2.6.6
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 0' # weekly
+
+jobs:
+  tests:
+    timeout-minutes: 10
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Test
+        env:
+          ENABLE_CODECOV: 1
+        run: |
+          gem install bundler
+          bundle install
+          bundle exec rake setup
+          bundle exec rspec
