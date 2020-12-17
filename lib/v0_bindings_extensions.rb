@@ -8,9 +8,33 @@ Rails.application.config.to_prepare do
   # to monkey patch, so bail.
   next if RakeUtils.running_task?(/generate_model_bindings/)
 
+  Api::V0::Bindings::Events.class_exec do
+    alias_method :original_valid?, :valid?
+    def valid?
+      original_valid? && events.all?(&:valid?)
+    end
+
+    alias_method :original_list_invalid_properties, :list_invalid_properties
+    def list_invalid_properties
+      event_invalid_properties = events.map_with_index do |event,ii|
+        event.list_invalid_properties.map do |message|
+          "Event [#{ii}]: #{message}"
+        end
+      end.flatten
+
+      original_list_invalid_properties + event_invalid_properties
+    end
+  end
+
   Api::V0::Bindings::Event.class_exec do
-    def valid_data?
-      data&.valid?
+    alias_method :original_valid?, :valid?
+    def valid?
+      original_valid? && data&.valid?
+    end
+
+    alias_method :original_list_invalid_properties, :list_invalid_properties
+    def list_invalid_properties
+      original_list_invalid_properties + (data&.list_invalid_properties || [])
     end
 
     def data=(data_object)
