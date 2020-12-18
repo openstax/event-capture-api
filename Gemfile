@@ -43,7 +43,7 @@ group :test do
   # Code Climate integration
   # gem "codeclimate-test-reporter", require: false
 
-  gem 'codecov', require: false
+  gem 'codecov', '~> 0.2.13', require: false
   gem 'simplecov', require: false
   gem 'sinatra'
   gem 'webmock'
