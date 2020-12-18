@@ -6,7 +6,7 @@ Rails.application.config.to_prepare do
 
   # If we're running the task to generate model bindings, there's nothing yet
   # to monkey patch, so bail.
-  next if RakeUtils.running_task?(/generate_model_bindings/)
+  next if RakeUtils.running_task?(/generate_model_bindings|generate_swagger/)
 
   Api::V0::Bindings::Events.class_exec do
     alias_method :original_valid?, :valid?
@@ -16,7 +16,7 @@ Rails.application.config.to_prepare do
 
     alias_method :original_list_invalid_properties, :list_invalid_properties
     def list_invalid_properties
-      event_invalid_properties = events.map_with_index do |event,ii|
+      event_invalid_properties = events.map.with_index do |event,ii|
         event.list_invalid_properties.map do |message|
           "Event [#{ii}]: #{message}"
         end
