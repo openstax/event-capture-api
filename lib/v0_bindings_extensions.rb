@@ -16,9 +16,9 @@ Rails.application.config.to_prepare do
 
     alias_method :original_list_invalid_properties, :list_invalid_properties
     def list_invalid_properties
-      event_invalid_properties = events.map.with_index do |event,ii|
+      event_invalid_properties = events.map.with_index do |event,index|
         event.list_invalid_properties.map do |message|
-          "Event [#{ii}]: #{message}"
+          "Event [#{index}]: #{message}"
         end
       end.flatten
 

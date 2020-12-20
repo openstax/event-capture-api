@@ -133,6 +133,18 @@ RSpec.describe Api::V0::EventsController, type: :request do
 
         post api_v0_events_path, params: event_attributes, headers: headers
       end
+
+      it 'sends occurred_at to kafka' do
+        expect(avro_turf).to receive(:encode).with(hash_including(occurred_at: kind_of(Integer)), anything)
+        post api_v0_events_path, params: event_attributes, headers: headers
+      end
+
+      it 'does not send the other timestamps to kafka' do
+        expect(avro_turf).to receive(:encode).with(hash_not_including(
+          client_clock_sent_at: anything, client_clock_occurred_at: anything
+        ), anything)
+        post api_v0_events_path, params: event_attributes, headers: headers
+      end
     end
 
     context 'when a logged-in user submits an event' do
