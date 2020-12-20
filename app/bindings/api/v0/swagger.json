@@ -30,7 +30,7 @@
       "post": {
         "summary": "Captures events",
         "description": "Capture one or more events",
-        "operationId": "addEvent",
+        "operationId": "addEvents",
         "produces": [
           "application/json"
         ],
@@ -39,7 +39,7 @@
         ],
         "parameters": [
           {
-            "name": "events",
+            "name": "payload",
             "in": "body",
             "required": true,
             "schema": {
@@ -48,8 +48,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success."
+          "201": {
+            "description": "Created."
           }
         }
       }
@@ -99,10 +99,13 @@
       }
     },
     "Event": {
+      "required": [
+        "data"
+      ],
       "properties": {
         "data": {
           "type": "object",
-          "description": "The event payload object.  Will be of a type that lives in a swagger file inside the schemas directory."
+          "description": "The event object.  Will be of a type that lives in a swagger file inside the schemas directory."
         }
       }
     },
@@ -110,7 +113,7 @@
       "properties": {
         "events": {
           "type": "array",
-          "description": "Array of Events",
+          "description": "Array of Event",
           "items": {
             "$ref": "#/definitions/Event"
           }

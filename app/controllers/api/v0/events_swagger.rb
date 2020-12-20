@@ -3,16 +3,17 @@ class Api::V0::EventsSwagger
   include OpenStax::Swagger::SwaggerBlocksExtensions
 
   swagger_schema :Event do
+    key :required, [:data]
     property :data do
       key :type, :object
-      key :description, 'The event payload object.  Will be of a type that lives in a swagger file inside the schemas directory.'
+      key :description, 'The event object.  Will be of a type that lives in a swagger file inside the schemas directory.'
     end
   end
 
   swagger_schema :Events do
     property :events do
       key :type, :array
-      key :description, 'Array of Events'
+      key :description, 'Array of Event'
       items do
         key :'$ref', :Event
       end
@@ -23,7 +24,7 @@ class Api::V0::EventsSwagger
     operation :post do
       key :summary, 'Captures events'
       key :description, 'Capture one or more events'
-      key :operationId, 'addEvent'
+      key :operationId, 'addEvents'
       key :produces, [
         'application/json'
       ]
@@ -31,15 +32,15 @@ class Api::V0::EventsSwagger
         'Events'
       ]
       parameter do
-        key :name, :events
+        key :name, :payload # ignored but used in various ways in client generation
         key :in, :body
         key :required, true
         schema do
           key :'$ref', :Events
         end
       end
-      response 200 do
-        key :description, 'Success.'
+      response 201 do
+        key :description, 'Created.'
       end
       # extend Api::V0::SwaggerResponses::AuthenticationError
       # extend Api::V0::SwaggerResponses::UnprocessableEntityError

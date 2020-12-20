@@ -20,7 +20,8 @@ RSpec.describe Api::V0::EventsController, type: :request do
         "client_clock_sent_at": "2020-10-06T18:14:22Z",
         'type': 'org.openstax.ec.nudged_v1',
         'version': '1',
-        'session_uuid': 'ed3cdd93-6688-4fcb-b5b3-da3e71052454'
+        'session_uuid': 'ed3cdd93-6688-4fcb-b5b3-da3e71052454',
+        'session_order': 42
       }
     }
 
@@ -35,6 +36,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
         "client_clock_sent_at": "2020-10-06T18:14:22Z",
         'type': 'org.openstax.ec.nudged_v1',
         'session_uuid': 'ed3cdd93-6688-4fcb-b5b3-da3e71052454',
+        'session_order': 42,
         'version': '1'
       }
     }
@@ -84,11 +86,24 @@ RSpec.describe Api::V0::EventsController, type: :request do
       expect(response).to have_http_status(201)
     end
 
+    it 'gives a 422 with error messages for any invalid event and sends none to Kafka' do
+      expect(KafkaClient).not_to receive(:async_produce)
+
+      data1.delete(:session_uuid)
+      post api_v0_events_path, params: attributes
+
+      expect(response).to have_http_status(422)
+      expect(JSON.parse(response.body)["messages"]).to include(
+        /Event \[0\]: invalid value for "session_uuid/
+      )
+    end
+
     context 'when the request is a started_session' do
       let(:data) do
         {
           'type': 'org.openstax.ec.started_session_v1',
           'session_uuid': 'ed3cdd93-6688-4fcb-b5b3-da3e71052454',
+          'referrer': 'https://google.com',
           'client_clock_occurred_at': '2020-10-06T18:14:22Z',
           'client_clock_sent_at': '2020-10-06T18:14:22Z',
         }
@@ -116,6 +131,18 @@ RSpec.describe Api::V0::EventsController, type: :request do
         expect(avro_turf).to receive(:encode).
           with(hash_including( user_agent: agent, ip_address: ip_address), anything)
 
+        post api_v0_events_path, params: event_attributes, headers: headers
+      end
+
+      it 'sends occurred_at to kafka' do
+        expect(avro_turf).to receive(:encode).with(hash_including(occurred_at: kind_of(Integer)), anything)
+        post api_v0_events_path, params: event_attributes, headers: headers
+      end
+
+      it 'does not send the other timestamps to kafka' do
+        expect(avro_turf).to receive(:encode).with(hash_not_including(
+          client_clock_sent_at: anything, client_clock_occurred_at: anything
+        ), anything)
         post api_v0_events_path, params: event_attributes, headers: headers
       end
     end

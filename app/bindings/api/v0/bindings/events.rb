@@ -14,7 +14,7 @@ require 'date'
 
 module Api::V0::Bindings
   class Events
-    # Array of Events
+    # Array of Event
     attr_accessor :events
 
     # Attribute mapping from ruby-style variable name to JSON key.

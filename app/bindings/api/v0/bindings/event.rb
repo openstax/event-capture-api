@@ -14,7 +14,7 @@ require 'date'
 
 module Api::V0::Bindings
   class Event
-    # The event payload object.  Will be of a type that lives in a swagger file inside the schemas directory.
+    # The event object.  Will be of a type that lives in a swagger file inside the schemas directory.
     attr_accessor :data
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -48,12 +48,17 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if @data.nil?
+        invalid_properties.push('invalid value for "data", data cannot be nil.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      return false if @data.nil?
       true
     end
 
