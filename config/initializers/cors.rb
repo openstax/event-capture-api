@@ -5,12 +5,21 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-# Rails.application.config.middleware.insert_before 0, Rack::Cors do
-#   allow do
-#     origins 'example.com'
-#
-#     resource '*',
-#       headers: :any,
-#       methods: [:get, :post, :put, :patch, :delete, :options, :head]
-#   end
-# end
+ALLOWED_CORS_ORIGINS = [
+  /^https:\/\/openstax\.org$/,
+  /\.openstax\.org$/,
+  /^https:\/\/rex-web(-production)?\.herokuapp\.com$/,
+  /^https?:\/\/localhost:\d+$/
+]
+
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins do |source, env|
+      ALLOWED_CORS_ORIGINS.any? { |regex| source =~ regex }
+    end
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
+end
