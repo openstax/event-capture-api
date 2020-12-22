@@ -3,7 +3,7 @@
   "info": {
     "version": "0.1.0",
     "title": "OpenStax Event Capture API",
-    "description": "The Event Capture API for OpenStax.\n\nRequests to this API should include `application/json` in the `Accept` header.\n\nThe desired API version is specified in the request URL, e.g. `[domain]/api/v0/events`. While the API does support a default version, that version will change over time and therefore should not be used in production code!\n",
+    "description": "The Event Capture API for OpenStax.\n\nRequests to this API should include `application/json` in the `Accept` header.\n\nThe desired API version is specified in the request URL, e.g. `[domain]/api/v0`. While the API does support a default version, that version will change over time and therefore should not be used in production code!\n",
     "termsOfService": "https://openstax.org/tos",
     "contact": {
       "name": "support@openstax.org"
@@ -18,7 +18,7 @@
       "description": "Event Capture endpoints"
     }
   ],
-  "basePath": "/api/v0/events",
+  "basePath": "/api/v0",
   "consumes": [
     "application/json"
   ],
