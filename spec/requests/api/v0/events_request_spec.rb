@@ -7,7 +7,67 @@ include SchemaRegistryHelpers
 RSpec.describe Api::V0::EventsController, type: :request do
   before { use_fake_schema_registry }
 
-  describe 'POST /highlights' do
+  describe 'OPTIONS /events' do
+    it 'returns allowed origin for openstax.org' do
+      process :options, api_v0_events_path, headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://openstax.org'
+      }
+
+      expect(response.headers).to include 'Access-Control-Allow-Origin'
+      expect(response.headers['Access-Control-Allow-Origin']).to eq 'https://openstax.org'
+    end
+
+    it 'does not allow unknown origins' do
+      process :options, api_v0_events_path, headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://randomsite.com'
+      }
+
+      expect(response.headers).not_to include 'Access-Control-Allow-Origin'
+    end
+
+    it 'does not allow sneaky bad guys' do
+      process :options, api_v0_events_path, headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://notopenstax.org'
+      }
+
+      expect(response.headers).not_to include 'Access-Control-Allow-Origin'
+    end
+
+    it 'allows heroku (dev)' do
+      process :options, api_v0_events_path, headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://rex-web.herokuapp.com'
+      }
+
+      expect(response.headers).to include 'Access-Control-Allow-Origin'
+      expect(response.headers['Access-Control-Allow-Origin']).to eq 'https://rex-web.herokuapp.com'
+    end
+
+    it 'allows heroku (prod)' do
+      process :options, api_v0_events_path, headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://rex-web-production.herokuapp.com'
+      }
+
+      expect(response.headers).to include 'Access-Control-Allow-Origin'
+      expect(response.headers['Access-Control-Allow-Origin']).to eq 'https://rex-web-production.herokuapp.com'
+    end
+
+    it 'allows subdomains (sandbox)' do
+      process :options, api_v0_events_path, headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://release-foo.sandbox.openstax.org'
+      }
+
+      expect(response.headers).to include 'Access-Control-Allow-Origin'
+      expect(response.headers['Access-Control-Allow-Origin']).to eq 'https://release-foo.sandbox.openstax.org'
+    end
+  end
+
+  describe 'POST /events' do
     let(:user_id) { '123' }
     let(:data1) {
       {
