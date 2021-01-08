@@ -7,10 +7,13 @@ services:
       dockerfile: docker/Dockerfile
     ports:
       - "3001:3001"
-    command: bash -c "rm -f tmp/pids/server.pid && bin/rake setup && bin/rake about && bin/rails server -b '0.0.0.0' -p 3001"
+    command: bash -c "bin/rake about && bin/rails server -b '0.0.0.0' -p 3001"
     stdin_open: true  # allow for debugger
     tty: true         # interaction
     volumes:
       - ..:/code
       - /code/tmp
       - /code/log
+    environment:
+      KAFKA_BROKER_HOST: 'broker:9092'
+      KAFKA_SCHEMA_URL: 'http://schema-registry:8081/'
