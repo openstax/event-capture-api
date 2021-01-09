@@ -14,3 +14,6 @@ services:
       - ..:/code
       - /code/tmp
       - /code/log
+    environment:
+      KAFKA_BROKER_HOST: 'broker:9092'
+      KAFKA_SCHEMA_URL: 'http://schema-registry:8081/'
