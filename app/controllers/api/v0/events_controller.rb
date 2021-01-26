@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'uri'
+require 'byebug'
 
 class Api::V0::EventsController < Api::V0::BaseController
   def create
@@ -24,6 +26,16 @@ class Api::V0::EventsController < Api::V0::BaseController
         data[:ip_address] = request.remote_ip
         data[:user_agent] = request.headers['User-Agent']
       end
+
+      # Split source_uri into parts, keeping most of them
+      # FIXME how to error properly, if source_uri is not parseable?
+      # TODO parse query params into a hash of some sort?
+      
+      source_uri = URI(data[:source_uri])
+
+      data[:host] = source_uri.host
+      data[:path] = source_uri.path
+      data[:query] = source_uri.query
 
       # Set the user uuid according to the currently logged in user
       data[:user_uuid] = CompactUuid.pack(current_user_uuid) if current_user_uuid
