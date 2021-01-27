@@ -54,6 +54,8 @@ class Api::V0::EventsController < Api::V0::BaseController
       data[:host] = source_uri.host
       data[:path] = source_uri.path
       data[:query] = source_uri.query
+
+      data.except!(:source_uri)
     end
 
     def translate_uuids
