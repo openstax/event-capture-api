@@ -53,7 +53,7 @@ module SwaggerEventSchema1
         end
         property :source_uri do
           key :type, :string
-          key :description, 'client browser location when event occurred.'
+          key :description, 'client location when event occurred.'
         end
         unless skip_session_fields
           property :session_uuid do

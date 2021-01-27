@@ -191,7 +191,7 @@
         },
         "source_uri": {
           "type": "string",
-          "description": "client browser location when event occurred."
+          "description": "client location when event occurred."
         },
         "session_uuid": {
           "type": "string",
@@ -258,7 +258,7 @@
         },
         "source_uri": {
           "type": "string",
-          "description": "client browser location when event occurred."
+          "description": "client location when event occurred."
         },
         "referrer": {
           "type": "string",
@@ -301,7 +301,7 @@
         },
         "source_uri": {
           "type": "string",
-          "description": "client browser location when event occurred."
+          "description": "client location when event occurred."
         },
         "session_uuid": {
           "type": "string",
@@ -353,7 +353,7 @@
         },
         "source_uri": {
           "type": "string",
-          "description": "client browser location when event occurred."
+          "description": "client location when event occurred."
         },
         "session_uuid": {
           "type": "string",
