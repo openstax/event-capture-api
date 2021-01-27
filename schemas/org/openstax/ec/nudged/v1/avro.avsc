@@ -33,6 +33,10 @@
       "type": "int"
     },
     {
+      "name": "scheme",
+      "type": "string"
+    },
+    {
       "name": "host",
       "type": "string"
     },

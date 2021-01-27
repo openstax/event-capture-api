@@ -29,6 +29,10 @@
       "type": "org.openstax.ec.uuid"
     },
     {
+      "name": "scheme",
+      "type": "string"
+    },
+    {
       "name": "host",
       "type": "string"
     },
