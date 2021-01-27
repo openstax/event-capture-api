@@ -39,7 +39,7 @@ class Api::V0::EventsController < Api::V0::BaseController
       # Capture request-level data for session starts
       return unless data[:type].include?('org.openstax.ec.started_session')
       data[:ip_address] = controller.request.remote_ip
-      data[:user_agent] = request.headers['User-Agent']
+      data[:user_agent] = controller.request.headers['User-Agent']
     end
 
     def translate_source_uri
