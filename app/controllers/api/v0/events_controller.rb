@@ -18,7 +18,7 @@ class Api::V0::EventsController < Api::V0::BaseController
 
   class KafkaData
     def initialize(api_data:, controller:)
-      @data = api_data.to_hash
+      @data = api_data.to_hash.deep_dup
       @controller = controller
 
       translate_started_session
