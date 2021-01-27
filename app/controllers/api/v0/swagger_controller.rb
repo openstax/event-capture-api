@@ -1,5 +1,3 @@
-require 'uri'
-
 class Api::V0::SwaggerController < ApplicationController
   include ::Swagger::Blocks
 
