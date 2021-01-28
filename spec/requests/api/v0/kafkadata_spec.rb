@@ -51,7 +51,7 @@ RSpec.describe Api::V0::EventsController::KafkaData do
         host: 'rex.example.com',
         occurred_at: occured_at,
         path: '/some/book/id',
-        query: { book_id: ['34343'] },
+        query: { "book_id" => ['34343'] },
         referrer: 'https://lms.example.com/some/other/path',
         scheme: 'https',
         session_uuid: compact_session_uuid,
