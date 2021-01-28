@@ -53,7 +53,7 @@ class Api::V0::EventsController < Api::V0::BaseController
       data[:scheme] = source_uri.scheme
       data[:host] = source_uri.host
       data[:path] = source_uri.path
-      data[:query] = source_uri.query
+      data[:query] = CGI.parse(source_uri.query)
 
       data.except!(:source_uri)
     end

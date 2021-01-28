@@ -42,7 +42,13 @@
     },
     {
       "name": "query",
-      "type": "string"
+      "type": {
+        "type": "map",
+        "values": {
+          "type": "array",
+          "items": "string"
+        }
+      }
     },
     {
       "name": "ip_address",
