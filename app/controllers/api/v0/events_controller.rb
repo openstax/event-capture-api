@@ -18,6 +18,7 @@ class Api::V0::EventsController < Api::V0::BaseController
 
   class KafkaData < Hash
     def initialize(api_data:, controller:)
+      super
       merge!(api_data)
 
       @controller = controller
