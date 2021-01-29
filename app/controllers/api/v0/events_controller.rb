@@ -31,7 +31,7 @@ class Api::V0::EventsController < Api::V0::BaseController
 
     protected
 
-    attr_reader :data, :controller
+    attr_reader :controller
 
     def translate_started_session
       # Capture request-level data for session starts

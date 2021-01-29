@@ -39,17 +39,17 @@ RSpec.describe Api::V0::EventsController::KafkaData do
     }
   end
 
-  let(:instance) { described_class.new(api_data: api_data, controller: fake_controller).to_hash }
+  let(:instance) { described_class.new(api_data: api_data, controller: fake_controller)}
 
   # Request header captures
   it 'captures the remote IP from request headers' do
-    expect(instance).to include({ ip_address: remote_ip })
+    expect(instance).to include(ip_address: remote_ip)
   end
   it 'captures the referrer from request headers' do
-    expect(instance).to include({ referrer: 'https://lms.example.com/some/other/path' })
+    expect(instance).to include(referrer: 'https://lms.example.com/some/other/path')
   end
   it 'catures the user_agent from the request headers' do
-    expect(instance).to include({ user_agent: 'My Crazy Test Browser' })
+    expect(instance).to include(user_agent: 'My Crazy Test Browser')
   end
 
   # Event time calculation
@@ -61,38 +61,38 @@ RSpec.describe Api::V0::EventsController::KafkaData do
     ).to_i
   end
   it 'calculates the occured_at timestamp' do
-    expect(instance).to include({ occurred_at: occured_at })
+    expect(instance).to include(occurred_at: occured_at)
   end
 
   # Source_uri parsing
   it 'extracts the source_uri schema' do
-    expect(instance).to include({ scheme: 'https' })
+    expect(instance).to include(scheme: 'https')
   end
   it 'extracts host from source_uri' do
-    expect(instance).to include({ host: 'rex.example.com' })
+    expect(instance).to include(host: 'rex.example.com')
   end
   it 'extracts the path from source_uri' do
-    expect(instance).to include({ path: '/some/book/id' })
+    expect(instance).to include(path: '/some/book/id')
   end
   it 'extracts and parses the query from source_uri' do
     expect(instance).to include(
-      { query: { 'book_id' => ['34343'], 'words' => ['me', 'and', 'my shadow'] } }
+      query: { 'book_id' => ['34343'], 'words' => ['me', 'and', 'my shadow'] }
     )
   end
 
   # uuid handling
   it 'compacts the session_id' do
     expect(instance).to include(
-      { session_uuid: CompactUuid.pack(session_uuid) }
+      session_uuid: CompactUuid.pack(session_uuid)
     )
   end
   it 'compacts  the user_id' do
     expect(instance).to include(
-      { user_uuid: CompactUuid.pack(user_id) }
+      user_uuid: CompactUuid.pack(user_id)
     )
   end
 
   it 'includes the event type' do
-    expect(instance).to include({ type: 'org.openstax.ec.started_session' })
+    expect(instance).to include(type: 'org.openstax.ec.started_session')
   end
 end
