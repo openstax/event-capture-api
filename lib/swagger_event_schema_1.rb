@@ -39,17 +39,21 @@ module SwaggerEventSchema1
         property :client_clock_occurred_at do
           key :type, :string
           key :format, 'date-time'
-          key :description, 'The RFC 3339 section 5.6 date-time when nudge actually occurred.'
+          key :description, 'The RFC 3339 section 5.6 date-time when event actually occurred.'
         end
         property :client_clock_sent_at do
           key :type, :string
           key :format, 'date-time'
-          key :description, 'The RFC 3339 section 5.6 date-time when nudge event was sent to the server.'
+          key :description, 'The RFC 3339 section 5.6 date-time when event was sent to the server.'
         end
         property :type do
           key :type, :string
           key :description, 'The data\'s type.'
           key :enum, [type]
+        end
+        property :source_uri do
+          key :type, :string
+          key :description, 'client location when event occurred.'
         end
         unless skip_session_fields
           property :session_uuid do
@@ -67,13 +71,14 @@ module SwaggerEventSchema1
 
       # Run the block on the schema (to add the event-specific fields), but use a wrapper around
       # the schema that intercepts the call to `key :required, [:blah]`.  Save off those required
-      # fields and then add our three common event fields to it, and make all of those required
-      # on the schema.
+      # fields and then add our common event fields to it, and make all of those required on the
+      # schema.
       wrapper = RequiredKeyInterceptor.new(schema)
       wrapper.instance_eval(&block)
       schema.key(:required, wrapper.required_fields + [:client_clock_sent_at,
                                                        :client_clock_occurred_at,
                                                        :type,
+                                                       :source_uri,
                                                        :session_uuid,
                                                        :session_order])
       schema

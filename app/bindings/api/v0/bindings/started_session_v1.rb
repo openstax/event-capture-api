@@ -14,14 +14,17 @@ require 'date'
 
 module Api::V0::Bindings
   class StartedSessionV1
-    # The RFC 3339 section 5.6 date-time when nudge actually occurred.
+    # The RFC 3339 section 5.6 date-time when event actually occurred.
     attr_accessor :client_clock_occurred_at
 
-    # The RFC 3339 section 5.6 date-time when nudge event was sent to the server.
+    # The RFC 3339 section 5.6 date-time when event was sent to the server.
     attr_accessor :client_clock_sent_at
 
     # The data's type.
     attr_accessor :type
+
+    # client location when event occurred.
+    attr_accessor :source_uri
 
     # The referrer.
     attr_accessor :referrer
@@ -57,6 +60,7 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'client_clock_occurred_at',
         :'client_clock_sent_at' => :'client_clock_sent_at',
         :'type' => :'type',
+        :'source_uri' => :'source_uri',
         :'referrer' => :'referrer',
         :'session_uuid' => :'session_uuid'
       }
@@ -68,6 +72,7 @@ module Api::V0::Bindings
         :'client_clock_occurred_at' => :'DateTime',
         :'client_clock_sent_at' => :'DateTime',
         :'type' => :'String',
+        :'source_uri' => :'String',
         :'referrer' => :'String',
         :'session_uuid' => :'String'
       }
@@ -91,6 +96,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'type')
         self.type = attributes[:'type']
+      end
+
+      if attributes.has_key?(:'source_uri')
+        self.source_uri = attributes[:'source_uri']
       end
 
       if attributes.has_key?(:'referrer')
@@ -118,6 +127,10 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
+      if @source_uri.nil?
+        invalid_properties.push('invalid value for "source_uri", source_uri cannot be nil.')
+      end
+
       if @referrer.nil?
         invalid_properties.push('invalid value for "referrer", referrer cannot be nil.')
       end
@@ -137,6 +150,7 @@ module Api::V0::Bindings
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.started_session_v1'])
       return false unless type_validator.valid?(@type)
+      return false if @source_uri.nil?
       return false if @referrer.nil?
       return false if @session_uuid.nil?
       true
@@ -160,6 +174,7 @@ module Api::V0::Bindings
           client_clock_occurred_at == o.client_clock_occurred_at &&
           client_clock_sent_at == o.client_clock_sent_at &&
           type == o.type &&
+          source_uri == o.source_uri &&
           referrer == o.referrer &&
           session_uuid == o.session_uuid
     end
@@ -173,7 +188,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, referrer, session_uuid].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, referrer, session_uuid].hash
     end
 
     # Builds the object from hash

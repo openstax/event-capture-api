@@ -33,6 +33,28 @@
       "type": "int"
     },
     {
+      "name": "scheme",
+      "type": "string"
+    },
+    {
+      "name": "host",
+      "type": "string"
+    },
+    {
+      "name": "path",
+      "type": "string"
+    },
+    {
+      "name": "query",
+      "type": {
+        "type": "map",
+        "values": {
+          "type": "array",
+          "items": "string"
+        }
+      }
+    },
+    {
       "name": "app",
       "type": "string"
     },
