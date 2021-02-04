@@ -56,6 +56,16 @@ RSpec.describe Api::V0::EventsController, type: :request do
       expect(response.headers['Access-Control-Allow-Origin']).to eq 'https://rex-web-production.herokuapp.com'
     end
 
+    it 'allows heroku (pr)' do
+      process :options, api_v0_events_path, headers: {
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://rex-web-foobar-as-3-s-3.herokuapp.com'
+      }
+
+      expect(response.headers).to include 'Access-Control-Allow-Origin'
+      expect(response.headers['Access-Control-Allow-Origin']).to eq 'https://rex-web-foobar-as-3-s-3.herokuapp.com'
+    end
+
     it 'allows subdomains (sandbox)' do
       process :options, api_v0_events_path, headers: {
         'Access-Control-Request-Method': 'POST',
