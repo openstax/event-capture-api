@@ -8,7 +8,7 @@
 ALLOWED_CORS_ORIGINS = [
   /^https:\/\/openstax\.org$/,
   /\.openstax\.org$/,
-  /^https:\/\/rex-web(-production)?\.herokuapp\.com$/,
+  /^https:\/\/rex-web[^\.]*\.herokuapp\.com$/,
   /^https?:\/\/localhost:\d+$/
 ]
 
