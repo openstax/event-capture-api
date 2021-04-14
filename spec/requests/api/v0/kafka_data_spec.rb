@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 require 'ostruct'
 
 RSpec.describe Api::V0::EventsController::KafkaData do
   # mock controller and request
   let(:remote_ip) { '192.168.1.1' }
   let(:user_id) { 'd8388680-80cf-4fdb-95bb-829a46342115' }
+  let(:device_id) { '9c2e4a92-67ef-11eb-847e-a71a7356faee' }
   let(:received_at) { Time.parse('2020-10-06T18:14:27Z') }
 
   let(:fake_controller) do
@@ -19,7 +21,8 @@ RSpec.describe Api::V0::EventsController::KafkaData do
           'User-Agent' => 'My Crazy Test Browser'
         )
       ),
-      current_user_uuid: user_id
+      current_user_uuid: user_id,
+      current_device_uuid: device_id
     )
   end
 
@@ -92,7 +95,21 @@ RSpec.describe Api::V0::EventsController::KafkaData do
     )
   end
 
-  it 'includes the event type' do
-    expect(instance).to include(type: 'org.openstax.ec.started_session')
+  it 'compacts  the device_id' do
+    expect(instance).to include(
+      device_uuid: CompactUuid.pack(device_id)
+    )
+  end
+
+  it 'includes the event schema name' do
+    expect(instance.schema_name).to include('org.openstax.ec.started_session')
+  end
+
+  it 'returns nil for unknown key' do
+    expect(instance[:foo]).to be_nil
+  end
+
+  it 'works with string keys' do
+    expect(instance["referrer"]).to be_a String
   end
 end

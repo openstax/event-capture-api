@@ -3,10 +3,6 @@ require 'openstax/auth/strategy_2'
 class ApplicationController < ActionController::API
   include RescueFromUnlessLocal
 
-  # will delete this as soon as we have anonymous users
-  # we'll always have user ids
-  TEMP_ANONYMOUS = '7c56ebf5-a850-44b1-a5e5-8e3866f6a248'
-
   def current_user_uuid
     @current_user_uuid ||= begin
       if Rails.application.load_testing? && request.headers['HTTP_LOADTEST_CLIENT_UUID']
@@ -21,7 +17,7 @@ class ApplicationController < ActionController::API
                             "the #{Rails.env} environment.")
         end
 
-        OpenStax::Auth::Strategy2.user_uuid(request) || TEMP_ANONYMOUS
+        OpenStax::Auth::Strategy2.user_uuid(request)
       end
     end
   end
@@ -37,7 +33,4 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def render_unauthorized_if_no_current_user
-    head :unauthorized if current_user_uuid.nil?
-  end
 end

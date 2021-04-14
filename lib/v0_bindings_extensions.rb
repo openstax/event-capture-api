@@ -40,7 +40,7 @@ Rails.application.config.to_prepare do
     def data=(data_object)
       *_, record_name = data_object[:type].split('.')
       swagger_class = swagger_class_for_record_name(record_name)
-      @data = swagger_class.new(data_object)
+      @data = swagger_class.new.build_from_hash(data_object)
     end
 
     def swagger_class_for_record_name(record_name)

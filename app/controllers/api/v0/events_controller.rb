@@ -7,7 +7,10 @@ class Api::V0::EventsController < Api::V0::BaseController
 
     inbound_binding.events.each do |event|
       raw_kafka_data = KafkaData.new(api_data: event.data, controller: self)
-      avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data, schema_name: event.data.type)
+
+      avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data,
+                                                      schema_name: raw_kafka_data.schema_name,
+                                                      validate: true)
 
       kafka_topic = TopicsConfig.get_topic_for_event(event)
       KafkaClient.async_produce(data: avro_kafka_data, topic: kafka_topic)
@@ -16,12 +19,18 @@ class Api::V0::EventsController < Api::V0::BaseController
     render nothing: true, status: 201
   end
 
-  class KafkaData < Hash
+  class KafkaData < HashWithIndifferentAccess
+    attr_reader :schema_name
+
     def initialize(api_data:, controller:)
-      super
-      merge!(api_data)
+      super()
+
+      api_data = api_data.to_hash
 
       @controller = controller
+      @schema_name = api_data.delete(:type)
+
+      merge!(api_data)
 
       translate_started_session
       translate_source_uri
@@ -35,7 +44,7 @@ class Api::V0::EventsController < Api::V0::BaseController
 
     def translate_started_session
       # Capture request-level data for session starts
-      return unless self[:type].include?('org.openstax.ec.started_session')
+      return unless schema_name.include?('org.openstax.ec.started_session')
 
       self[:ip_address] = controller.request.remote_ip
       self[:user_agent] = controller.request.headers['User-Agent']

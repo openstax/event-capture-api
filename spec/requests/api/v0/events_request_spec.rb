@@ -130,7 +130,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
       {
         'events': [
           {
-            'data': data1 ,
+            'data': data1,
           }
         ]
       }
@@ -139,19 +139,16 @@ RSpec.describe Api::V0::EventsController, type: :request do
     let(:agent) { 'agent' }
     let(:ip_address) { '1.1.1.1' }
 
-    let(:avro_turf) {
-      double({encode: nil})
-    }
+    let(:avro_turf) { KafkaAvroTurf.instance }
 
     before do
       allow(TopicsConfig).to receive(:get_topic_for_event).and_return('foo_topic')
-      allow(KafkaAvroTurf).to receive(:instance).and_return(avro_turf)
     end
 
     it 'successfully calls the API and sends a data message to kafka' do
       expect(KafkaClient).to receive(:async_produce).twice
-      expect(avro_turf).to receive(:encode).
-        with(hash_excluding( user_agent: agent, ip_address: ip_address), anything)
+      expect(avro_turf).to receive(:encode).twice
+        .with(hash_excluding( user_agent: agent, ip_address: ip_address), anything)
 
       post api_v0_events_path, params: attributes
 
