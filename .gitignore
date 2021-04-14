@@ -26,4 +26,6 @@ coverage/*
 
 .DS_Store
 
+.irb-history
+
 clients/*
