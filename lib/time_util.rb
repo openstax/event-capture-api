@@ -10,7 +10,11 @@ class TimeUtil
   def self.infer_actual_occurred_at_from_client_timestamps(request_received_at:,
                                                            client_clock_occurred_at:,
                                                            client_clock_sent_at:)
-    offset_secs = request_received_at - Time.parse(client_clock_sent_at)
-    Time.parse(client_clock_occurred_at) + offset_secs
+    offset_secs = request_received_at - parse(client_clock_sent_at)
+    parse(client_clock_occurred_at) + offset_secs
+  end
+
+  def self.parse(datetime_or_string)
+    datetime_or_string.is_a?(String) ? Time.parse(datetime_or_string) : datetime_or_string
   end
 end

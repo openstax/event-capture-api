@@ -46,13 +46,17 @@
     },
     {
       "name": "query",
-      "type": {
-        "type": "map",
-        "values": {
-          "type": "array",
-          "items": "string"
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": {
+            "type": "array",
+            "items": "string"
+          }
         }
-      }
+      ],
+      "default": null
     },
     {
       "name": "app",

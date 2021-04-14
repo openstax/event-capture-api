@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 require 'ostruct'
 
 RSpec.describe Api::V0::EventsController::KafkaData do
@@ -100,7 +101,15 @@ RSpec.describe Api::V0::EventsController::KafkaData do
     )
   end
 
-  it 'includes the event type' do
-    expect(instance).to include(type: 'org.openstax.ec.started_session')
+  it 'includes the event schema name' do
+    expect(instance.schema_name).to include('org.openstax.ec.started_session')
+  end
+
+  it 'returns nil for unknown key' do
+    expect(instance[:foo]).to be_nil
+  end
+
+  it 'works with string keys' do
+    expect(instance["referrer"]).to be_a String
   end
 end
