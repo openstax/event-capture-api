@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
                             "the #{Rails.env} environment.")
         end
 
-        OpenStax::Auth::Strategy2.user_uuid(request) || nil
+        OpenStax::Auth::Strategy2.user_uuid(request)
       end
     end
   end
@@ -28,7 +28,7 @@ class ApplicationController < ActionController::API
       if Rails.env.development? && ENV['STUBBED_DEVICE_UUID']
         ENV['STUBBED_DEVICE_UUID']
       else
-        request.cookies[Rails.application.secrets.accounts[:device_cookie_name]] || nil
+        request.cookies[Rails.application.secrets.accounts[:device_cookie_name]]
       end
     end
   end
