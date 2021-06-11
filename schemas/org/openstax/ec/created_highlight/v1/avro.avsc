@@ -72,7 +72,10 @@
     },
     {
       "name": "source_metadata",
-      "type": "string"
+      "type": {
+        "type": "map",
+        "values": "string"
+      }
     },
     {
       "name": "annotation",

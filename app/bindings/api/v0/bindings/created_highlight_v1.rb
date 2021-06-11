@@ -114,7 +114,7 @@ module Api::V0::Bindings
         :'highlight_id' => :'String',
         :'source_type' => :'String',
         :'source_id' => :'String',
-        :'source_metadata' => :'String',
+        :'source_metadata' => :'Object',
         :'annotation' => :'String',
         :'anchor' => :'String',
         :'color' => :'String',

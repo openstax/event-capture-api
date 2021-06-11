@@ -17,7 +17,7 @@ module Ec::CreatedHighlight::V1
         key :description, 'The highlight source id (e.g., page uuid).'
       end
       property :source_metadata do
-        key :type, :string
+        key :type, :object
         key :description, 'The highlight source metadata.'
       end
       property :annotation do

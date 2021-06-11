@@ -377,7 +377,7 @@
           "description": "The highlight source id (e.g., page uuid)."
         },
         "source_metadata": {
-          "type": "string",
+          "type": "object",
           "description": "The highlight source metadata."
         },
         "annotation": {
