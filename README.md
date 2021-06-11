@@ -117,7 +117,16 @@ DELETE http://localhost:8081/subjects/org.openstax.ec.nudged?permanent=true
 
 ### Swagger, Clients, and Bindings
 
-The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.  The Swagger JSON file must be generated before it can be served.  Do so with `./docker/compose run --rm api rake generate_swagger[X]` (which will also generate the bindings), where `X` is the version of the outer API you want to generate.
+The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.  The Swagger JSON file must be generated before it can be served.  This uses `swagger-codegen` To do so with docker `./docker/compose run --rm api rake generate_swagger[X]` (which will also generate the bindings), where `X` is the version of the outer API you want to generate.
+
+To generate locally, you will need to install `swagger-codegen` This can be done as so (extracted from docker/Dockerfile):
+
+mkdir /usr/local/lib/swagger-codegen && \
+  wget -q https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.15/swagger-codegen-cli-2.4.15.jar -O /usr/local/lib/swagger-codegen/swagger-codegen-cli.jar && \
+  echo "java -jar /usr/local/lib/swagger-codegen/swagger-codegen-cli.jar \$@" > /usr/local/bin/swagger-codegen && \
+  chmod a+x /usr/local/bin/swagger-codegen
+
+Then run `bundle exec rake generate_swagger\[X]` 
 
 Note that there is a separate `generate_swagger_json[X]` task that generates just the Swagger JSON and not the bindings, but this should generally not be used as it puts us at risk of our JSON and bindings getting out of sync.
 

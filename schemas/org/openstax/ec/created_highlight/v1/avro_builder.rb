@@ -9,7 +9,7 @@ record :created_highlight_v1 do
   required :highlight_id, :string
   required :source_type, :string
   required :source_id, :string
-  required :source_metadata, :string
+  required :source_metadata, :map, values: :string
   required :annotation, :string
   required :anchor, :string
   required :color, :string
