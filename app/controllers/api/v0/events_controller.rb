@@ -77,11 +77,12 @@ class Api::V0::EventsController < Api::V0::BaseController
       sent_at = delete(:client_clock_sent_at)
       occurred_at = delete(:client_clock_occurred_at)
 
-      self[:occurred_at] = TimeUtil.infer_actual_occurred_at_from_client_timestamps(
+      # Schema expects integer timestamps in milliseconds
+      self[:occurred_at] = (TimeUtil.infer_actual_occurred_at_from_client_timestamps(
         request_received_at: controller.request.env[:received_at],
         client_clock_occurred_at: occurred_at,
         client_clock_sent_at: sent_at
-      ).to_i
+      ).to_f * 1000).to_i
     end
   end
 end

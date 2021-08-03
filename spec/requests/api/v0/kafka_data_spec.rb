@@ -55,13 +55,13 @@ RSpec.describe Api::V0::EventsController::KafkaData do
     expect(instance).to include(user_agent: 'My Crazy Test Browser')
   end
 
-  # Event time calculation
+  # Event time calculation (milliseconds timestamp)
   let(:occured_at) do
-    TimeUtil.infer_actual_occurred_at_from_client_timestamps(
+    (TimeUtil.infer_actual_occurred_at_from_client_timestamps(
       request_received_at: received_at,
       client_clock_occurred_at: client_clock_occurred_at,
       client_clock_sent_at: client_clock_sent_at
-    ).to_i
+    ).to_f * 1000).to_i
   end
   it 'calculates the occured_at timestamp' do
     expect(instance).to include(occurred_at: occured_at)
