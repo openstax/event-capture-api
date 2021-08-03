@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-RSpec.describe Time do
+RSpec.describe DateTime do
+  let(:the_answer_dt) { 'Jan 1, 1970 00:00:42.345678Z' }
 
   describe '.floored_milliseconds_since_epoch' do
     subject(:millisecond_timestamp) {
-      described_class.at(42.345678).floored_milliseconds_since_epoch
+      described_class.parse(the_answer_dt).floored_milliseconds_since_epoch
     }
 
     it 'calculates the actual occurred at time based on client server offset' do

@@ -8,7 +8,7 @@ RSpec.describe Api::V0::EventsController::KafkaData do
   let(:remote_ip) { '192.168.1.1' }
   let(:user_id) { 'd8388680-80cf-4fdb-95bb-829a46342115' }
   let(:device_id) { '9c2e4a92-67ef-11eb-847e-a71a7356faee' }
-  let(:received_at) { Time.parse('2020-10-06T18:14:27Z') }
+  let(:received_at) { DateTime.parse('2020-10-06T18:14:27Z') }
 
   let(:fake_controller) do
     OpenStruct.new(
@@ -57,7 +57,7 @@ RSpec.describe Api::V0::EventsController::KafkaData do
 
   # Event time calculation (milliseconds timestamp)
   let(:occured_at) do
-    TimeUtil.infer_actual_occurred_at_from_client_timestamps(
+    DateTimeUtil.infer_actual_occurred_at_from_client_timestamps(
       request_received_at: received_at,
       client_clock_occurred_at: client_clock_occurred_at,
       client_clock_sent_at: client_clock_sent_at
