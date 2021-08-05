@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TimeUtil
+class DateTimeUtil
   # Normalize a timestamp to a more accurate time based on an offset of sent time
   # vs now time.
   #
@@ -15,6 +15,6 @@ class TimeUtil
   end
 
   def self.parse(datetime_or_string)
-    datetime_or_string.is_a?(String) ? Time.parse(datetime_or_string) : datetime_or_string
+    datetime_or_string.is_a?(String) ? DateTime.parse(datetime_or_string) : datetime_or_string
   end
 end

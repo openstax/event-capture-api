@@ -2,7 +2,7 @@ class Api::V0::InfoController < Api::V0::BaseController
   # See Api::V0::InfoSwagger for documentation
 
   def info
-    started_at = Time.now
+    started_at = DateTime.now
     info_data = current_user_authorized_as_admin? ?
       EventCaptureInfo.new.extended :
       EventCaptureInfo.new.basic

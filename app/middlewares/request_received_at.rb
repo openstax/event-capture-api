@@ -4,7 +4,7 @@ class RequestReceivedAt
   end
 
   def call(env)
-    env[:received_at] = Time.now
+    env[:received_at] = DateTime.now
     @app.call(env)
   end
 end
