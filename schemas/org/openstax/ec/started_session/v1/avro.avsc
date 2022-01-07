@@ -72,6 +72,22 @@
         "type": "long",
         "logicalType": "timestamp-millis"
       }
+    },
+    {
+      "name": "release_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "service_worker",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
     }
   ]
 }
