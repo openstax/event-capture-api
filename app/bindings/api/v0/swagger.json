@@ -170,6 +170,62 @@
         }
       }
     },
+    "StartedSessionV1": {
+      "properties": {
+        "client_clock_occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when event actually occurred."
+        },
+        "client_clock_sent_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The RFC 3339 section 5.6 date-time when event was sent to the server."
+        },
+        "type": {
+          "type": "string",
+          "description": "The data's type.",
+          "enum": [
+            "org.openstax.ec.started_session_v1"
+          ]
+        },
+        "source_uri": {
+          "type": "string",
+          "description": "client location when event occurred."
+        },
+        "referrer": {
+          "type": "string",
+          "description": "The referrer."
+        },
+        "session_uuid": {
+          "type": "string",
+          "description": "The client generates this UUID and references it for all future events in this session."
+        },
+        "release_id": {
+          "type": "string",
+          "description": "The code version of the app."
+        },
+        "service_worker": {
+          "type": "string",
+          "description": "The service worker state",
+          "enum": [
+            "unsupported",
+            "inactive",
+            "active"
+          ]
+        }
+      },
+      "required": [
+        "referrer",
+        "session_uuid",
+        "client_clock_sent_at",
+        "client_clock_occurred_at",
+        "type",
+        "source_uri",
+        "session_uuid",
+        "session_order"
+      ]
+    },
     "NudgedV1": {
       "properties": {
         "client_clock_occurred_at": {
@@ -229,49 +285,6 @@
         "context",
         "flavor",
         "medium",
-        "client_clock_sent_at",
-        "client_clock_occurred_at",
-        "type",
-        "source_uri",
-        "session_uuid",
-        "session_order"
-      ]
-    },
-    "StartedSessionV1": {
-      "properties": {
-        "client_clock_occurred_at": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The RFC 3339 section 5.6 date-time when event actually occurred."
-        },
-        "client_clock_sent_at": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The RFC 3339 section 5.6 date-time when event was sent to the server."
-        },
-        "type": {
-          "type": "string",
-          "description": "The data's type.",
-          "enum": [
-            "org.openstax.ec.started_session_v1"
-          ]
-        },
-        "source_uri": {
-          "type": "string",
-          "description": "client location when event occurred."
-        },
-        "referrer": {
-          "type": "string",
-          "description": "The referrer."
-        },
-        "session_uuid": {
-          "type": "string",
-          "description": "The client generates this UUID and references it for all future events in this session."
-        }
-      },
-      "required": [
-        "referrer",
-        "session_uuid",
         "client_clock_sent_at",
         "client_clock_occurred_at",
         "type",

@@ -32,6 +32,12 @@ module Api::V0::Bindings
     # The client generates this UUID and references it for all future events in this session.
     attr_accessor :session_uuid
 
+    # The code version of the app.
+    attr_accessor :release_id
+
+    # The service worker state
+    attr_accessor :service_worker
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -62,7 +68,9 @@ module Api::V0::Bindings
         :'type' => :'type',
         :'source_uri' => :'source_uri',
         :'referrer' => :'referrer',
-        :'session_uuid' => :'session_uuid'
+        :'session_uuid' => :'session_uuid',
+        :'release_id' => :'release_id',
+        :'service_worker' => :'service_worker'
       }
     end
 
@@ -74,7 +82,9 @@ module Api::V0::Bindings
         :'type' => :'String',
         :'source_uri' => :'String',
         :'referrer' => :'String',
-        :'session_uuid' => :'String'
+        :'session_uuid' => :'String',
+        :'release_id' => :'String',
+        :'service_worker' => :'String'
       }
     end
 
@@ -108,6 +118,14 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'session_uuid')
         self.session_uuid = attributes[:'session_uuid']
+      end
+
+      if attributes.has_key?(:'release_id')
+        self.release_id = attributes[:'release_id']
+      end
+
+      if attributes.has_key?(:'service_worker')
+        self.service_worker = attributes[:'service_worker']
       end
     end
 
@@ -153,6 +171,8 @@ module Api::V0::Bindings
       return false if @source_uri.nil?
       return false if @referrer.nil?
       return false if @session_uuid.nil?
+      service_worker_validator = EnumAttributeValidator.new('String', ['unsupported', 'inactive', 'active'])
+      return false unless service_worker_validator.valid?(@service_worker)
       true
     end
 
@@ -166,6 +186,16 @@ module Api::V0::Bindings
       @type = type
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] service_worker Object to be assigned
+    def service_worker=(service_worker)
+      validator = EnumAttributeValidator.new('String', ['unsupported', 'inactive', 'active'])
+      unless validator.valid?(service_worker)
+        fail ArgumentError, 'invalid value for "service_worker", must be one of #{validator.allowable_values}.'
+      end
+      @service_worker = service_worker
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -176,7 +206,9 @@ module Api::V0::Bindings
           type == o.type &&
           source_uri == o.source_uri &&
           referrer == o.referrer &&
-          session_uuid == o.session_uuid
+          session_uuid == o.session_uuid &&
+          release_id == o.release_id &&
+          service_worker == o.service_worker
     end
 
     # @see the `==` method
@@ -188,7 +220,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, referrer, session_uuid].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, referrer, session_uuid, release_id, service_worker].hash
     end
 
     # Builds the object from hash

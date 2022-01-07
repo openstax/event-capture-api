@@ -12,6 +12,15 @@ module Ec::StartedSession::V1
         key :type, :string
         key :description, 'The client generates this UUID and references it for all future events in this session.'
       end
+      property :release_id do
+        key :type, :string
+        key :description, 'The code version of the app.'
+      end
+      property :service_worker do
+        key :type, :string
+        key :description, 'The service worker state'
+        key :enum, ['unsupported', 'inactive', 'active']
+      end
     end
   end
 end
