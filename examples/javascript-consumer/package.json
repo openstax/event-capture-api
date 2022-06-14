@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@kafkajs/confluent-schema-registry": "^3.2.1",
+    "kafkajs": "^2.0.2"
+  }
+}
