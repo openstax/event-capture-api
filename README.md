@@ -115,6 +115,14 @@ DELETE http://localhost:8081/subjects/org.openstax.ec.nudged
 DELETE http://localhost:8081/subjects/org.openstax.ec.nudged?permanent=true
 ```
 
+**note that the schema registry runs over http on port 8081 in dev and on default https in our deployed environments**
+
+### Writing Consumers
+
+there is an example javascript consumer [here](./examples/javscript-consumer/).
+
+Consumers must run in the same vpc as the kafka deployment. testing a local script against a remote cluster may be possible with ssh tunneling but is not straight forward. Using your favorite kafka library and at least one broker url (found on the aws msk dashboard) you should be able to see some data going by. the data is encoded in an avro schema, you will need a different library and to connect to the schema registry (eg: https://schemas-COOL-ENV-NAME.ec.sandbox.openstax.org) in order to decode the message value.
+
 ### Swagger, Clients, and Bindings
 
 The Event Capture API is documented in the code using Swagger.  Swagger JSON can be accessed at `/api/v0/swagger`.  The Swagger JSON file must be generated before it can be served.  This uses `swagger-codegen` To do so with docker `./docker/compose run --rm api rake generate_swagger[X]` (which will also generate the bindings), where `X` is the version of the outer API you want to generate.
@@ -126,7 +134,7 @@ mkdir /usr/local/lib/swagger-codegen && \
   echo "java -jar /usr/local/lib/swagger-codegen/swagger-codegen-cli.jar \$@" > /usr/local/bin/swagger-codegen && \
   chmod a+x /usr/local/bin/swagger-codegen
 
-Then run `bundle exec rake generate_swagger\[X]` 
+Then run `bundle exec rake generate_swagger\[X]`
 
 Note that there is a separate `generate_swagger_json[X]` task that generates just the Swagger JSON and not the bindings, but this should generally not be used as it puts us at risk of our JSON and bindings getting out of sync.
 
