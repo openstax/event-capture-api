@@ -15,7 +15,7 @@ gem "aws-sdk-ssm"
 
 gem 'dotenv-rails'
 
-gem "openstax_auth", github: 'openstax/auth-rails', ref: 'ed2d7da86ca226b93376955b9474c4cf115c611f'
+gem "openstax_auth"
 
 # Exception reporting
 gem 'sentry-raven'
