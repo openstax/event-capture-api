@@ -364,6 +364,14 @@
         "context_attributes": {
           "type": "string",
           "description": "The context element attributes (map, all useful attributes)."
+        },
+        "context_region": {
+          "type": "string",
+          "description": "The UX region the context element is in (e.g. toc, header, page)."
+        },
+        "context_state_change": {
+          "type": "string",
+          "description": "The context element state change that triggered event, if any."
         }
       },
       "required": [

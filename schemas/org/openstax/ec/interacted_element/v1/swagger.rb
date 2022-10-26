@@ -28,6 +28,14 @@ module Ec::InteractedElement::V1
         key :type, :string
         key :description, 'The context element attributes (map, all useful attributes).'
       end
+      property :context_region do
+        key :type, :string
+        key :description, 'The UX region the context element is in (e.g. toc, header, page).'
+      end
+      property :context_state_change do
+        key :type, :string
+        key :description, 'The context element state change that triggered event, if any.'
+      end
     end
   end
 end
