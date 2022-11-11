@@ -353,6 +353,10 @@
           "type": "string",
           "description": "The target element attributes (map, all attributes)."
         },
+        "target_state_change": {
+          "type": "string",
+          "description": "The target element state change that triggered event, if any."
+        },
         "context_id": {
           "type": "string",
           "description": "The context element id for the target element (likely a parent: eg: if target is a solution, context would be problem)."
@@ -368,10 +372,6 @@
         "context_region": {
           "type": "string",
           "description": "The UX region the context element is in (e.g. toc, header, page)."
-        },
-        "context_state_change": {
-          "type": "string",
-          "description": "The context element state change that triggered event, if any."
         }
       },
       "required": [

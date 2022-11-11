@@ -16,6 +16,10 @@ module Ec::InteractedElement::V1
         key :type, :string
         key :description, 'The target element attributes (map, all attributes).'
       end
+      property :target_state_change do
+        key :type, :string
+        key :description, 'The target element state change that triggered event, if any.'
+      end
       property :context_id do
         key :type, :string
         key :description, 'The context element id for the target element (likely a parent: eg: if target is a solution, context would be problem).'
@@ -31,10 +35,6 @@ module Ec::InteractedElement::V1
       property :context_region do
         key :type, :string
         key :description, 'The UX region the context element is in (e.g. toc, header, page).'
-      end
-      property :context_state_change do
-        key :type, :string
-        key :description, 'The context element state change that triggered event, if any.'
       end
     end
   end

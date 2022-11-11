@@ -41,6 +41,9 @@ module Api::V0::Bindings
     # The target element attributes (map, all attributes).
     attr_accessor :target_attributes
 
+    # The target element state change that triggered event, if any.
+    attr_accessor :target_state_change
+
     # The context element id for the target element (likely a parent: eg: if target is a solution, context would be problem).
     attr_accessor :context_id
 
@@ -52,9 +55,6 @@ module Api::V0::Bindings
 
     # The UX region the context element is in (e.g. toc, header, page).
     attr_accessor :context_region
-
-    # The context element state change that triggered event, if any.
-    attr_accessor :context_state_change
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -90,11 +90,11 @@ module Api::V0::Bindings
         :'target_id' => :'target_id',
         :'target_type' => :'target_type',
         :'target_attributes' => :'target_attributes',
+        :'target_state_change' => :'target_state_change',
         :'context_id' => :'context_id',
         :'context_type' => :'context_type',
         :'context_attributes' => :'context_attributes',
-        :'context_region' => :'context_region',
-        :'context_state_change' => :'context_state_change'
+        :'context_region' => :'context_region'
       }
     end
 
@@ -110,11 +110,11 @@ module Api::V0::Bindings
         :'target_id' => :'String',
         :'target_type' => :'String',
         :'target_attributes' => :'String',
+        :'target_state_change' => :'String',
         :'context_id' => :'String',
         :'context_type' => :'String',
         :'context_attributes' => :'String',
-        :'context_region' => :'String',
-        :'context_state_change' => :'String'
+        :'context_region' => :'String'
       }
     end
 
@@ -162,6 +162,10 @@ module Api::V0::Bindings
         self.target_attributes = attributes[:'target_attributes']
       end
 
+      if attributes.has_key?(:'target_state_change')
+        self.target_state_change = attributes[:'target_state_change']
+      end
+
       if attributes.has_key?(:'context_id')
         self.context_id = attributes[:'context_id']
       end
@@ -176,10 +180,6 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'context_region')
         self.context_region = attributes[:'context_region']
-      end
-
-      if attributes.has_key?(:'context_state_change')
-        self.context_state_change = attributes[:'context_state_change']
       end
     end
 
@@ -282,11 +282,11 @@ module Api::V0::Bindings
           target_id == o.target_id &&
           target_type == o.target_type &&
           target_attributes == o.target_attributes &&
+          target_state_change == o.target_state_change &&
           context_id == o.context_id &&
           context_type == o.context_type &&
           context_attributes == o.context_attributes &&
-          context_region == o.context_region &&
-          context_state_change == o.context_state_change
+          context_region == o.context_region
     end
 
     # @see the `==` method
@@ -298,7 +298,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, target_id, target_type, target_attributes, context_id, context_type, context_attributes, context_region, context_state_change].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, target_id, target_type, target_attributes, target_state_change, context_id, context_type, context_attributes, context_region].hash
     end
 
     # Builds the object from hash

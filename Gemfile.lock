@@ -154,6 +154,8 @@ GEM
       racc (~> 1.4)
     oj (3.13.21)
     oj_mimic_json (1.0.1)
+    openstax_auth (0.2.0)
+      json-jwt
     openstax_healthcheck (1.0.1)
       rails (>= 3.0)
     parallel (1.22.1)
@@ -329,7 +331,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 2.7.4p191
+   ruby 2.7.6p219
 
 BUNDLED WITH
    2.1.4
