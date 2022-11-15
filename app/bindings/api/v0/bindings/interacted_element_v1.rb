@@ -109,11 +109,11 @@ module Api::V0::Bindings
         :'session_order' => :'Integer',
         :'target_id' => :'String',
         :'target_type' => :'String',
-        :'target_attributes' => :'String',
+        :'target_attributes' => :'Object',
         :'target_state_change' => :'String',
         :'context_id' => :'String',
         :'context_type' => :'String',
-        :'context_attributes' => :'String',
+        :'context_attributes' => :'Object',
         :'context_region' => :'String'
       }
     end

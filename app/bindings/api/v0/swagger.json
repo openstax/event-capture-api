@@ -350,7 +350,7 @@
           "description": "The target element (interactive) type."
         },
         "target_attributes": {
-          "type": "string",
+          "type": "object",
           "description": "The target element attributes (map, all attributes)."
         },
         "target_state_change": {
@@ -366,7 +366,7 @@
           "description": "The context element (parent) type."
         },
         "context_attributes": {
-          "type": "string",
+          "type": "object",
           "description": "The context element attributes (map, all useful attributes)."
         },
         "context_region": {

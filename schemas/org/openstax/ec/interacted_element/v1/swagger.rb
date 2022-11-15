@@ -13,7 +13,7 @@ module Ec::InteractedElement::V1
         key :description, 'The target element (interactive) type.'
       end
       property :target_attributes do
-        key :type, :string
+        key :type, :object
         key :description, 'The target element attributes (map, all attributes).'
       end
       property :target_state_change do
@@ -29,7 +29,7 @@ module Ec::InteractedElement::V1
         key :description, 'The context element (parent) type.'
       end
       property :context_attributes do
-        key :type, :string
+        key :type, :object
         key :description, 'The context element attributes (map, all useful attributes).'
       end
       property :context_region do
