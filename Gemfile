@@ -21,7 +21,7 @@ gem "openstax_auth"
 gem 'sentry-raven'
 
 # Profiling
-gem 'scout_apm', '~> 3.0.x'
+gem 'scout_apm'
 
 # Kafka stuff
 gem 'ruby-kafka'

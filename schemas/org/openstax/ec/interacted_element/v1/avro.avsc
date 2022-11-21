@@ -1,0 +1,115 @@
+{
+  "type": "record",
+  "name": "interacted_element_v1",
+  "namespace": "org.openstax.ec",
+  "fields": [
+    {
+      "name": "device_uuid",
+      "type": [
+        "null",
+        {
+          "name": "uuid",
+          "type": "fixed",
+          "namespace": "org.openstax.ec",
+          "size": 16
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "user_uuid",
+      "type": [
+        "null",
+        "org.openstax.ec.uuid"
+      ],
+      "default": null
+    },
+    {
+      "name": "session_uuid",
+      "type": "org.openstax.ec.uuid"
+    },
+    {
+      "name": "session_order",
+      "type": "int"
+    },
+    {
+      "name": "scheme",
+      "type": "string"
+    },
+    {
+      "name": "host",
+      "type": "string"
+    },
+    {
+      "name": "path",
+      "type": "string"
+    },
+    {
+      "name": "query",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "target_id",
+      "type": "string"
+    },
+    {
+      "name": "target_type",
+      "type": "string"
+    },
+    {
+      "name": "target_attributes",
+      "type": {
+        "type": "map",
+        "values": "string"
+      }
+    },
+    {
+      "name": "context_id",
+      "type": "string"
+    },
+    {
+      "name": "context_type",
+      "type": "string"
+    },
+    {
+      "name": "context_attributes",
+      "type": {
+        "type": "map",
+        "values": "string"
+      }
+    },
+    {
+      "name": "occurred_at",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "context_region",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "context_state_change",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    }
+  ]
+}
