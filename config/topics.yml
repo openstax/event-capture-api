@@ -38,5 +38,15 @@ topics: [
       replication: 3,
       partitions: 3
     }
+  },
+  {
+    name: 'interacted_element',
+    schemas: [
+        'org.openstax.ec.interacted_element_v1'
+    ],
+    config: {
+      replication: 3,
+      partitions: 3
+    }
   }
 ]
