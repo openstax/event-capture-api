@@ -39,6 +39,15 @@ topics: [
       partitions: 3
     }
   },
+    name: 'changed_session',
+    schemas: [
+        'org.openstax.ec.changed_session_v1'
+    ],
+    config: {
+      replication: 3,
+      partitions: 3
+    }
+  },
   {
     name: 'interacted_element',
     schemas: [
