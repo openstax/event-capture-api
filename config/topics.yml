@@ -39,6 +39,7 @@ topics: [
       partitions: 3
     }
   },
+  {
     name: 'changed_session',
     schemas: [
         'org.openstax.ec.changed_session_v1'
