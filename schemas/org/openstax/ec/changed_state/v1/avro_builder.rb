@@ -6,8 +6,9 @@ import 'types/base_web_event'
 
 record :interacted_element_v1 do
   extends :base_web_event
-  required :visibility, :string
-  required :previous_visibility, :string
+  required :type, :string
+  required :current, :string
+  required :previous, :string
 end
 
 

@@ -13,14 +13,14 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class ChangedSessionV1
+  class ChangedStateV1
     # The RFC 3339 section 5.6 date-time when event actually occurred.
     attr_accessor :client_clock_occurred_at
 
     # The RFC 3339 section 5.6 date-time when event was sent to the server.
     attr_accessor :client_clock_sent_at
 
-    # The data's type.
+    # The type of state that is changing, e.g. visibility
     attr_accessor :type
 
     # client location when event occurred.
@@ -32,33 +32,11 @@ module Api::V0::Bindings
     # The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc.
     attr_accessor :session_order
 
-    # The apps new visibility, from \"visible\", \"hidden\", or \"none\".
-    attr_accessor :visibility
+    # The current value for the state described by :type
+    attr_accessor :current
 
-    # The apps previous visibility, from \"visible\", \"hidden\", or \"none\".
-    attr_accessor :old_visibility
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # The previous value for the state described by :type
+    attr_accessor :previous
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -69,8 +47,8 @@ module Api::V0::Bindings
         :'source_uri' => :'source_uri',
         :'session_uuid' => :'session_uuid',
         :'session_order' => :'session_order',
-        :'visibility' => :'visibility',
-        :'old_visibility' => :'old_visibility'
+        :'current' => :'current',
+        :'previous' => :'previous'
       }
     end
 
@@ -83,8 +61,8 @@ module Api::V0::Bindings
         :'source_uri' => :'String',
         :'session_uuid' => :'String',
         :'session_order' => :'Integer',
-        :'visibility' => :'String',
-        :'old_visibility' => :'String'
+        :'current' => :'String',
+        :'previous' => :'String'
       }
     end
 
@@ -120,12 +98,12 @@ module Api::V0::Bindings
         self.session_order = attributes[:'session_order']
       end
 
-      if attributes.has_key?(:'visibility')
-        self.visibility = attributes[:'visibility']
+      if attributes.has_key?(:'current')
+        self.current = attributes[:'current']
       end
 
-      if attributes.has_key?(:'old_visibility')
-        self.old_visibility = attributes[:'old_visibility']
+      if attributes.has_key?(:'previous')
+        self.previous = attributes[:'previous']
       end
     end
 
@@ -157,12 +135,12 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
       end
 
-      if @visibility.nil?
-        invalid_properties.push('invalid value for "visibility", visibility cannot be nil.')
+      if @current.nil?
+        invalid_properties.push('invalid value for "current", current cannot be nil.')
       end
 
-      if @old_visibility.nil?
-        invalid_properties.push('invalid value for "old_visibility", old_visibility cannot be nil.')
+      if @previous.nil?
+        invalid_properties.push('invalid value for "previous", previous cannot be nil.')
       end
 
       invalid_properties
@@ -174,24 +152,12 @@ module Api::V0::Bindings
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.changed_session_v1'])
-      return false unless type_validator.valid?(@type)
       return false if @source_uri.nil?
       return false if @session_uuid.nil?
       return false if @session_order.nil?
-      return false if @visibility.nil?
-      return false if @old_visibility.nil?
+      return false if @current.nil?
+      return false if @previous.nil?
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.changed_session_v1'])
-      unless validator.valid?(type)
-        fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
-      end
-      @type = type
     end
 
     # Checks equality by comparing each attribute.
@@ -205,8 +171,8 @@ module Api::V0::Bindings
           source_uri == o.source_uri &&
           session_uuid == o.session_uuid &&
           session_order == o.session_order &&
-          visibility == o.visibility &&
-          old_visibility == o.old_visibility
+          current == o.current &&
+          previous == o.previous
     end
 
     # @see the `==` method
@@ -218,7 +184,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, visibility, old_visibility].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, current, previous].hash
     end
 
     # Builds the object from hash

@@ -59,11 +59,15 @@
       "default": null
     },
     {
-      "name": "visibility",
+      "name": "type",
       "type": "string"
     },
     {
-      "name": "previous_visibility",
+      "name": "current",
+      "type": "string"
+    },
+    {
+      "name": "previous",
       "type": "string"
     }
   ]
