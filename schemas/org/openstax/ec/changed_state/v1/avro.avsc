@@ -1,0 +1,74 @@
+{
+  "type": "record",
+  "name": "interacted_element_v1",
+  "namespace": "org.openstax.ec",
+  "fields": [
+    {
+      "name": "device_uuid",
+      "type": [
+        "null",
+        {
+          "name": "uuid",
+          "type": "fixed",
+          "namespace": "org.openstax.ec",
+          "size": 16
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "user_uuid",
+      "type": [
+        "null",
+        "org.openstax.ec.uuid"
+      ],
+      "default": null
+    },
+    {
+      "name": "session_uuid",
+      "type": "org.openstax.ec.uuid"
+    },
+    {
+      "name": "session_order",
+      "type": "int"
+    },
+    {
+      "name": "scheme",
+      "type": "string"
+    },
+    {
+      "name": "host",
+      "type": "string"
+    },
+    {
+      "name": "path",
+      "type": "string"
+    },
+    {
+      "name": "query",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "type",
+      "type": "string"
+    },
+    {
+      "name": "current",
+      "type": "string"
+    },
+    {
+      "name": "previous",
+      "type": "string"
+    }
+  ]
+}

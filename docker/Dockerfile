@@ -1,4 +1,4 @@
-from ruby:2.7.6
+from ruby:2.7.7
 
 ### rails
 
