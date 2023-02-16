@@ -12,6 +12,10 @@ module Ec::StartedSession::V1
         key :type, :string
         key :description, 'The client generates this UUID and references it for all future events in this session.'
       end
+      property :platform do
+        key :type, :string
+        key :description, 'The platform name of the app (e.g. rex, kintec)'
+      end
       property :release_id do
         key :type, :string
         key :description, 'The code version of the app.'

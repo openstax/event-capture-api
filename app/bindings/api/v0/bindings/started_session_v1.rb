@@ -32,6 +32,9 @@ module Api::V0::Bindings
     # The client generates this UUID and references it for all future events in this session.
     attr_accessor :session_uuid
 
+    # The platform name of the app (e.g. rex, kintec)
+    attr_accessor :platform
+
     # The code version of the app.
     attr_accessor :release_id
 
@@ -69,6 +72,7 @@ module Api::V0::Bindings
         :'source_uri' => :'source_uri',
         :'referrer' => :'referrer',
         :'session_uuid' => :'session_uuid',
+        :'platform' => :'platform',
         :'release_id' => :'release_id',
         :'service_worker' => :'service_worker'
       }
@@ -83,6 +87,7 @@ module Api::V0::Bindings
         :'source_uri' => :'String',
         :'referrer' => :'String',
         :'session_uuid' => :'String',
+        :'platform' => :'String',
         :'release_id' => :'String',
         :'service_worker' => :'String'
       }
@@ -118,6 +123,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'session_uuid')
         self.session_uuid = attributes[:'session_uuid']
+      end
+
+      if attributes.has_key?(:'platform')
+        self.platform = attributes[:'platform']
       end
 
       if attributes.has_key?(:'release_id')
@@ -207,6 +216,7 @@ module Api::V0::Bindings
           source_uri == o.source_uri &&
           referrer == o.referrer &&
           session_uuid == o.session_uuid &&
+          platform == o.platform &&
           release_id == o.release_id &&
           service_worker == o.service_worker
     end
@@ -220,7 +230,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, referrer, session_uuid, release_id, service_worker].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, referrer, session_uuid, platform, release_id, service_worker].hash
     end
 
     # Builds the object from hash

@@ -544,6 +544,10 @@
           "type": "string",
           "description": "The client generates this UUID and references it for all future events in this session."
         },
+        "platform": {
+          "type": "string",
+          "description": "The platform name of the app (e.g. rex, kintec)"
+        },
         "release_id": {
           "type": "string",
           "description": "The code version of the app."
