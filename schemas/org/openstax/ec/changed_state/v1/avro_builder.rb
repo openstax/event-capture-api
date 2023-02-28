@@ -6,7 +6,7 @@ import 'types/base_web_event'
 
 record :interacted_element_v1 do
   extends :base_web_event
-  required :type, :string
+  required :state_type, :string
   required :current, :string
   required :previous, :string
 end

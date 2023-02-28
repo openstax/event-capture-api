@@ -40,9 +40,9 @@ topics: [
     }
   },
   {
-    name: 'changed_session',
+    name: 'changed_state',
     schemas: [
-        'org.openstax.ec.changed_session_v1'
+        'org.openstax.ec.changed_state_v1'
     ],
     config: {
       replication: 3,

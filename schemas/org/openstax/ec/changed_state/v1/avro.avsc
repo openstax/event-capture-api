@@ -59,7 +59,7 @@
       "default": null
     },
     {
-      "name": "type",
+      "name": "state_type",
       "type": "string"
     },
     {

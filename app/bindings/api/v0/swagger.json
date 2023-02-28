@@ -236,7 +236,10 @@
         },
         "type": {
           "type": "string",
-          "description": "The type of state that is changing, e.g. visibility"
+          "description": "The data's type.",
+          "enum": [
+            "org.openstax.ec.changed_state_v1"
+          ]
         },
         "source_uri": {
           "type": "string",
@@ -251,6 +254,10 @@
           "type": "integer",
           "description": "The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc."
         },
+        "state_type": {
+          "type": "string",
+          "description": "The type of state that is changing, e.g. visibility"
+        },
         "current": {
           "type": "string",
           "description": "The current value for the state described by :type"
@@ -261,7 +268,7 @@
         }
       },
       "required": [
-        "type",
+        "state_type",
         "current",
         "previous",
         "client_clock_sent_at",

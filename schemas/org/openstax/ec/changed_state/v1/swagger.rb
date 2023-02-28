@@ -3,8 +3,8 @@ module Ec::ChangedState::V1
     include SwaggerEventSchema1
 
     swagger_event_schema(:ChangedStateV1, type: 'org.openstax.ec.changed_state_v1') do
-      key :required, [:type, :current, :previous]
-      property :type do
+      key :required, [:state_type, :current, :previous]
+      property :state_type do
         key :type, :string
         key :description, 'The type of state that is changing, e.g. visibility'
       end
