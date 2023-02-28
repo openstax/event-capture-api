@@ -20,7 +20,7 @@ module Api::V0::Bindings
     # The RFC 3339 section 5.6 date-time when event was sent to the server.
     attr_accessor :client_clock_sent_at
 
-    # The type of state that is changing, e.g. visibility
+    # The data's type.
     attr_accessor :type
 
     # client location when event occurred.
@@ -32,11 +32,36 @@ module Api::V0::Bindings
     # The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc.
     attr_accessor :session_order
 
+    # The type of state that is changing, e.g. visibility
+    attr_accessor :state_type
+
     # The current value for the state described by :type
     attr_accessor :current
 
     # The previous value for the state described by :type
     attr_accessor :previous
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -47,6 +72,7 @@ module Api::V0::Bindings
         :'source_uri' => :'source_uri',
         :'session_uuid' => :'session_uuid',
         :'session_order' => :'session_order',
+        :'state_type' => :'state_type',
         :'current' => :'current',
         :'previous' => :'previous'
       }
@@ -61,6 +87,7 @@ module Api::V0::Bindings
         :'source_uri' => :'String',
         :'session_uuid' => :'String',
         :'session_order' => :'Integer',
+        :'state_type' => :'String',
         :'current' => :'String',
         :'previous' => :'String'
       }
@@ -96,6 +123,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'session_order')
         self.session_order = attributes[:'session_order']
+      end
+
+      if attributes.has_key?(:'state_type')
+        self.state_type = attributes[:'state_type']
       end
 
       if attributes.has_key?(:'current')
@@ -135,6 +166,10 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
       end
 
+      if @state_type.nil?
+        invalid_properties.push('invalid value for "state_type", state_type cannot be nil.')
+      end
+
       if @current.nil?
         invalid_properties.push('invalid value for "current", current cannot be nil.')
       end
@@ -152,12 +187,25 @@ module Api::V0::Bindings
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.changed_state_v1'])
+      return false unless type_validator.valid?(@type)
       return false if @source_uri.nil?
       return false if @session_uuid.nil?
       return false if @session_order.nil?
+      return false if @state_type.nil?
       return false if @current.nil?
       return false if @previous.nil?
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] type Object to be assigned
+    def type=(type)
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.changed_state_v1'])
+      unless validator.valid?(type)
+        fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
+      end
+      @type = type
     end
 
     # Checks equality by comparing each attribute.
@@ -171,6 +219,7 @@ module Api::V0::Bindings
           source_uri == o.source_uri &&
           session_uuid == o.session_uuid &&
           session_order == o.session_order &&
+          state_type == o.state_type &&
           current == o.current &&
           previous == o.previous
     end
@@ -184,7 +233,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, current, previous].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, state_type, current, previous].hash
     end
 
     # Builds the object from hash
