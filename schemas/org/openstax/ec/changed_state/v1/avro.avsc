@@ -69,6 +69,13 @@
     {
       "name": "previous",
       "type": "string"
+    },
+    {
+      "name": "occurred_at",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
     }
   ]
 }

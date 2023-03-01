@@ -9,6 +9,7 @@ record :changed_state_v1 do
   required :state_type, :string
   required :current, :string
   required :previous, :string
+  required :occurred_at, :timestamp
 end
 
 
