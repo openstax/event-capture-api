@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "interacted_element_v1",
+  "name": "changed_state_v1",
   "namespace": "org.openstax.ec",
   "fields": [
     {

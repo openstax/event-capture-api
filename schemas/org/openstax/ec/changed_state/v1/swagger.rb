@@ -10,11 +10,11 @@ module Ec::ChangedState::V1
       end
       property :current do
         key :type, :string
-        key :description, 'The current value for the state described by :type'
+        key :description, 'The current value for the state described by :state_type'
       end
       property :previous do
         key :type, :string
-        key :description, 'The previous value for the state described by :type'
+        key :description, 'The previous value for the state described by :state_type'
       end
     end
   end

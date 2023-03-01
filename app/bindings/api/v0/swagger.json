@@ -260,11 +260,11 @@
         },
         "current": {
           "type": "string",
-          "description": "The current value for the state described by :type"
+          "description": "The current value for the state described by :state_type"
         },
         "previous": {
           "type": "string",
-          "description": "The previous value for the state described by :type"
+          "description": "The previous value for the state described by :state_type"
         }
       },
       "required": [
