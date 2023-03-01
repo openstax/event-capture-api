@@ -35,10 +35,10 @@ module Api::V0::Bindings
     # The type of state that is changing, e.g. visibility
     attr_accessor :state_type
 
-    # The current value for the state described by :type
+    # The current value for the state described by :state_type
     attr_accessor :current
 
-    # The previous value for the state described by :type
+    # The previous value for the state described by :state_type
     attr_accessor :previous
 
     class EnumAttributeValidator
