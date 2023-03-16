@@ -32,7 +32,7 @@ module Api::V0::Bindings
     # The client generates this UUID and references it for all future events in this session.
     attr_accessor :session_uuid
 
-    # The platform name of the app (e.g. rex, kintec)
+    # The platform name of the app (e.g. rex, kinetic)
     attr_accessor :platform
 
     # The code version of the app.

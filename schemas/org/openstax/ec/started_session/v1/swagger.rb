@@ -14,7 +14,7 @@ module Ec::StartedSession::V1
       end
       property :platform do
         key :type, :string
-        key :description, 'The platform name of the app (e.g. rex, kintec)'
+        key :description, 'The platform name of the app (e.g. rex, kinetic)'
       end
       property :release_id do
         key :type, :string

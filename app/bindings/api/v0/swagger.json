@@ -546,7 +546,7 @@
         },
         "platform": {
           "type": "string",
-          "description": "The platform name of the app (e.g. rex, kintec)"
+          "description": "The platform name of the app (e.g. rex, kinetic)"
         },
         "release_id": {
           "type": "string",
