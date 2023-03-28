@@ -36,6 +36,10 @@ module Ec::InteractedElement::V1
         key :type, :string
         key :description, 'The UX region the context element is in (e.g. toc, header, page).'
       end
+      property :source_metadata do
+        key :type, :object
+        key :description, 'The ids and versions needed to retrieve the original source that was interacted with'
+      end
     end
   end
 end

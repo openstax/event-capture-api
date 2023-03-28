@@ -13,7 +13,7 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class AccessedStudyguideV1
+  class CreatedHighlightV2
     # The RFC 3339 section 5.6 date-time when event actually occurred.
     attr_accessor :client_clock_occurred_at
 
@@ -32,14 +32,26 @@ module Api::V0::Bindings
     # The event's numerical order within this session. E.g. the first event after a session is started should give 0 for this field, the next one should give 1, etc.
     attr_accessor :session_order
 
-    # The page id.
-    attr_accessor :page_id
+    # The highlight id.
+    attr_accessor :highlight_id
 
-    # The book id.
-    attr_accessor :book_id
+    # The highlight source type (e.g., openstax_page).
+    attr_accessor :source_type
 
-    # The ids and versions needed to retrieve the original source that was interacted with
+    # The highlight source metadata.
     attr_accessor :source_metadata
+
+    # The highlight annotation.
+    attr_accessor :annotation
+
+    # The highlight anchor.
+    attr_accessor :anchor
+
+    # The highlight color.
+    attr_accessor :color
+
+    # The highlight location strategies (e.g., a text position selector).
+    attr_accessor :location_strategies
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -72,9 +84,13 @@ module Api::V0::Bindings
         :'source_uri' => :'source_uri',
         :'session_uuid' => :'session_uuid',
         :'session_order' => :'session_order',
-        :'page_id' => :'page_id',
-        :'book_id' => :'book_id',
-        :'source_metadata' => :'source_metadata'
+        :'highlight_id' => :'highlight_id',
+        :'source_type' => :'source_type',
+        :'source_metadata' => :'source_metadata',
+        :'annotation' => :'annotation',
+        :'anchor' => :'anchor',
+        :'color' => :'color',
+        :'location_strategies' => :'location_strategies'
       }
     end
 
@@ -87,9 +103,13 @@ module Api::V0::Bindings
         :'source_uri' => :'String',
         :'session_uuid' => :'String',
         :'session_order' => :'Integer',
-        :'page_id' => :'String',
-        :'book_id' => :'String',
-        :'source_metadata' => :'Object'
+        :'highlight_id' => :'String',
+        :'source_type' => :'String',
+        :'source_metadata' => :'Object',
+        :'annotation' => :'String',
+        :'anchor' => :'String',
+        :'color' => :'String',
+        :'location_strategies' => :'String'
       }
     end
 
@@ -125,16 +145,32 @@ module Api::V0::Bindings
         self.session_order = attributes[:'session_order']
       end
 
-      if attributes.has_key?(:'page_id')
-        self.page_id = attributes[:'page_id']
+      if attributes.has_key?(:'highlight_id')
+        self.highlight_id = attributes[:'highlight_id']
       end
 
-      if attributes.has_key?(:'book_id')
-        self.book_id = attributes[:'book_id']
+      if attributes.has_key?(:'source_type')
+        self.source_type = attributes[:'source_type']
       end
 
       if attributes.has_key?(:'source_metadata')
         self.source_metadata = attributes[:'source_metadata']
+      end
+
+      if attributes.has_key?(:'annotation')
+        self.annotation = attributes[:'annotation']
+      end
+
+      if attributes.has_key?(:'anchor')
+        self.anchor = attributes[:'anchor']
+      end
+
+      if attributes.has_key?(:'color')
+        self.color = attributes[:'color']
+      end
+
+      if attributes.has_key?(:'location_strategies')
+        self.location_strategies = attributes[:'location_strategies']
       end
     end
 
@@ -166,12 +202,32 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "session_order", session_order cannot be nil.')
       end
 
-      if @page_id.nil?
-        invalid_properties.push('invalid value for "page_id", page_id cannot be nil.')
+      if @highlight_id.nil?
+        invalid_properties.push('invalid value for "highlight_id", highlight_id cannot be nil.')
       end
 
-      if @book_id.nil?
-        invalid_properties.push('invalid value for "book_id", book_id cannot be nil.')
+      if @source_type.nil?
+        invalid_properties.push('invalid value for "source_type", source_type cannot be nil.')
+      end
+
+      if @source_metadata.nil?
+        invalid_properties.push('invalid value for "source_metadata", source_metadata cannot be nil.')
+      end
+
+      if @annotation.nil?
+        invalid_properties.push('invalid value for "annotation", annotation cannot be nil.')
+      end
+
+      if @anchor.nil?
+        invalid_properties.push('invalid value for "anchor", anchor cannot be nil.')
+      end
+
+      if @color.nil?
+        invalid_properties.push('invalid value for "color", color cannot be nil.')
+      end
+
+      if @location_strategies.nil?
+        invalid_properties.push('invalid value for "location_strategies", location_strategies cannot be nil.')
       end
 
       invalid_properties
@@ -183,20 +239,25 @@ module Api::V0::Bindings
       return false if @client_clock_occurred_at.nil?
       return false if @client_clock_sent_at.nil?
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
+      type_validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v2'])
       return false unless type_validator.valid?(@type)
       return false if @source_uri.nil?
       return false if @session_uuid.nil?
       return false if @session_order.nil?
-      return false if @page_id.nil?
-      return false if @book_id.nil?
+      return false if @highlight_id.nil?
+      return false if @source_type.nil?
+      return false if @source_metadata.nil?
+      return false if @annotation.nil?
+      return false if @anchor.nil?
+      return false if @color.nil?
+      return false if @location_strategies.nil?
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.accessed_studyguide_v1'])
+      validator = EnumAttributeValidator.new('String', ['org.openstax.ec.created_highlight_v2'])
       unless validator.valid?(type)
         fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
       end
@@ -214,9 +275,13 @@ module Api::V0::Bindings
           source_uri == o.source_uri &&
           session_uuid == o.session_uuid &&
           session_order == o.session_order &&
-          page_id == o.page_id &&
-          book_id == o.book_id &&
-          source_metadata == o.source_metadata
+          highlight_id == o.highlight_id &&
+          source_type == o.source_type &&
+          source_metadata == o.source_metadata &&
+          annotation == o.annotation &&
+          anchor == o.anchor &&
+          color == o.color &&
+          location_strategies == o.location_strategies
     end
 
     # @see the `==` method
@@ -228,7 +293,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, page_id, book_id, source_metadata].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, highlight_id, source_type, source_metadata, annotation, anchor, color, location_strategies].hash
     end
 
     # Builds the object from hash

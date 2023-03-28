@@ -12,6 +12,10 @@ module Ec::AccessedStudyguide::V1
         key :type, :string
         key :description, 'The book id.'
       end
+      property :source_metadata do
+        key :type, :object
+        key :description, 'The ids and versions needed to retrieve the original source that was interacted with'
+      end
     end
   end
 end

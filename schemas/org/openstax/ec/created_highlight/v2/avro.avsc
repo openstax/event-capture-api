@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "changed_state_v1",
+  "name": "created_highlight_v2",
   "namespace": "org.openstax.ec",
   "fields": [
     {
@@ -59,15 +59,34 @@
       "default": null
     },
     {
-      "name": "state_type",
+      "name": "highlight_id",
       "type": "string"
     },
     {
-      "name": "current",
+      "name": "source_type",
       "type": "string"
     },
     {
-      "name": "previous",
+      "name": "source_metadata",
+      "type": {
+        "type": "map",
+        "values": "string"
+      }
+    },
+    {
+      "name": "annotation",
+      "type": "string"
+    },
+    {
+      "name": "anchor",
+      "type": "string"
+    },
+    {
+      "name": "color",
+      "type": "string"
+    },
+    {
+      "name": "location_strategies",
       "type": "string"
     },
     {
@@ -76,17 +95,6 @@
         "type": "long",
         "logicalType": "timestamp-millis"
       }
-    },
-    {
-      "name": "source_metadata",
-      "type": [
-        "null",
-        {
-          "type": "map",
-          "values": "string"
-        }
-      ],
-      "default": null
     }
   ]
 }

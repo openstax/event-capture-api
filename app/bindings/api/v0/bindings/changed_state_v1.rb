@@ -41,6 +41,9 @@ module Api::V0::Bindings
     # The previous value for the state described by :state_type
     attr_accessor :previous
 
+    # The ids and versions needed to retrieve the original source that was interacted with
+    attr_accessor :source_metadata
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -74,7 +77,8 @@ module Api::V0::Bindings
         :'session_order' => :'session_order',
         :'state_type' => :'state_type',
         :'current' => :'current',
-        :'previous' => :'previous'
+        :'previous' => :'previous',
+        :'source_metadata' => :'source_metadata'
       }
     end
 
@@ -89,7 +93,8 @@ module Api::V0::Bindings
         :'session_order' => :'Integer',
         :'state_type' => :'String',
         :'current' => :'String',
-        :'previous' => :'String'
+        :'previous' => :'String',
+        :'source_metadata' => :'Object'
       }
     end
 
@@ -135,6 +140,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'previous')
         self.previous = attributes[:'previous']
+      end
+
+      if attributes.has_key?(:'source_metadata')
+        self.source_metadata = attributes[:'source_metadata']
       end
     end
 
@@ -221,7 +230,8 @@ module Api::V0::Bindings
           session_order == o.session_order &&
           state_type == o.state_type &&
           current == o.current &&
-          previous == o.previous
+          previous == o.previous &&
+          source_metadata == o.source_metadata
     end
 
     # @see the `==` method
@@ -233,7 +243,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, state_type, current, previous].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, state_type, current, previous, source_metadata].hash
     end
 
     # Builds the object from hash

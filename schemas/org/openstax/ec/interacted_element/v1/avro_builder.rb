@@ -15,6 +15,7 @@ record :interacted_element_v1 do
   required :occurred_at, :timestamp
   optional :context_region, :string
   optional :context_state_change, :string
+  optional :source_metadata, :map, values: :string
 end
 
 

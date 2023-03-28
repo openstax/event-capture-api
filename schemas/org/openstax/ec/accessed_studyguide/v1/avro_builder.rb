@@ -9,4 +9,5 @@ record :accessed_studyguide_v1 do
   required :page_id, :string
   required :book_id, :string
   required :occurred_at, :timestamp
+  optional :source_metadata, :map, values: :string
 end

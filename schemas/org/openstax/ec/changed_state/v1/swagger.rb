@@ -16,6 +16,10 @@ module Ec::ChangedState::V1
         key :type, :string
         key :description, 'The previous value for the state described by :state_type'
       end
+      property :source_metadata do
+        key :type, :object
+        key :description, 'The ids and versions needed to retrieve the original source that was interacted with'
+      end
     end
   end
 end

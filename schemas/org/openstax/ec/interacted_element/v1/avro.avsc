@@ -110,6 +110,17 @@
         "string"
       ],
       "default": null
+    },
+    {
+      "name": "source_metadata",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": "string"
+        }
+      ],
+      "default": null
     }
   ]
 }

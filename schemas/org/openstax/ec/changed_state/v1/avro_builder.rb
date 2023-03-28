@@ -10,6 +10,7 @@ record :changed_state_v1 do
   required :current, :string
   required :previous, :string
   required :occurred_at, :timestamp
+  optional :source_metadata, :map, values: :string
 end
 
 
