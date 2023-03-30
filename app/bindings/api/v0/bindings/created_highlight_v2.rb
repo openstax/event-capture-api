@@ -41,9 +41,6 @@ module Api::V0::Bindings
     # The highlight source metadata.
     attr_accessor :source_metadata
 
-    # The highlight annotation.
-    attr_accessor :annotation
-
     # The highlight anchor.
     attr_accessor :anchor
 
@@ -87,7 +84,6 @@ module Api::V0::Bindings
         :'highlight_id' => :'highlight_id',
         :'source_type' => :'source_type',
         :'source_metadata' => :'source_metadata',
-        :'annotation' => :'annotation',
         :'anchor' => :'anchor',
         :'color' => :'color',
         :'location_strategies' => :'location_strategies'
@@ -106,7 +102,6 @@ module Api::V0::Bindings
         :'highlight_id' => :'String',
         :'source_type' => :'String',
         :'source_metadata' => :'Object',
-        :'annotation' => :'String',
         :'anchor' => :'String',
         :'color' => :'String',
         :'location_strategies' => :'String'
@@ -155,10 +150,6 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'source_metadata')
         self.source_metadata = attributes[:'source_metadata']
-      end
-
-      if attributes.has_key?(:'annotation')
-        self.annotation = attributes[:'annotation']
       end
 
       if attributes.has_key?(:'anchor')
@@ -214,10 +205,6 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "source_metadata", source_metadata cannot be nil.')
       end
 
-      if @annotation.nil?
-        invalid_properties.push('invalid value for "annotation", annotation cannot be nil.')
-      end
-
       if @anchor.nil?
         invalid_properties.push('invalid value for "anchor", anchor cannot be nil.')
       end
@@ -247,7 +234,6 @@ module Api::V0::Bindings
       return false if @highlight_id.nil?
       return false if @source_type.nil?
       return false if @source_metadata.nil?
-      return false if @annotation.nil?
       return false if @anchor.nil?
       return false if @color.nil?
       return false if @location_strategies.nil?
@@ -278,7 +264,6 @@ module Api::V0::Bindings
           highlight_id == o.highlight_id &&
           source_type == o.source_type &&
           source_metadata == o.source_metadata &&
-          annotation == o.annotation &&
           anchor == o.anchor &&
           color == o.color &&
           location_strategies == o.location_strategies
@@ -293,7 +278,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, highlight_id, source_type, source_metadata, annotation, anchor, color, location_strategies].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, highlight_id, source_type, source_metadata, anchor, color, location_strategies].hash
     end
 
     # Builds the object from hash

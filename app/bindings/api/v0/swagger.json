@@ -418,10 +418,6 @@
           "type": "object",
           "description": "The highlight source metadata."
         },
-        "annotation": {
-          "type": "string",
-          "description": "The highlight annotation."
-        },
         "anchor": {
           "type": "string",
           "description": "The highlight anchor."

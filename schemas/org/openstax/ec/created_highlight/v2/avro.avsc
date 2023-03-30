@@ -74,10 +74,6 @@
       }
     },
     {
-      "name": "annotation",
-      "type": "string"
-    },
-    {
       "name": "anchor",
       "type": "string"
     },

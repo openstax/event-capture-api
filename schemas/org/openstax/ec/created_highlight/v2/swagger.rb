@@ -16,10 +16,6 @@ module Ec::CreatedHighlight::V2
         key :type, :object
         key :description, 'The highlight source metadata.'
       end
-      property :annotation do
-        key :type, :string
-        key :description, 'The highlight annotation.'
-      end
       property :anchor do
         key :type, :string
         key :description, 'The highlight anchor.'
