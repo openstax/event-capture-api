@@ -56,7 +56,6 @@ module Api::V0::Bindings
     # The UX region the context element is in (e.g. toc, header, page).
     attr_accessor :context_region
 
-    # The ids and versions needed to retrieve the original source that was interacted with
     attr_accessor :source_metadata
 
     class EnumAttributeValidator
@@ -119,7 +118,7 @@ module Api::V0::Bindings
         :'context_type' => :'String',
         :'context_attributes' => :'Object',
         :'context_region' => :'String',
-        :'source_metadata' => :'Object'
+        :'source_metadata' => :'InteractedElementV1SourceMetadata'
       }
     end
 
