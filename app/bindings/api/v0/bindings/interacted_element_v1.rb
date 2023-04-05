@@ -118,7 +118,7 @@ module Api::V0::Bindings
         :'context_type' => :'String',
         :'context_attributes' => :'Object',
         :'context_region' => :'String',
-        :'source_metadata' => :'InteractedElementV1SourceMetadata'
+        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
       }
     end
 

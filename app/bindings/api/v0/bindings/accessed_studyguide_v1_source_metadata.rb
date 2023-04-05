@@ -14,7 +14,7 @@ require 'date'
 
 module Api::V0::Bindings
   # The ids and versions needed to retrieve the original source that was interacted with
-  class InteractedElementV1SourceMetadata
+  class AccessedStudyguideV1SourceMetadata
     # ID of content visible when this event occurred.
     attr_accessor :content_id
 

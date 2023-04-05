@@ -41,7 +41,6 @@ module Api::V0::Bindings
     # The previous value for the state described by :state_type
     attr_accessor :previous
 
-    # The ids and versions needed to retrieve the original source that was interacted with
     attr_accessor :source_metadata
 
     class EnumAttributeValidator
@@ -94,7 +93,7 @@ module Api::V0::Bindings
         :'state_type' => :'String',
         :'current' => :'String',
         :'previous' => :'String',
-        :'source_metadata' => :'Object'
+        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
       }
     end
 

@@ -212,7 +212,33 @@
         },
         "source_metadata": {
           "type": "object",
-          "description": "The ids and versions needed to retrieve the original source that was interacted with"
+          "description": "The ids and versions needed to retrieve the original source that was interacted with",
+          "required": [
+            "content_id",
+            "content_version"
+          ],
+          "properties": {
+            "content_id": {
+              "type": "string",
+              "description": "ID of content visible when this event occurred."
+            },
+            "content_version": {
+              "type": "string",
+              "description": "Version of the content"
+            },
+            "context_version": {
+              "type": "string",
+              "description": "Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline"
+            },
+            "content_index": {
+              "type": "string",
+              "description": "Zero based index of this content in its parent list, if any exists."
+            },
+            "scope_id": {
+              "type": "string",
+              "description": "ID for the larger scope of this content"
+            }
+          }
         }
       },
       "required": [
@@ -272,7 +298,33 @@
         },
         "source_metadata": {
           "type": "object",
-          "description": "The ids and versions needed to retrieve the original source that was interacted with"
+          "description": "The ids and versions needed to retrieve the original source that was interacted with",
+          "required": [
+            "content_id",
+            "content_version"
+          ],
+          "properties": {
+            "content_id": {
+              "type": "string",
+              "description": "ID of content visible when this event occurred."
+            },
+            "content_version": {
+              "type": "string",
+              "description": "Version of the content"
+            },
+            "context_version": {
+              "type": "string",
+              "description": "Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline"
+            },
+            "content_index": {
+              "type": "string",
+              "description": "Zero based index of this content in its parent list, if any exists."
+            },
+            "scope_id": {
+              "type": "string",
+              "description": "ID for the larger scope of this content"
+            }
+          }
         }
       },
       "required": [
@@ -414,10 +466,6 @@
           "type": "string",
           "description": "The highlight source type (e.g., openstax_page)."
         },
-        "source_metadata": {
-          "type": "object",
-          "description": "The highlight source metadata."
-        },
         "anchor": {
           "type": "string",
           "description": "The highlight anchor."
@@ -429,6 +477,36 @@
         "location_strategies": {
           "type": "string",
           "description": "The highlight location strategies (e.g., a text position selector)."
+        },
+        "source_metadata": {
+          "type": "object",
+          "description": "The ids and versions needed to retrieve the original source that was interacted with",
+          "required": [
+            "content_id",
+            "content_version"
+          ],
+          "properties": {
+            "content_id": {
+              "type": "string",
+              "description": "ID of content visible when this event occurred."
+            },
+            "content_version": {
+              "type": "string",
+              "description": "Version of the content"
+            },
+            "context_version": {
+              "type": "string",
+              "description": "Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline"
+            },
+            "content_index": {
+              "type": "string",
+              "description": "Zero based index of this content in its parent list, if any exists."
+            },
+            "scope_id": {
+              "type": "string",
+              "description": "ID for the larger scope of this content"
+            }
+          }
         }
       },
       "required": [

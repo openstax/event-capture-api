@@ -38,9 +38,6 @@ module Api::V0::Bindings
     # The highlight source type (e.g., openstax_page).
     attr_accessor :source_type
 
-    # The highlight source metadata.
-    attr_accessor :source_metadata
-
     # The highlight anchor.
     attr_accessor :anchor
 
@@ -49,6 +46,8 @@ module Api::V0::Bindings
 
     # The highlight location strategies (e.g., a text position selector).
     attr_accessor :location_strategies
+
+    attr_accessor :source_metadata
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -83,10 +82,10 @@ module Api::V0::Bindings
         :'session_order' => :'session_order',
         :'highlight_id' => :'highlight_id',
         :'source_type' => :'source_type',
-        :'source_metadata' => :'source_metadata',
         :'anchor' => :'anchor',
         :'color' => :'color',
-        :'location_strategies' => :'location_strategies'
+        :'location_strategies' => :'location_strategies',
+        :'source_metadata' => :'source_metadata'
       }
     end
 
@@ -101,10 +100,10 @@ module Api::V0::Bindings
         :'session_order' => :'Integer',
         :'highlight_id' => :'String',
         :'source_type' => :'String',
-        :'source_metadata' => :'Object',
         :'anchor' => :'String',
         :'color' => :'String',
-        :'location_strategies' => :'String'
+        :'location_strategies' => :'String',
+        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
       }
     end
 
@@ -148,10 +147,6 @@ module Api::V0::Bindings
         self.source_type = attributes[:'source_type']
       end
 
-      if attributes.has_key?(:'source_metadata')
-        self.source_metadata = attributes[:'source_metadata']
-      end
-
       if attributes.has_key?(:'anchor')
         self.anchor = attributes[:'anchor']
       end
@@ -162,6 +157,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'location_strategies')
         self.location_strategies = attributes[:'location_strategies']
+      end
+
+      if attributes.has_key?(:'source_metadata')
+        self.source_metadata = attributes[:'source_metadata']
       end
     end
 
@@ -201,10 +200,6 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "source_type", source_type cannot be nil.')
       end
 
-      if @source_metadata.nil?
-        invalid_properties.push('invalid value for "source_metadata", source_metadata cannot be nil.')
-      end
-
       if @anchor.nil?
         invalid_properties.push('invalid value for "anchor", anchor cannot be nil.')
       end
@@ -215,6 +210,10 @@ module Api::V0::Bindings
 
       if @location_strategies.nil?
         invalid_properties.push('invalid value for "location_strategies", location_strategies cannot be nil.')
+      end
+
+      if @source_metadata.nil?
+        invalid_properties.push('invalid value for "source_metadata", source_metadata cannot be nil.')
       end
 
       invalid_properties
@@ -233,10 +232,10 @@ module Api::V0::Bindings
       return false if @session_order.nil?
       return false if @highlight_id.nil?
       return false if @source_type.nil?
-      return false if @source_metadata.nil?
       return false if @anchor.nil?
       return false if @color.nil?
       return false if @location_strategies.nil?
+      return false if @source_metadata.nil?
       true
     end
 
@@ -263,10 +262,10 @@ module Api::V0::Bindings
           session_order == o.session_order &&
           highlight_id == o.highlight_id &&
           source_type == o.source_type &&
-          source_metadata == o.source_metadata &&
           anchor == o.anchor &&
           color == o.color &&
-          location_strategies == o.location_strategies
+          location_strategies == o.location_strategies &&
+          source_metadata == o.source_metadata
     end
 
     # @see the `==` method
@@ -278,7 +277,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, highlight_id, source_type, source_metadata, anchor, color, location_strategies].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, highlight_id, source_type, anchor, color, location_strategies, source_metadata].hash
     end
 
     # Builds the object from hash

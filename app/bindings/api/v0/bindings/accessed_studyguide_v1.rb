@@ -38,7 +38,6 @@ module Api::V0::Bindings
     # The book id.
     attr_accessor :book_id
 
-    # The ids and versions needed to retrieve the original source that was interacted with
     attr_accessor :source_metadata
 
     class EnumAttributeValidator
@@ -89,7 +88,7 @@ module Api::V0::Bindings
         :'session_order' => :'Integer',
         :'page_id' => :'String',
         :'book_id' => :'String',
-        :'source_metadata' => :'Object'
+        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
       }
     end
 
