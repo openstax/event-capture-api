@@ -3,6 +3,7 @@ namespace 'org.openstax.ec'
 import 'types/uuid'
 import 'types/date_time'
 import 'types/base_web_event'
+import 'types/source_metadata'
 
 record :interacted_element_v1 do
   extends :base_web_event
@@ -15,7 +16,7 @@ record :interacted_element_v1 do
   required :occurred_at, :timestamp
   optional :context_region, :string
   optional :context_state_change, :string
-  optional :source_metadata, :map, values: :string
+  optional :source_metadata, :source_metadata
 end
 
 
