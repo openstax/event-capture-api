@@ -74,6 +74,14 @@
       }
     },
     {
+      "name": "platform",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "release_id",
       "type": [
         "null",

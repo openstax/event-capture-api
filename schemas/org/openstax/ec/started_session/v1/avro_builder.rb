@@ -14,6 +14,7 @@ record :started_session_v1 do
   required :referrer, :string
   required :user_agent, :string
   required :occurred_at, :timestamp
+  optional :platform, :string
   optional :release_id, :string
   optional :service_worker, :string
 end
