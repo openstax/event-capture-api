@@ -72,6 +72,52 @@
         "type": "long",
         "logicalType": "timestamp-millis"
       }
+    },
+    {
+      "name": "source_metadata",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "source_metadata",
+          "namespace": "org.openstax.ec",
+          "fields": [
+            {
+              "name": "content_id",
+              "type": "org.openstax.ec.uuid"
+            },
+            {
+              "name": "content_version",
+              "type": "string"
+            },
+            {
+              "name": "context_version",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "content_index",
+              "type": [
+                "null",
+                "int"
+              ],
+              "default": null
+            },
+            {
+              "name": "scope_id",
+              "type": [
+                "null",
+                "org.openstax.ec.uuid"
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
     }
   ]
 }

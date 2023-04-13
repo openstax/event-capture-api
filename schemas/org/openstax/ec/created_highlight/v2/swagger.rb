@@ -1,16 +1,28 @@
-module Ec::AccessedStudyguide::V1
+module Ec::CreatedHighlight::V2
   class Swagger
     include SwaggerEventSchema1
 
-    swagger_event_schema(:AccessedStudyguideV1, type: 'org.openstax.ec.accessed_studyguide_v1') do
-      key :required, [:page_id, :book_id]
-      property :page_id do
+    swagger_event_schema(:CreatedHighlightV2, type: 'org.openstax.ec.created_highlight_v2') do
+      key :required, [:highlight_id, :source_type, :source_metadata, :anchor, :annotation, :color, :location_strategies]
+      property :highlight_id do
         key :type, :string
-        key :description, 'The page id.'
+        key :description, 'The highlight id.'
       end
-      property :book_id do
+      property :source_type do
         key :type, :string
-        key :description, 'The book id.'
+        key :description, 'The highlight source type (e.g., openstax_page).'
+      end
+      property :anchor do
+        key :type, :string
+        key :description, 'The highlight anchor.'
+      end
+      property :color do
+        key :type, :string
+        key :description, 'The highlight color.'
+      end
+      property :location_strategies do
+        key :type, :string
+        key :description, 'The highlight location strategies (e.g., a text position selector).'
       end
       property :source_metadata do
         key :type, :object
