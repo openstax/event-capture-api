@@ -38,6 +38,8 @@ module Api::V0::Bindings
     # The book id.
     attr_accessor :book_id
 
+    attr_accessor :source_metadata
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -70,7 +72,8 @@ module Api::V0::Bindings
         :'session_uuid' => :'session_uuid',
         :'session_order' => :'session_order',
         :'page_id' => :'page_id',
-        :'book_id' => :'book_id'
+        :'book_id' => :'book_id',
+        :'source_metadata' => :'source_metadata'
       }
     end
 
@@ -84,7 +87,8 @@ module Api::V0::Bindings
         :'session_uuid' => :'String',
         :'session_order' => :'Integer',
         :'page_id' => :'String',
-        :'book_id' => :'String'
+        :'book_id' => :'String',
+        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
       }
     end
 
@@ -126,6 +130,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'book_id')
         self.book_id = attributes[:'book_id']
+      end
+
+      if attributes.has_key?(:'source_metadata')
+        self.source_metadata = attributes[:'source_metadata']
       end
     end
 
@@ -206,7 +214,8 @@ module Api::V0::Bindings
           session_uuid == o.session_uuid &&
           session_order == o.session_order &&
           page_id == o.page_id &&
-          book_id == o.book_id
+          book_id == o.book_id &&
+          source_metadata == o.source_metadata
     end
 
     # @see the `==` method
@@ -218,7 +227,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, page_id, book_id].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, page_id, book_id, source_metadata].hash
     end
 
     # Builds the object from hash

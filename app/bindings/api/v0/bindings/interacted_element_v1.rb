@@ -56,6 +56,8 @@ module Api::V0::Bindings
     # The UX region the context element is in (e.g. toc, header, page).
     attr_accessor :context_region
 
+    attr_accessor :source_metadata
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -94,7 +96,8 @@ module Api::V0::Bindings
         :'context_id' => :'context_id',
         :'context_type' => :'context_type',
         :'context_attributes' => :'context_attributes',
-        :'context_region' => :'context_region'
+        :'context_region' => :'context_region',
+        :'source_metadata' => :'source_metadata'
       }
     end
 
@@ -114,7 +117,8 @@ module Api::V0::Bindings
         :'context_id' => :'String',
         :'context_type' => :'String',
         :'context_attributes' => :'Object',
-        :'context_region' => :'String'
+        :'context_region' => :'String',
+        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
       }
     end
 
@@ -180,6 +184,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'context_region')
         self.context_region = attributes[:'context_region']
+      end
+
+      if attributes.has_key?(:'source_metadata')
+        self.source_metadata = attributes[:'source_metadata']
       end
     end
 
@@ -286,7 +294,8 @@ module Api::V0::Bindings
           context_id == o.context_id &&
           context_type == o.context_type &&
           context_attributes == o.context_attributes &&
-          context_region == o.context_region
+          context_region == o.context_region &&
+          source_metadata == o.source_metadata
     end
 
     # @see the `==` method
@@ -298,7 +307,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, target_id, target_type, target_attributes, target_state_change, context_id, context_type, context_attributes, context_region].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, session_uuid, session_order, target_id, target_type, target_attributes, target_state_change, context_id, context_type, context_attributes, context_region, source_metadata].hash
     end
 
     # Builds the object from hash
