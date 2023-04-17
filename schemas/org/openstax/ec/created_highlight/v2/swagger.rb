@@ -3,7 +3,7 @@ module Ec::CreatedHighlight::V2
     include SwaggerEventSchema1
 
     swagger_event_schema(:CreatedHighlightV2, type: 'org.openstax.ec.created_highlight_v2') do
-      key :required, [:highlight_id, :source_type, :source_metadata, :anchor, :annotation, :color, :location_strategies]
+      key :required, [:highlight_id, :source_type, :source_metadata, :anchor, :color, :location_strategies]
       property :highlight_id do
         key :type, :string
         key :description, 'The highlight id.'
