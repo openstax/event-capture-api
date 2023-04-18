@@ -514,7 +514,6 @@
         "source_type",
         "source_metadata",
         "anchor",
-        "annotation",
         "color",
         "location_strategies",
         "client_clock_sent_at",
