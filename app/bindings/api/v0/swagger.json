@@ -231,7 +231,7 @@
               "description": "Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline"
             },
             "content_index": {
-              "type": "string",
+              "type": "integer",
               "description": "Zero based index of this content in its parent list, if any exists."
             },
             "scope_id": {
@@ -317,7 +317,7 @@
               "description": "Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline"
             },
             "content_index": {
-              "type": "string",
+              "type": "integer",
               "description": "Zero based index of this content in its parent list, if any exists."
             },
             "scope_id": {
@@ -499,7 +499,7 @@
               "description": "Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline"
             },
             "content_index": {
-              "type": "string",
+              "type": "integer",
               "description": "Zero based index of this content in its parent list, if any exists."
             },
             "scope_id": {
@@ -609,7 +609,7 @@
               "description": "Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline"
             },
             "content_index": {
-              "type": "string",
+              "type": "integer",
               "description": "Zero based index of this content in its parent list, if any exists."
             },
             "scope_id": {
