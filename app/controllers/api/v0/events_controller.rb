@@ -73,8 +73,8 @@ class Api::V0::EventsController < Api::V0::BaseController
       
       # Need to fixup uuids in the subschemas as well - 
       # Should read the avro-schema and do this for all that are defined as uuid but ... for now
-      self[:content_id] = CompactUuid.pack(controller.content_id) if controller.content_id
-      self[:scope_id] = CompactUuid.pack(controller.scope_id) if controller.scope_id
+      self[:content_id] = CompactUuid.pack(self[:content_id]) if self[:content_id]
+      self[:scope_id] = CompactUuid.pack(self[:scope_id]) if self[:scope_id]
     end
 
     def fixup_timestamps
