@@ -47,7 +47,7 @@ module Api::V0::Bindings
         :'content_id' => :'String',
         :'content_version' => :'String',
         :'context_version' => :'String',
-        :'content_index' => :'String',
+        :'content_index' => :'Integer',
         :'scope_id' => :'String'
       }
     end

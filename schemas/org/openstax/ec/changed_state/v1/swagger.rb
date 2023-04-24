@@ -33,7 +33,7 @@ module Ec::ChangedState::V1
           key :description, 'Version that impacts the source content, but is not revision of the content itself, such as a versioned api, or content pipeline'
         end
         property :content_index do
-          key :type, :string
+          key :type, :integer
           key :description, 'Zero based index of this content in its parent list, if any exists.'
         end
         property :scope_id do
