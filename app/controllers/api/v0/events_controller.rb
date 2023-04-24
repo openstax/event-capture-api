@@ -71,10 +71,12 @@ class Api::V0::EventsController < Api::V0::BaseController
       self[:device_uuid] = CompactUuid.pack(controller.current_device_uuid) if controller.current_device_uuid
       self[:session_uuid] = CompactUuid.pack(self[:session_uuid])
       
-      # Need to fixup uuids in the subschemas as well - 
+      # Need to fixup uuids in the source_metadata subschemas as well - 
       # Should read the avro-schema and do this for all that are defined as uuid but ... for now
-      self[:content_id] = CompactUuid.pack(self[:content_id]) if self[:content_id]
-      self[:scope_id] = CompactUuid.pack(self[:scope_id]) if self[:scope_id]
+      if self[:source_metadata]
+        self[:source_metadata][:content_id] = CompactUuid.pack(self[:source_metadata][:content_id]) if self[:source_metadata][:content_id]
+        self[:source_metadata][:scope_id] = CompactUuid.pack(self[:source_metadata][:scope_id]) if self[:source_metadata][:scope_id]
+      end
     end
 
     def fixup_timestamps
