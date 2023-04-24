@@ -103,14 +103,16 @@ RSpec.describe Api::V0::EventsController, type: :request do
         "context": "foo uuid",
         "flavor": "full-screen-v2",
         "medium": "in-app",
-        "content_id": "3ff3f27f-9bd2-42b3-b517-72bca70ead26",
         "client_clock_occurred_at": "2020-10-06T18:14:22Z",
         "client_clock_sent_at": "2020-10-06T18:14:22Z",
         'type': 'org.openstax.ec.nudged_v1',
         'session_uuid': 'ed3cdd93-6688-4fcb-b5b3-da3e71052454',
         'session_order': 42,
         'version': '1',
-        'source_uri': 'https://rex.example.com/some/exercise?id=34343'
+        'source_uri': 'https://rex.example.com/some/exercise?id=34343',
+        'source_metadata': {
+          'content_id': "3ff3f27f-9bd2-42b3-b517-72bca70ead26",
+        }
       }
     }
 
