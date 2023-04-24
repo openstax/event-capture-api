@@ -112,6 +112,7 @@ RSpec.describe Api::V0::EventsController, type: :request do
         'source_uri': 'https://rex.example.com/some/exercise?id=34343',
         'source_metadata': {
           'content_id': "3ff3f27f-9bd2-42b3-b517-72bca70ead26",
+          'scope_id': "9f488967-ec5f-41bf-b6e1-e8560c3c0f44",
         }
       }
     }
