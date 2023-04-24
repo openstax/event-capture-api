@@ -74,8 +74,8 @@ class Api::V0::EventsController < Api::V0::BaseController
       # Need to fixup uuids in the source_metadata subschemas as well - 
       # Should read the avro-schema and do this for all that are defined as uuid but ... for now
       if self[:source_metadata]
-        self.source_metadata[:content_id] = CompactUuid.pack(self.source_metadata[:content_id]) if self.source_metadata[:content_id]
-        self.source_metadata[:scope_id] = CompactUuid.pack(self.source_metadata[:scope_id]) if self.source_metadata[:scope_id]
+        self[:source_metadata][:content_id] = CompactUuid.pack(self[:source_metadata][:content_id]) if self[:source_metadata][:content_id]
+        self[:source_metadata][:scope_id] = CompactUuid.pack(self[:source_metadata][:scope_id]) if self[:source_metadata][:scope_id]
       end
     end
 
