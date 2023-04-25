@@ -22,7 +22,8 @@ topics: [
   {
     name: 'created_highlight',
     schemas: [
-        'org.openstax.ec.created_highlight_v1'
+        'org.openstax.ec.created_highlight_v1',
+        'org.openstax.ec.created_highlight_v2'
     ],
     config: {
       replication: 3,
