@@ -23,6 +23,15 @@ topics: [
     name: 'created_highlight',
     schemas: [
         'org.openstax.ec.created_highlight_v1',
+    ],
+    config: {
+      replication: 3,
+      partitions: 3
+    }
+  },
+  {
+    name: 'created_highlight_2',
+    schemas: [
         'org.openstax.ec.created_highlight_v2'
     ],
     config: {
