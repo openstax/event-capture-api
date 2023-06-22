@@ -80,6 +80,108 @@
           }
         }
       }
+    },
+    "/xapi/statements": {
+      "put": {
+        "summary": "Stores a single Statement with the given id.",
+        "description": "Stores a single `Statement` with the given id. POST can also be used to store single Statements.",
+        "parameters": [
+          {
+            "name": "method",
+            "in": "query",
+            "type": "string",
+            "description": "a MUST",
+            "default": "PUT",
+            "required": true
+          },
+          {
+            "name": "statementId",
+            "type": "string",
+            "in": "query",
+            "description": "Id of Statement to record",
+            "required": true
+          },
+          {
+            "name": "content",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Statement"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Default response",
+            "headers": {
+              "X-Experience-API-Consistent-Through": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The LRS MUST include this header on all responses to Statements Resource requests."
+              }
+            }
+          },
+          "409": {
+            "description": "If the LRS receives a Statement with an id it already has a Statement for, it SHOULD verify the received Statement matches the existing one and SHOULD return 409 Conflict if they do not match. See Statement comparison requirements.",
+            "headers": {
+              "X-Experience-API-Consistent-Through": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
+              }
+            }
+          },
+          "400": {
+            "description": "If the LRS receives a batch of Statements containing two or more Statements with the same id, it SHOULD* reject the batch and return 400 Bad Request.",
+            "headers": {
+              "X-Experience-API-Consistent-Through": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Stores a Statement, or a set of Statements.",
+        "description": "Stores a Statement, or a set of Statements.",
+        "parameters": [
+          {
+            "name": "content",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Statement"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Default response",
+            "headers": {
+              "X-Experience-API-Consistent-Through": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
+              }
+            }
+          },
+          "400": {
+            "description": "If the LRS receives a batch of Statements containing two or more Statements with the same id, it SHOULD* reject the batch and return 400 Bad Request.",
+            "headers": {
+              "X-Experience-API-Consistent-Through": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -167,6 +269,170 @@
         },
         "data": {
           "$ref": "#/definitions/InfoData"
+        }
+      }
+    },
+    "Actor": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the actor."
+        },
+        "account": {
+          "type": "object",
+          "required": [
+            "homePage",
+            "name"
+          ],
+          "properties": {
+            "homePage": {
+              "type": "string",
+              "description": "The URL of the actor's home page."
+            },
+            "name": {
+              "type": "string",
+              "description": "The account name or handle."
+            }
+          }
+        }
+      }
+    },
+    "Verb": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the verb."
+        },
+        "display": {
+          "type": "object",
+          "required": [
+            "en"
+          ],
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "The verb display name in English."
+            }
+          }
+        }
+      }
+    },
+    "Object": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the object."
+        },
+        "definition": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "object",
+              "required": [
+                "en"
+              ],
+              "properties": {
+                "en": {
+                  "type": "string",
+                  "description": "The object display name in English."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "object",
+          "required": [
+            "raw"
+          ],
+          "properties": {
+            "raw": {
+              "type": "number",
+              "description": "The raw score value."
+            }
+          }
+        }
+      }
+    },
+    "Statement": {
+      "type": "object",
+      "required": [
+        "actor",
+        "verb",
+        "object"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the statement."
+        },
+        "actor": {
+          "$ref": "#/definitions/Actor",
+          "description": "The actor who performed the action described in the statement."
+        },
+        "verb": {
+          "$ref": "#/definitions/Verb",
+          "description": "The action performed by the actor."
+        },
+        "object": {
+          "$ref": "#/definitions/Object",
+          "description": "The object or target of the action."
+        },
+        "context": {
+          "$ref": "#/definitions/Context",
+          "description": "The context in which the statement occurred."
+        },
+        "result": {
+          "$ref": "#/definitions/Result",
+          "description": "The result or outcome of the action."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date_time",
+          "description": "The timestamp when the statement was made."
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          },
+          "description": "Any attachments associated with the statement."
+        },
+        "authority": {
+          "$ref": "#/definitions/Agent",
+          "description": "The authority or source of the statement."
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of the xAPI specification."
+        }
+      }
+    },
+    "Statements": {
+      "properties": {
+        "statements": {
+          "type": "array",
+          "description": "Array of Statement",
+          "items": {
+            "$ref": "#/definitions/Statement"
+          }
         }
       }
     },
