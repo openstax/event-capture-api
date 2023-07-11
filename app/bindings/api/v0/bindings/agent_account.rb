@@ -13,7 +13,7 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class ActorAccount
+  class AgentAccount
     # The URL of the actor's home page.
     attr_accessor :home_page
 

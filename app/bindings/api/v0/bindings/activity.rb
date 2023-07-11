@@ -13,54 +13,16 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class Statement
-    # The unique identifier of the statement.
+  class Activity
     attr_accessor :id
 
-    # The actor who performed the action described in the statement.
-    attr_accessor :actor
-
-    # The action performed by the actor.
-    attr_accessor :verb
-
-    # The object or target of the action.
-    attr_accessor :object
-
-    # The context in which the statement occurred.
-    attr_accessor :context
-
-    # The result or outcome of the action.
-    attr_accessor :result
-
-    # The timestamp when the statement was made.
-    attr_accessor :timestamp
-
-    # The timestamp when the statement was stored in LRS.
-    attr_accessor :stored
-
-    # Any attachments associated with the statement.
-    attr_accessor :attachments
-
-    # The authority or source of the statement.
-    attr_accessor :authority
-
-    # The version of the xAPI specification.
-    attr_accessor :version
+    attr_accessor :definition
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
-        :'actor' => :'actor',
-        :'verb' => :'verb',
-        :'object' => :'object',
-        :'context' => :'context',
-        :'result' => :'result',
-        :'timestamp' => :'timestamp',
-        :'stored' => :'stored',
-        :'attachments' => :'attachments',
-        :'authority' => :'authority',
-        :'version' => :'version'
+        :'definition' => :'definition'
       }
     end
 
@@ -68,16 +30,7 @@ module Api::V0::Bindings
     def self.swagger_types
       {
         :'id' => :'String',
-        :'actor' => :'Agent',
-        :'verb' => :'Verb',
-        :'object' => :'Object',
-        :'context' => :'Context',
-        :'result' => :'Result',
-        :'timestamp' => :'String',
-        :'stored' => :'String',
-        :'attachments' => :'Array<Attachment>',
-        :'authority' => :'Agent',
-        :'version' => :'String'
+        :'definition' => :'ActivityDefinition'
       }
     end
 
@@ -93,46 +46,8 @@ module Api::V0::Bindings
         self.id = attributes[:'id']
       end
 
-      if attributes.has_key?(:'actor')
-        self.actor = attributes[:'actor']
-      end
-
-      if attributes.has_key?(:'verb')
-        self.verb = attributes[:'verb']
-      end
-
-      if attributes.has_key?(:'object')
-        self.object = attributes[:'object']
-      end
-
-      if attributes.has_key?(:'context')
-        self.context = attributes[:'context']
-      end
-
-      if attributes.has_key?(:'result')
-        self.result = attributes[:'result']
-      end
-
-      if attributes.has_key?(:'timestamp')
-        self.timestamp = attributes[:'timestamp']
-      end
-
-      if attributes.has_key?(:'stored')
-        self.stored = attributes[:'stored']
-      end
-
-      if attributes.has_key?(:'attachments')
-        if (value = attributes[:'attachments']).is_a?(Array)
-          self.attachments = value
-        end
-      end
-
-      if attributes.has_key?(:'authority')
-        self.authority = attributes[:'authority']
-      end
-
-      if attributes.has_key?(:'version')
-        self.version = attributes[:'version']
+      if attributes.has_key?(:'definition')
+        self.definition = attributes[:'definition']
       end
     end
 
@@ -140,16 +55,12 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @actor.nil?
-        invalid_properties.push('invalid value for "actor", actor cannot be nil.')
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
-      if @verb.nil?
-        invalid_properties.push('invalid value for "verb", verb cannot be nil.')
-      end
-
-      if @object.nil?
-        invalid_properties.push('invalid value for "object", object cannot be nil.')
+      if @definition.nil?
+        invalid_properties.push('invalid value for "definition", definition cannot be nil.')
       end
 
       invalid_properties
@@ -158,9 +69,8 @@ module Api::V0::Bindings
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @actor.nil?
-      return false if @verb.nil?
-      return false if @object.nil?
+      return false if @id.nil?
+      return false if @definition.nil?
       true
     end
 
@@ -170,16 +80,7 @@ module Api::V0::Bindings
       return true if self.equal?(o)
       self.class == o.class &&
           id == o.id &&
-          actor == o.actor &&
-          verb == o.verb &&
-          object == o.object &&
-          context == o.context &&
-          result == o.result &&
-          timestamp == o.timestamp &&
-          stored == o.stored &&
-          attachments == o.attachments &&
-          authority == o.authority &&
-          version == o.version
+          definition == o.definition
     end
 
     # @see the `==` method
@@ -191,7 +92,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [id, actor, verb, object, context, result, timestamp, stored, attachments, authority, version].hash
+      [id, definition].hash
     end
 
     # Builds the object from hash

@@ -13,25 +13,24 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class Actor
-    # The name of the actor.
-    attr_accessor :name
+  class ContextContextActivities
+    attr_accessor :parent
 
-    attr_accessor :account
+    attr_accessor :registration
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name',
-        :'account' => :'account'
+        :'parent' => :'parent',
+        :'registration' => :'registration'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'name' => :'String',
-        :'account' => :'ActorAccount'
+        :'parent' => :'Array<Activity>',
+        :'registration' => :'String'
       }
     end
 
@@ -43,12 +42,14 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.has_key?(:'parent')
+        if (value = attributes[:'parent']).is_a?(Array)
+          self.parent = value
+        end
       end
 
-      if attributes.has_key?(:'account')
-        self.account = attributes[:'account']
+      if attributes.has_key?(:'registration')
+        self.registration = attributes[:'registration']
       end
     end
 
@@ -56,8 +57,8 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      if @parent.nil?
+        invalid_properties.push('invalid value for "parent", parent cannot be nil.')
       end
 
       invalid_properties
@@ -66,7 +67,7 @@ module Api::V0::Bindings
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @name.nil?
+      return false if @parent.nil?
       true
     end
 
@@ -75,8 +76,8 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name &&
-          account == o.account
+          parent == o.parent &&
+          registration == o.registration
     end
 
     # @see the `==` method
@@ -88,7 +89,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [name, account].hash
+      [parent, registration].hash
     end
 
     # Builds the object from hash

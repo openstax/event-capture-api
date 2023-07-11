@@ -2,7 +2,7 @@ class Api::V0::XapiSwagger
   include Swagger::Blocks
   include OpenStax::Swagger::SwaggerBlocksExtensions
 
-  swagger_schema :Actor do
+  swagger_schema :Agent do
     key :type, :object
     key :required, [:name]
     property :name do
@@ -61,6 +61,56 @@ class Api::V0::XapiSwagger
     end
   end
 
+  swagger_schema :Context do
+    key :type, :object
+    key :required, [:contextActivities]
+
+    property :contextActivities do
+      key :type, :object
+      key :required, [:parent]
+
+      property :parent do
+        key :type, :array
+        items do
+          key :'$ref', :Activity
+        end
+      end
+
+      property :registration do
+        key :type, :string
+      end
+    end
+  end
+
+  swagger_schema :ActivityDefinition do
+    key :type, :object
+    key :required, [:name, :type]
+
+    property :name do
+      key :type, :string
+    end
+
+    property :type do
+      key :type, :string
+    end
+  end
+
+  swagger_schema :Activity do
+    key :type, :object
+    key :required, [:id, :definition]
+
+    property :id do
+      key :type, :string
+    end
+
+    property :definition do
+      key :'$ref', :ActivityDefinition
+    end
+
+    # Add any additional properties for the Activity schema as needed
+
+  end
+
   swagger_schema :Result do
     key :type, :object
     property :score do
@@ -81,7 +131,7 @@ class Api::V0::XapiSwagger
       key :description, 'The unique identifier of the statement.'
     end
     property :actor do
-      key :'$ref', :Actor
+      key :'$ref', :Agent
       key :description, 'The actor who performed the action described in the statement.'
     end
     property :verb do
@@ -104,6 +154,11 @@ class Api::V0::XapiSwagger
       key :type, :string
       key :format, :date_time
       key :description, 'The timestamp when the statement was made.'
+    end
+    property :stored do
+      key :type, :string
+      key :format, :date_time
+      key :description, 'The timestamp when the statement was stored in LRS.'
     end
     property :attachments do
       key :type, :array
