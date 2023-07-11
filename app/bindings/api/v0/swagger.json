@@ -80,108 +80,6 @@
           }
         }
       }
-    },
-    "/xapi/statements": {
-      "put": {
-        "summary": "Stores a single Statement with the given id.",
-        "description": "Stores a single `Statement` with the given id. POST can also be used to store single Statements.",
-        "parameters": [
-          {
-            "name": "method",
-            "in": "query",
-            "type": "string",
-            "description": "a MUST",
-            "default": "PUT",
-            "required": true
-          },
-          {
-            "name": "statementId",
-            "type": "string",
-            "in": "query",
-            "description": "Id of Statement to record",
-            "required": true
-          },
-          {
-            "name": "content",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Statement"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Default response",
-            "headers": {
-              "X-Experience-API-Consistent-Through": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The LRS MUST include this header on all responses to Statements Resource requests."
-              }
-            }
-          },
-          "409": {
-            "description": "If the LRS receives a Statement with an id it already has a Statement for, it SHOULD verify the received Statement matches the existing one and SHOULD return 409 Conflict if they do not match. See Statement comparison requirements.",
-            "headers": {
-              "X-Experience-API-Consistent-Through": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
-              }
-            }
-          },
-          "400": {
-            "description": "If the LRS receives a batch of Statements containing two or more Statements with the same id, it SHOULD* reject the batch and return 400 Bad Request.",
-            "headers": {
-              "X-Experience-API-Consistent-Through": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Stores a Statement, or a set of Statements.",
-        "description": "Stores a Statement, or a set of Statements.",
-        "parameters": [
-          {
-            "name": "content",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Statement"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Default response",
-            "headers": {
-              "X-Experience-API-Consistent-Through": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
-              }
-            }
-          },
-          "400": {
-            "description": "If the LRS receives a batch of Statements containing two or more Statements with the same id, it SHOULD* reject the batch and return 400 Bad Request.",
-            "headers": {
-              "X-Experience-API-Consistent-Through": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The LRS MUST include the header \"X-Experience-API-Consistent-Through\" on all responses to Statements Resource requests."
-              }
-            }
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -272,136 +170,92 @@
         }
       }
     },
-    "Agent": {
-      "type": "object",
+    "Statement": {
       "required": [
-        "name"
+        "id",
+        "actor",
+        "verb",
+        "object"
       ],
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "The name of the actor."
+        "id": {
+          "type": "string"
         },
-        "account": {
-          "type": "object",
-          "required": [
-            "homePage",
-            "name"
-          ],
-          "properties": {
-            "homePage": {
-              "type": "string",
-              "description": "The URL of the actor's home page."
+        "actor": {
+          "oneOf": [
+            {
+              "$ref": "Agent"
             },
-            "name": {
-              "type": "string",
-              "description": "The account name or handle."
+            {
+              "$ref": "Group"
             }
+          ]
+        },
+        "verb": {
+          "$ref": "#/definitions/Verb"
+        },
+        "object": {
+          "oneOf": [
+            {
+              "$ref": "Activity"
+            },
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Statement"
+            }
+          ]
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        },
+        "context": {
+          "$ref": "#/definitions/Context"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "stored": {
+          "type": "string"
+        },
+        "authority": {
+          "$ref": "#/definitions/Agent"
+        },
+        "version": {
+          "type": "string"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attachment"
           }
         }
       }
     },
     "Verb": {
-      "type": "object",
       "required": [
         "id"
       ],
       "properties": {
         "id": {
-          "type": "string",
-          "description": "The unique identifier of the verb."
+          "type": "string"
         },
         "display": {
-          "type": "object",
-          "required": [
-            "en"
-          ],
-          "properties": {
-            "en": {
-              "type": "string",
-              "description": "The verb display name in English."
-            }
-          }
-        }
-      }
-    },
-    "Object": {
-      "type": "object",
-      "required": [
-        "id"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The unique identifier of the object."
-        },
-        "definition": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "object",
-              "required": [
-                "en"
-              ],
-              "properties": {
-                "en": {
-                  "type": "string",
-                  "description": "The object display name in English."
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "Context": {
-      "type": "object",
-      "required": [
-        "contextActivities"
-      ],
-      "properties": {
-        "contextActivities": {
-          "type": "object",
-          "required": [
-            "parent"
-          ],
-          "properties": {
-            "parent": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Activity"
-              }
-            },
-            "registration": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "ActivityDefinition": {
-      "type": "object",
-      "required": [
-        "name",
-        "type"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
+          "type": "object"
         }
       }
     },
     "Activity": {
-      "type": "object",
       "required": [
         "id",
-        "definition"
+        "objectType"
       ],
       "properties": {
         "id": {
+          "type": "string"
+        },
+        "objectType": {
           "type": "string"
         },
         "definition": {
@@ -409,89 +263,232 @@
         }
       }
     },
+    "Agent": {
+      "required": [
+        "objectType"
+      ],
+      "properties": {
+        "objectType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "mbox": {
+          "type": "string"
+        },
+        "mbox_sha1sum": {
+          "type": "string"
+        },
+        "openid": {
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/definitions/Account"
+        }
+      }
+    },
+    "StatementReference": {
+      "required": [
+        "objectType",
+        "id"
+      ],
+      "properties": {
+        "objectType": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
     "Result": {
-      "type": "object",
       "properties": {
         "score": {
-          "type": "object",
-          "required": [
-            "raw"
-          ],
-          "properties": {
-            "raw": {
-              "type": "number",
-              "description": "The raw score value."
+          "$ref": "#/definitions/Score"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "completion": {
+          "type": "boolean"
+        },
+        "response": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "object"
+        }
+      }
+    },
+    "Context": {
+      "properties": {
+        "registration": {
+          "type": "string"
+        },
+        "instructor": {
+          "oneOf": [
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Group"
             }
+          ]
+        },
+        "team": {
+          "oneOf": [
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Group"
+            }
+          ]
+        },
+        "contextActivities": {
+          "$ref": "#/definitions/ContextActivities"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "statement": {
+          "$ref": "#/definitions/StatementReference"
+        },
+        "extensions": {
+          "type": "object"
+        }
+      }
+    },
+    "Attachment": {
+      "required": [
+        "usageType",
+        "display",
+        "description",
+        "contentType",
+        "length",
+        "sha2"
+      ],
+      "properties": {
+        "usageType": {
+          "type": "string"
+        },
+        "display": {
+          "type": "object"
+        },
+        "description": {
+          "type": "object"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "length": {
+          "type": "integer"
+        },
+        "sha2": {
+          "type": "string"
+        },
+        "fileUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "ActivityDefinition": {
+      "properties": {
+        "name": {
+          "type": "object"
+        },
+        "description": {
+          "type": "object"
+        },
+        "type": {
+          "type": "string"
+        },
+        "moreInfo": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "object"
+        }
+      }
+    },
+    "Score": {
+      "properties": {
+        "scaled": {
+          "type": "number",
+          "format": "double"
+        },
+        "raw": {
+          "type": "number",
+          "format": "double"
+        },
+        "min": {
+          "type": "number",
+          "format": "double"
+        },
+        "max": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "Account": {
+      "required": [
+        "homePage",
+        "name"
+      ],
+      "properties": {
+        "homePage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Group": {
+      "properties": {
+        "objectType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "member": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Agent"
           }
         }
       }
     },
-    "Statement": {
-      "type": "object",
-      "required": [
-        "actor",
-        "verb",
-        "object"
-      ],
+    "ContextActivities": {
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "The unique identifier of the statement."
-        },
-        "actor": {
-          "$ref": "#/definitions/Agent",
-          "description": "The actor who performed the action described in the statement."
-        },
-        "verb": {
-          "$ref": "#/definitions/Verb",
-          "description": "The action performed by the actor."
-        },
-        "object": {
-          "$ref": "#/definitions/Object",
-          "description": "The object or target of the action."
-        },
-        "context": {
-          "$ref": "#/definitions/Context",
-          "description": "The context in which the statement occurred."
-        },
-        "result": {
-          "$ref": "#/definitions/Result",
-          "description": "The result or outcome of the action."
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date_time",
-          "description": "The timestamp when the statement was made."
-        },
-        "stored": {
-          "type": "string",
-          "format": "date_time",
-          "description": "The timestamp when the statement was stored in LRS."
-        },
-        "attachments": {
+        "parent": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Attachment"
-          },
-          "description": "Any attachments associated with the statement."
+            "$ref": "#/definitions/Activity"
+          }
         },
-        "authority": {
-          "$ref": "#/definitions/Agent",
-          "description": "The authority or source of the statement."
-        },
-        "version": {
-          "type": "string",
-          "description": "The version of the xAPI specification."
-        }
-      }
-    },
-    "Statements": {
-      "properties": {
-        "statements": {
+        "category": {
           "type": "array",
-          "description": "Array of Statement",
           "items": {
-            "$ref": "#/definitions/Statement"
+            "$ref": "#/definitions/Activity"
+          }
+        },
+        "other": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Activity"
           }
         }
       }

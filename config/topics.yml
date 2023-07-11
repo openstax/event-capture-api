@@ -68,7 +68,6 @@ topics: [
       replication: 3,
       partitions: 3
     }
-  }
   },
   {
     name: 'xapi_statement',

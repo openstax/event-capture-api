@@ -16,17 +16,37 @@ module Api::V0::Bindings
   class Result
     attr_accessor :score
 
+    attr_accessor :success
+
+    attr_accessor :completion
+
+    attr_accessor :response
+
+    attr_accessor :duration
+
+    attr_accessor :extensions
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'score' => :'score'
+        :'score' => :'score',
+        :'success' => :'success',
+        :'completion' => :'completion',
+        :'response' => :'response',
+        :'duration' => :'duration',
+        :'extensions' => :'extensions'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'score' => :'ResultScore'
+        :'score' => :'Score',
+        :'success' => :'BOOLEAN',
+        :'completion' => :'BOOLEAN',
+        :'response' => :'String',
+        :'duration' => :'String',
+        :'extensions' => :'Object'
       }
     end
 
@@ -40,6 +60,26 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'score')
         self.score = attributes[:'score']
+      end
+
+      if attributes.has_key?(:'success')
+        self.success = attributes[:'success']
+      end
+
+      if attributes.has_key?(:'completion')
+        self.completion = attributes[:'completion']
+      end
+
+      if attributes.has_key?(:'response')
+        self.response = attributes[:'response']
+      end
+
+      if attributes.has_key?(:'duration')
+        self.duration = attributes[:'duration']
+      end
+
+      if attributes.has_key?(:'extensions')
+        self.extensions = attributes[:'extensions']
       end
     end
 
@@ -61,7 +101,12 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          score == o.score
+          score == o.score &&
+          success == o.success &&
+          completion == o.completion &&
+          response == o.response &&
+          duration == o.duration &&
+          extensions == o.extensions
     end
 
     # @see the `==` method
@@ -73,7 +118,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [score].hash
+      [score, success, completion, response, duration, extensions].hash
     end
 
     # Builds the object from hash

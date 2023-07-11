@@ -13,20 +13,28 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class ObjectDefinition
+  class Group
+    attr_accessor :object_type
+
     attr_accessor :name
+
+    attr_accessor :member
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name'
+        :'object_type' => :'objectType',
+        :'name' => :'name',
+        :'member' => :'member'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'name' => :'ObjectDefinitionName'
+        :'object_type' => :'String',
+        :'name' => :'String',
+        :'member' => :'Array<Agent>'
       }
     end
 
@@ -38,8 +46,18 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
+      if attributes.has_key?(:'objectType')
+        self.object_type = attributes[:'objectType']
+      end
+
       if attributes.has_key?(:'name')
         self.name = attributes[:'name']
+      end
+
+      if attributes.has_key?(:'member')
+        if (value = attributes[:'member']).is_a?(Array)
+          self.member = value
+        end
       end
     end
 
@@ -61,7 +79,9 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name
+          object_type == o.object_type &&
+          name == o.name &&
+          member == o.member
     end
 
     # @see the `==` method
@@ -73,7 +93,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [name].hash
+      [object_type, name, member].hash
     end
 
     # Builds the object from hash

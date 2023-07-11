@@ -13,21 +13,32 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class ObjectDefinitionName
-    # The object display name in English.
-    attr_accessor :en
+  class Score
+    attr_accessor :scaled
+
+    attr_accessor :raw
+
+    attr_accessor :min
+
+    attr_accessor :max
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'en' => :'en'
+        :'scaled' => :'scaled',
+        :'raw' => :'raw',
+        :'min' => :'min',
+        :'max' => :'max'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'en' => :'String'
+        :'scaled' => :'Float',
+        :'raw' => :'Float',
+        :'min' => :'Float',
+        :'max' => :'Float'
       }
     end
 
@@ -39,8 +50,20 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'en')
-        self.en = attributes[:'en']
+      if attributes.has_key?(:'scaled')
+        self.scaled = attributes[:'scaled']
+      end
+
+      if attributes.has_key?(:'raw')
+        self.raw = attributes[:'raw']
+      end
+
+      if attributes.has_key?(:'min')
+        self.min = attributes[:'min']
+      end
+
+      if attributes.has_key?(:'max')
+        self.max = attributes[:'max']
       end
     end
 
@@ -48,17 +71,12 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @en.nil?
-        invalid_properties.push('invalid value for "en", en cannot be nil.')
-      end
-
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @en.nil?
       true
     end
 
@@ -67,7 +85,10 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          en == o.en
+          scaled == o.scaled &&
+          raw == o.raw &&
+          min == o.min &&
+          max == o.max
     end
 
     # @see the `==` method
@@ -79,7 +100,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [en].hash
+      [scaled, raw, min, max].hash
     end
 
     # Builds the object from hash

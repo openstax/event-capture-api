@@ -13,24 +13,24 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class ContextContextActivities
-    attr_accessor :parent
+  class StatementReference
+    attr_accessor :object_type
 
-    attr_accessor :registration
+    attr_accessor :id
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'parent' => :'parent',
-        :'registration' => :'registration'
+        :'object_type' => :'objectType',
+        :'id' => :'id'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'parent' => :'Array<Activity>',
-        :'registration' => :'String'
+        :'object_type' => :'String',
+        :'id' => :'String'
       }
     end
 
@@ -42,14 +42,12 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'parent')
-        if (value = attributes[:'parent']).is_a?(Array)
-          self.parent = value
-        end
+      if attributes.has_key?(:'objectType')
+        self.object_type = attributes[:'objectType']
       end
 
-      if attributes.has_key?(:'registration')
-        self.registration = attributes[:'registration']
+      if attributes.has_key?(:'id')
+        self.id = attributes[:'id']
       end
     end
 
@@ -57,8 +55,12 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @parent.nil?
-        invalid_properties.push('invalid value for "parent", parent cannot be nil.')
+      if @object_type.nil?
+        invalid_properties.push('invalid value for "object_type", object_type cannot be nil.')
+      end
+
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
       invalid_properties
@@ -67,7 +69,8 @@ module Api::V0::Bindings
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @parent.nil?
+      return false if @object_type.nil?
+      return false if @id.nil?
       true
     end
 
@@ -76,8 +79,8 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          parent == o.parent &&
-          registration == o.registration
+          object_type == o.object_type &&
+          id == o.id
     end
 
     # @see the `==` method
@@ -89,7 +92,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [parent, registration].hash
+      [object_type, id].hash
     end
 
     # Builds the object from hash

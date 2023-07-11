@@ -10,73 +10,106 @@
     },
     {
       "name": "actor",
-      "type": {
-        "type": "record",
-        "name": "Actor",
-        "namespace": "org.adlnet.xapi",
-        "doc": "Actor schema",
-        "fields": [
-          {
-            "name": "objectType",
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "type": [
-              "null",
-              "string"
-            ],
-            "default": null
-          },
-          {
-            "name": "mbox",
-            "type": [
-              "null",
-              "string"
-            ],
-            "default": null
-          },
-          {
-            "name": "mbox_sha1sum",
-            "type": [
-              "null",
-              "string"
-            ],
-            "default": null
-          },
-          {
-            "name": "openid",
-            "type": [
-              "null",
-              "string"
-            ],
-            "default": null
-          },
-          {
-            "name": "account",
-            "type": [
-              "null",
-              {
-                "type": "record",
-                "name": "Account",
-                "namespace": "org.adlnet.xapi",
-                "doc": "Account schema",
-                "fields": [
-                  {
-                    "name": "homePage",
-                    "type": "string"
-                  },
-                  {
-                    "name": "name",
-                    "type": "string"
-                  }
-                ]
-              }
-            ],
-            "default": null
-          }
-        ]
-      }
+      "type": [
+        {
+          "type": "record",
+          "name": "Agent",
+          "namespace": "org.adlnet.xapi",
+          "doc": "Agent schema",
+          "fields": [
+            {
+              "name": "objectType",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "mbox",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "mbox_sha1sum",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "openid",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "account",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "Account",
+                  "namespace": "org.adlnet.xapi",
+                  "doc": "Account schema",
+                  "fields": [
+                    {
+                      "name": "homePage",
+                      "type": "string"
+                    },
+                    {
+                      "name": "name",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ],
+              "default": null
+            }
+          ]
+        },
+        {
+          "type": "record",
+          "name": "Group",
+          "namespace": "org.adlnet.xapi",
+          "doc": "Group schema",
+          "fields": [
+            {
+              "name": "objectType",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "member",
+              "type": [
+                "null",
+                {
+                  "type": "array",
+                  "items": "org.adlnet.xapi.Agent"
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "verb",
@@ -115,6 +148,10 @@
           "fields": [
             {
               "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "objectType",
               "type": "string"
             },
             {
@@ -183,58 +220,7 @@
             }
           ]
         },
-        {
-          "type": "record",
-          "name": "Agent",
-          "namespace": "org.adlnet.xapi",
-          "doc": "Agent schema",
-          "fields": [
-            {
-              "name": "objectType",
-              "type": "string"
-            },
-            {
-              "name": "name",
-              "type": [
-                "null",
-                "string"
-              ],
-              "default": null
-            },
-            {
-              "name": "mbox",
-              "type": [
-                "null",
-                "string"
-              ],
-              "default": null
-            },
-            {
-              "name": "mbox_sha1sum",
-              "type": [
-                "null",
-                "string"
-              ],
-              "default": null
-            },
-            {
-              "name": "openid",
-              "type": [
-                "null",
-                "string"
-              ],
-              "default": null
-            },
-            {
-              "name": "account",
-              "type": [
-                "null",
-                "org.adlnet.xapi.Account"
-              ],
-              "default": null
-            }
-          ]
-        },
+        "org.adlnet.xapi.Agent",
         "org.adlnet.xapi.Statement"
       ]
     },
@@ -365,7 +351,8 @@
               "name": "instructor",
               "type": [
                 "null",
-                "org.adlnet.xapi.Actor"
+                "org.adlnet.xapi.Agent",
+                "org.adlnet.xapi.Group"
               ],
               "default": null
             },
@@ -373,37 +360,7 @@
               "name": "team",
               "type": [
                 "null",
-                {
-                  "type": "record",
-                  "name": "Group",
-                  "namespace": "org.adlnet.xapi",
-                  "doc": "Group schema",
-                  "fields": [
-                    {
-                      "name": "objectType",
-                      "type": "string"
-                    },
-                    {
-                      "name": "name",
-                      "type": [
-                        "null",
-                        "string"
-                      ],
-                      "default": null
-                    },
-                    {
-                      "name": "member",
-                      "type": [
-                        "null",
-                        {
-                          "type": "array",
-                          "items": "org.adlnet.xapi.Agent"
-                        }
-                      ],
-                      "default": null
-                    }
-                  ]
-                }
+                "org.adlnet.xapi.Group"
               ],
               "default": null
             },

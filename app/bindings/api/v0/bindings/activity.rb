@@ -16,12 +16,15 @@ module Api::V0::Bindings
   class Activity
     attr_accessor :id
 
+    attr_accessor :object_type
+
     attr_accessor :definition
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
+        :'object_type' => :'objectType',
         :'definition' => :'definition'
       }
     end
@@ -30,6 +33,7 @@ module Api::V0::Bindings
     def self.swagger_types
       {
         :'id' => :'String',
+        :'object_type' => :'String',
         :'definition' => :'ActivityDefinition'
       }
     end
@@ -46,6 +50,10 @@ module Api::V0::Bindings
         self.id = attributes[:'id']
       end
 
+      if attributes.has_key?(:'objectType')
+        self.object_type = attributes[:'objectType']
+      end
+
       if attributes.has_key?(:'definition')
         self.definition = attributes[:'definition']
       end
@@ -59,8 +67,8 @@ module Api::V0::Bindings
         invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
-      if @definition.nil?
-        invalid_properties.push('invalid value for "definition", definition cannot be nil.')
+      if @object_type.nil?
+        invalid_properties.push('invalid value for "object_type", object_type cannot be nil.')
       end
 
       invalid_properties
@@ -70,7 +78,7 @@ module Api::V0::Bindings
     # @return true if the model is valid
     def valid?
       return false if @id.nil?
-      return false if @definition.nil?
+      return false if @object_type.nil?
       true
     end
 
@@ -80,6 +88,7 @@ module Api::V0::Bindings
       return true if self.equal?(o)
       self.class == o.class &&
           id == o.id &&
+          object_type == o.object_type &&
           definition == o.definition
     end
 
@@ -92,7 +101,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [id, definition].hash
+      [id, object_type, definition].hash
     end
 
     # Builds the object from hash

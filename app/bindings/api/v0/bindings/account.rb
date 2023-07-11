@@ -13,11 +13,9 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class AgentAccount
-    # The URL of the actor's home page.
+  class Account
     attr_accessor :home_page
 
-    # The account name or handle.
     attr_accessor :name
 
     # Attribute mapping from ruby-style variable name to JSON key.

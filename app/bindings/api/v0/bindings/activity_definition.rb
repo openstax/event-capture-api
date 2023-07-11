@@ -16,21 +16,33 @@ module Api::V0::Bindings
   class ActivityDefinition
     attr_accessor :name
 
+    attr_accessor :description
+
     attr_accessor :type
+
+    attr_accessor :more_info
+
+    attr_accessor :extensions
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
-        :'type' => :'type'
+        :'description' => :'description',
+        :'type' => :'type',
+        :'more_info' => :'moreInfo',
+        :'extensions' => :'extensions'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'name' => :'String',
-        :'type' => :'String'
+        :'name' => :'Object',
+        :'description' => :'Object',
+        :'type' => :'String',
+        :'more_info' => :'String',
+        :'extensions' => :'Object'
       }
     end
 
@@ -46,8 +58,20 @@ module Api::V0::Bindings
         self.name = attributes[:'name']
       end
 
+      if attributes.has_key?(:'description')
+        self.description = attributes[:'description']
+      end
+
       if attributes.has_key?(:'type')
         self.type = attributes[:'type']
+      end
+
+      if attributes.has_key?(:'moreInfo')
+        self.more_info = attributes[:'moreInfo']
+      end
+
+      if attributes.has_key?(:'extensions')
+        self.extensions = attributes[:'extensions']
       end
     end
 
@@ -55,22 +79,12 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
-      end
-
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
-      end
-
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @name.nil?
-      return false if @type.nil?
       true
     end
 
@@ -80,7 +94,10 @@ module Api::V0::Bindings
       return true if self.equal?(o)
       self.class == o.class &&
           name == o.name &&
-          type == o.type
+          description == o.description &&
+          type == o.type &&
+          more_info == o.more_info &&
+          extensions == o.extensions
     end
 
     # @see the `==` method
@@ -92,7 +109,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [name, type].hash
+      [name, description, type, more_info, extensions].hash
     end
 
     # Builds the object from hash

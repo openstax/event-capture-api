@@ -14,7 +14,6 @@ require 'date'
 
 module Api::V0::Bindings
   class Verb
-    # The unique identifier of the verb.
     attr_accessor :id
 
     attr_accessor :display
@@ -31,7 +30,7 @@ module Api::V0::Bindings
     def self.swagger_types
       {
         :'id' => :'String',
-        :'display' => :'VerbDisplay'
+        :'display' => :'Object'
       }
     end
 

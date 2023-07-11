@@ -9,53 +9,28 @@ class Api::V0::StatementsController < Api::V0::BaseController
     # If that errors, try as json array of statements
     if error
       statements = params[:_json]
-    statements.each do |statement|
-      statement, error = bind(statement, Api::V0::Bindings::Statement)
-      render(json: error, status: error.status_code) and return if error
-      post_xapi_kafka data: statement
+        statements.each do |statement|
+          statement, error = bind(statement, Api::V0::Bindings::Statement)
+          render(json: error, status: error.status_code) and return if error
+          post_xapi_kafka data: statement
+        end
     else
       
       post_xapi_kafka data: statement
-      render nothing: true, status: 201
 
     end
-    debugger
-    end
+    render nothing: true, status: 201
 
-#    raw_kafka_data = KafkaData.new(api_data: event.data, controller: self)
-#
-#    avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data,
-#                                                    schema_name: raw_kafka_data.schema_name,
-#                                                    validate: true)
-#
-#      KafkaClient.async_produce(data: avro_kafka_data, topic: 'xapi_statement')
-#
-#    render nothing: true, status: 201
   end
 
-  class KafkaData < HashWithIndifferentAccess
-    attr_reader :schema_name
+  def post_xapi_kafka(data:)
 
-    def initialize(api_data:, controller:)
-      super()
+    debugger
+    avro_kafka_data = KafkaAvroTurf.instance.encode(data.to_hash,
+                                                    schema_name: 'org.adlnet.xapi.Statement',
+                                                    validate: true)
 
-      api_data = api_data.to_hash
-
-      @controller = controller
-      @schema_name = api_data.delete(:type)
-
-      merge!(api_data)
-
-      translate_started_session
-      translate_source_uri
-      translate_uuids
-      fixup_timestamps
-    end
-
-    protected
-
-    attr_reader :controller
-
+    KafkaClient.async_produce(data: avro_kafka_data, topic: 'xapi_statement')
 
   end
 end

@@ -13,21 +13,44 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class ResultScore
-    # The raw score value.
-    attr_accessor :raw
+  class Attachment
+    attr_accessor :usage_type
+
+    attr_accessor :display
+
+    attr_accessor :description
+
+    attr_accessor :content_type
+
+    attr_accessor :length
+
+    attr_accessor :sha2
+
+    attr_accessor :file_url
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'raw' => :'raw'
+        :'usage_type' => :'usageType',
+        :'display' => :'display',
+        :'description' => :'description',
+        :'content_type' => :'contentType',
+        :'length' => :'length',
+        :'sha2' => :'sha2',
+        :'file_url' => :'fileUrl'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'raw' => :'Float'
+        :'usage_type' => :'String',
+        :'display' => :'Object',
+        :'description' => :'Object',
+        :'content_type' => :'String',
+        :'length' => :'Integer',
+        :'sha2' => :'String',
+        :'file_url' => :'String'
       }
     end
 
@@ -39,8 +62,32 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'raw')
-        self.raw = attributes[:'raw']
+      if attributes.has_key?(:'usageType')
+        self.usage_type = attributes[:'usageType']
+      end
+
+      if attributes.has_key?(:'display')
+        self.display = attributes[:'display']
+      end
+
+      if attributes.has_key?(:'description')
+        self.description = attributes[:'description']
+      end
+
+      if attributes.has_key?(:'contentType')
+        self.content_type = attributes[:'contentType']
+      end
+
+      if attributes.has_key?(:'length')
+        self.length = attributes[:'length']
+      end
+
+      if attributes.has_key?(:'sha2')
+        self.sha2 = attributes[:'sha2']
+      end
+
+      if attributes.has_key?(:'fileUrl')
+        self.file_url = attributes[:'fileUrl']
       end
     end
 
@@ -48,8 +95,28 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @raw.nil?
-        invalid_properties.push('invalid value for "raw", raw cannot be nil.')
+      if @usage_type.nil?
+        invalid_properties.push('invalid value for "usage_type", usage_type cannot be nil.')
+      end
+
+      if @display.nil?
+        invalid_properties.push('invalid value for "display", display cannot be nil.')
+      end
+
+      if @description.nil?
+        invalid_properties.push('invalid value for "description", description cannot be nil.')
+      end
+
+      if @content_type.nil?
+        invalid_properties.push('invalid value for "content_type", content_type cannot be nil.')
+      end
+
+      if @length.nil?
+        invalid_properties.push('invalid value for "length", length cannot be nil.')
+      end
+
+      if @sha2.nil?
+        invalid_properties.push('invalid value for "sha2", sha2 cannot be nil.')
       end
 
       invalid_properties
@@ -58,7 +125,12 @@ module Api::V0::Bindings
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @raw.nil?
+      return false if @usage_type.nil?
+      return false if @display.nil?
+      return false if @description.nil?
+      return false if @content_type.nil?
+      return false if @length.nil?
+      return false if @sha2.nil?
       true
     end
 
@@ -67,7 +139,13 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          raw == o.raw
+          usage_type == o.usage_type &&
+          display == o.display &&
+          description == o.description &&
+          content_type == o.content_type &&
+          length == o.length &&
+          sha2 == o.sha2 &&
+          file_url == o.file_url
     end
 
     # @see the `==` method
@@ -79,7 +157,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [raw].hash
+      [usage_type, display, description, content_type, length, sha2, file_url].hash
     end
 
     # Builds the object from hash

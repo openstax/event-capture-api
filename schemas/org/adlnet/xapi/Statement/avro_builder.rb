@@ -23,6 +23,7 @@ end
 
 record :Activity, namespace: 'org.adlnet.xapi' do
   required :id, :string
+  required :objectType, :string
   optional :definition, :ActivityDefinition
 
   doc 'Activity schema'
@@ -71,17 +72,6 @@ record :Group, namespace: 'org.adlnet.xapi' do
   doc 'Group schema'
 end
 
-record :Actor, namespace: 'org.adlnet.xapi' do
-  required :objectType, :string
-  optional :name, :string
-  optional :mbox, :string
-  optional :mbox_sha1sum, :string
-  optional :openid, :string
-  optional :account, :Account
-
-  doc 'Actor schema'
-end
-
 record :Verb, namespace: 'org.adlnet.xapi' do
   required :id, :string
   optional :display, :map, values: :string
@@ -109,7 +99,7 @@ end
 
 record :Context, namespace: 'org.adlnet.xapi' do
   optional :registration, :string
-  optional :instructor, :Actor
+  optional :instructor, :union, types: [:Agent, :Group]
   optional :team, :Group
   optional :contextActivities, :ContextActivities
   optional :revision, :string
@@ -123,7 +113,7 @@ end
 
 record :Statement, namespace: 'org.adlnet.xapi' do
   required :id, :string
-  required :actor, :Actor
+  required :actor, :union, types: [:Agent, :Group]
   required :verb, :Verb
   required :object, :union, types: [:Activity, :Agent, :Statement]
   optional :result, :Result

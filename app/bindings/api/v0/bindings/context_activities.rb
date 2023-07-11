@@ -13,21 +13,28 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class VerbDisplay
-    # The verb display name in English.
-    attr_accessor :en
+  class ContextActivities
+    attr_accessor :parent
+
+    attr_accessor :category
+
+    attr_accessor :other
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'en' => :'en'
+        :'parent' => :'parent',
+        :'category' => :'category',
+        :'other' => :'other'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'en' => :'String'
+        :'parent' => :'Array<Activity>',
+        :'category' => :'Array<Activity>',
+        :'other' => :'Array<Activity>'
       }
     end
 
@@ -39,8 +46,22 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'en')
-        self.en = attributes[:'en']
+      if attributes.has_key?(:'parent')
+        if (value = attributes[:'parent']).is_a?(Array)
+          self.parent = value
+        end
+      end
+
+      if attributes.has_key?(:'category')
+        if (value = attributes[:'category']).is_a?(Array)
+          self.category = value
+        end
+      end
+
+      if attributes.has_key?(:'other')
+        if (value = attributes[:'other']).is_a?(Array)
+          self.other = value
+        end
       end
     end
 
@@ -48,17 +69,12 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @en.nil?
-        invalid_properties.push('invalid value for "en", en cannot be nil.')
-      end
-
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @en.nil?
       true
     end
 
@@ -67,7 +83,9 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          en == o.en
+          parent == o.parent &&
+          category == o.category &&
+          other == o.other
     end
 
     # @see the `==` method
@@ -79,7 +97,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [en].hash
+      [parent, category, other].hash
     end
 
     # Builds the object from hash
