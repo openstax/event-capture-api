@@ -25,7 +25,6 @@ class Api::V0::StatementsController < Api::V0::BaseController
 
   def post_xapi_kafka(data:)
 
-    debugger
     avro_kafka_data = KafkaAvroTurf.instance.encode(data.to_hash,
                                                     schema_name: 'org.adlnet.xapi.Statement',
                                                     validate: true)
