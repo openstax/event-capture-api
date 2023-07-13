@@ -8,6 +8,10 @@ Rails.application.routes.draw do
 
       resources :events, only: :create
 
+      scope '/xapi' do
+        resources :statements, only: :create
+      end
+
       get :info, to: 'info#info'
 
       get :swagger, to: 'swagger#json'
