@@ -170,6 +170,329 @@
         }
       }
     },
+    "Statement": {
+      "required": [
+        "id",
+        "actor",
+        "verb",
+        "object"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "actor": {
+          "oneOf": [
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Group"
+            }
+          ]
+        },
+        "verb": {
+          "$ref": "#/definitions/Verb"
+        },
+        "object": {
+          "oneOf": [
+            {
+              "$ref": "Activity"
+            },
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Statement"
+            }
+          ]
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        },
+        "context": {
+          "$ref": "#/definitions/Context"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "stored": {
+          "type": "string"
+        },
+        "authority": {
+          "$ref": "#/definitions/Agent"
+        },
+        "version": {
+          "type": "string"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      }
+    },
+    "Verb": {
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "display": {
+          "type": "object"
+        }
+      }
+    },
+    "Activity": {
+      "required": [
+        "id",
+        "objectType"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "objectType": {
+          "type": "string"
+        },
+        "definition": {
+          "$ref": "#/definitions/ActivityDefinition"
+        }
+      }
+    },
+    "Agent": {
+      "required": [
+        "objectType"
+      ],
+      "properties": {
+        "objectType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "mbox": {
+          "type": "string"
+        },
+        "mbox_sha1sum": {
+          "type": "string"
+        },
+        "openid": {
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/definitions/Account"
+        }
+      }
+    },
+    "StatementReference": {
+      "required": [
+        "objectType",
+        "id"
+      ],
+      "properties": {
+        "objectType": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "Result": {
+      "properties": {
+        "score": {
+          "$ref": "#/definitions/Score"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "completion": {
+          "type": "boolean"
+        },
+        "response": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "object"
+        }
+      }
+    },
+    "Context": {
+      "properties": {
+        "registration": {
+          "type": "string"
+        },
+        "instructor": {
+          "oneOf": [
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Group"
+            }
+          ]
+        },
+        "team": {
+          "oneOf": [
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Group"
+            }
+          ]
+        },
+        "contextActivities": {
+          "$ref": "#/definitions/ContextActivities"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "statement": {
+          "$ref": "#/definitions/StatementReference"
+        },
+        "extensions": {
+          "type": "object"
+        }
+      }
+    },
+    "Attachment": {
+      "required": [
+        "usageType",
+        "display",
+        "description",
+        "contentType",
+        "length",
+        "sha2"
+      ],
+      "properties": {
+        "usageType": {
+          "type": "string"
+        },
+        "display": {
+          "type": "object"
+        },
+        "description": {
+          "type": "object"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "length": {
+          "type": "integer"
+        },
+        "sha2": {
+          "type": "string"
+        },
+        "fileUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "ActivityDefinition": {
+      "properties": {
+        "name": {
+          "type": "object"
+        },
+        "description": {
+          "type": "object"
+        },
+        "type": {
+          "type": "string"
+        },
+        "moreInfo": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "object"
+        }
+      }
+    },
+    "Score": {
+      "properties": {
+        "scaled": {
+          "type": "number",
+          "format": "double"
+        },
+        "raw": {
+          "type": "number",
+          "format": "double"
+        },
+        "min": {
+          "type": "number",
+          "format": "double"
+        },
+        "max": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "Account": {
+      "required": [
+        "homePage",
+        "name"
+      ],
+      "properties": {
+        "homePage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Group": {
+      "properties": {
+        "objectType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "member": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Agent"
+          }
+        }
+      }
+    },
+    "ContextActivities": {
+      "properties": {
+        "parent": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Activity"
+          }
+        },
+        "category": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Activity"
+          }
+        },
+        "other": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Activity"
+          }
+        }
+      }
+    },
     "AccessedStudyguideV1": {
       "properties": {
         "client_clock_occurred_at": {

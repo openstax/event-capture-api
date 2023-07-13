@@ -68,5 +68,15 @@ topics: [
       replication: 3,
       partitions: 3
     }
+  },
+  {
+    name: 'xapi_statement',
+    schemas: [
+        'org.adlnet.xapi.Statement'
+    ],
+    config: {
+      replication: 3,
+      partitions: 3
+    }
   }
 ]
