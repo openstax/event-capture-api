@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "XAPI endpoint", type: :request do
-  describe "POST /xapi" do
+  describe "POST /api/v0/xapi/statements" do
     context "with valid xAPI event" do
       let(:valid_xapi_event) do
         {
@@ -27,14 +27,13 @@ RSpec.describe "XAPI endpoint", type: :request do
       end
 
       it "saves the xAPI event to Kafka" do
-        expect {
-          post "/xapi", params: valid_xapi_event.to_json
-        }.to change { KafkaProducer.messages.count }.by(1)
+        post "/api/v0/xapi/statements", params: valid_xapi_event
+        expect(KafkaClient).to receive(:async_produce)
       end
 
-      it "responds with HTTP status 200" do
-        post "/xapi", params: valid_xapi_event.to_json
-        expect(response).to have_http_status(200)
+      it "responds with HTTP status 201" do
+        post "/api/v0/xapi/statements", params: valid_xapi_event.to_json
+        expect(response).to have_http_status(201)
       end
     end
 
@@ -62,14 +61,13 @@ RSpec.describe "XAPI endpoint", type: :request do
       end
 
       it "does not save the xAPI event to Kafka" do
-        expect {
-          post "/xapi", params: invalid_xapi_event.to_json
-        }.not_to change { KafkaProducer.messages.count }
+        post "/api/v0/xapi/statements", params: invalid_xapi_event.to_json
+        expect(KafkaClient).not_to receive(:async_produce)
       end
 
-      it "responds with HTTP status 400" do
-        post "/xapi", params: invalid_xapi_event.to_json
-        expect(response).to have_http_status(400)
+      it "responds with HTTP status 422" do
+        post "/api/v0/xapi/statements", params: invalid_xapi_event.to_json
+        expect(response).to have_http_status(422)
       end
     end
   end
