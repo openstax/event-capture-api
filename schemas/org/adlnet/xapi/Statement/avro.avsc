@@ -1,0 +1,567 @@
+{
+  "type": "record",
+  "name": "Statement",
+  "namespace": "org.adlnet.xapi",
+  "doc": "Experience API (xAPI) Statement schema",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "actor",
+      "type": [
+        {
+          "type": "record",
+          "name": "Agent",
+          "namespace": "org.adlnet.xapi",
+          "doc": "Agent schema",
+          "fields": [
+            {
+              "name": "objectType",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "mbox",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "mbox_sha1sum",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "openid",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "account",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "Account",
+                  "namespace": "org.adlnet.xapi",
+                  "doc": "Account schema",
+                  "fields": [
+                    {
+                      "name": "homePage",
+                      "type": "string"
+                    },
+                    {
+                      "name": "name",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ],
+              "default": null
+            }
+          ]
+        },
+        {
+          "type": "record",
+          "name": "Group",
+          "namespace": "org.adlnet.xapi",
+          "doc": "Group schema",
+          "fields": [
+            {
+              "name": "objectType",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "member",
+              "type": [
+                "null",
+                {
+                  "type": "array",
+                  "items": "org.adlnet.xapi.Agent"
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "verb",
+      "type": {
+        "type": "record",
+        "name": "Verb",
+        "namespace": "org.adlnet.xapi",
+        "doc": "Verb schema",
+        "fields": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "display",
+            "type": [
+              "null",
+              {
+                "type": "map",
+                "values": "string"
+              }
+            ],
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "object",
+      "type": [
+        {
+          "type": "record",
+          "name": "Activity",
+          "namespace": "org.adlnet.xapi",
+          "doc": "Activity schema",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "objectType",
+              "type": "string"
+            },
+            {
+              "name": "definition",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "ActivityDefinition",
+                  "namespace": "org.adlnet.xapi",
+                  "doc": "ActivityDefinition schema",
+                  "fields": [
+                    {
+                      "name": "name",
+                      "type": [
+                        "null",
+                        {
+                          "type": "map",
+                          "values": "string"
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "description",
+                      "type": [
+                        "null",
+                        {
+                          "type": "map",
+                          "values": "string"
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "type",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "moreInfo",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "extensions",
+                      "type": [
+                        "null",
+                        {
+                          "type": "map",
+                          "values": "string"
+                        }
+                      ],
+                      "default": null
+                    }
+                  ]
+                }
+              ],
+              "default": null
+            }
+          ]
+        },
+        "org.adlnet.xapi.Agent",
+        "org.adlnet.xapi.Statement"
+      ]
+    },
+    {
+      "name": "result",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Result",
+          "namespace": "org.adlnet.xapi",
+          "doc": "Result schema",
+          "fields": [
+            {
+              "name": "score",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "Score",
+                  "namespace": "org.adlnet.xapi",
+                  "doc": "Score schema",
+                  "fields": [
+                    {
+                      "name": "scaled",
+                      "type": [
+                        "null",
+                        "double"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "raw",
+                      "type": [
+                        "null",
+                        "double"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "min",
+                      "type": [
+                        "null",
+                        "double"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "max",
+                      "type": [
+                        "null",
+                        "double"
+                      ],
+                      "default": null
+                    }
+                  ]
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "success",
+              "type": [
+                "null",
+                "boolean"
+              ],
+              "default": null
+            },
+            {
+              "name": "completion",
+              "type": [
+                "null",
+                "boolean"
+              ],
+              "default": null
+            },
+            {
+              "name": "response",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "duration",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "extensions",
+              "type": [
+                "null",
+                {
+                  "type": "map",
+                  "values": "string"
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "context",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Context",
+          "namespace": "org.adlnet.xapi",
+          "doc": "Context schema",
+          "fields": [
+            {
+              "name": "registration",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "instructor",
+              "type": [
+                "null",
+                "org.adlnet.xapi.Agent",
+                "org.adlnet.xapi.Group"
+              ],
+              "default": null
+            },
+            {
+              "name": "team",
+              "type": [
+                "null",
+                "org.adlnet.xapi.Group"
+              ],
+              "default": null
+            },
+            {
+              "name": "contextActivities",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "ContextActivities",
+                  "namespace": "org.adlnet.xapi",
+                  "doc": "ContextActivities schema",
+                  "fields": [
+                    {
+                      "name": "parent",
+                      "type": [
+                        "null",
+                        {
+                          "type": "array",
+                          "items": "org.adlnet.xapi.Activity"
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "category",
+                      "type": [
+                        "null",
+                        {
+                          "type": "array",
+                          "items": "org.adlnet.xapi.Activity"
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "other",
+                      "type": [
+                        "null",
+                        {
+                          "type": "array",
+                          "items": "org.adlnet.xapi.Activity"
+                        }
+                      ],
+                      "default": null
+                    }
+                  ]
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "revision",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "platform",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "language",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "statement",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "StatementReference",
+                  "namespace": "org.adlnet.xapi",
+                  "doc": "StatementReference schema",
+                  "fields": [
+                    {
+                      "name": "objectType",
+                      "type": "string"
+                    },
+                    {
+                      "name": "id",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "extensions",
+              "type": [
+                "null",
+                {
+                  "type": "map",
+                  "values": "string"
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "timestamp",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "stored",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "authority",
+      "type": [
+        "null",
+        "org.adlnet.xapi.Agent"
+      ],
+      "default": null
+    },
+    {
+      "name": "version",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "attachments",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "Attachment",
+            "namespace": "org.adlnet.xapi",
+            "doc": "Attachment schema",
+            "fields": [
+              {
+                "name": "usageType",
+                "type": "string"
+              },
+              {
+                "name": "display",
+                "type": {
+                  "type": "map",
+                  "values": "string"
+                }
+              },
+              {
+                "name": "description",
+                "type": {
+                  "type": "map",
+                  "values": "string"
+                }
+              },
+              {
+                "name": "contentType",
+                "type": "string"
+              },
+              {
+                "name": "length",
+                "type": "int"
+              },
+              {
+                "name": "sha2",
+                "type": "string"
+              },
+              {
+                "name": "fileUrl",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    }
+  ]
+}
