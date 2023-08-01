@@ -13,24 +13,44 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class StatementReference
-    attr_accessor :object_type
+  class SubStatement
+    attr_accessor :actor
 
-    attr_accessor :id
+    attr_accessor :verb
+
+    attr_accessor :object
+
+    attr_accessor :result
+
+    attr_accessor :context
+
+    attr_accessor :timestamp
+
+    attr_accessor :attachments
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'object_type' => :'objectType',
-        :'id' => :'id'
+        :'actor' => :'actor',
+        :'verb' => :'verb',
+        :'object' => :'object',
+        :'result' => :'result',
+        :'context' => :'context',
+        :'timestamp' => :'timestamp',
+        :'attachments' => :'attachments'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'object_type' => :'String',
-        :'id' => :'String'
+        :'actor' => :'Object',
+        :'verb' => :'Verb',
+        :'object' => :'Object',
+        :'result' => :'Result',
+        :'context' => :'Context',
+        :'timestamp' => :'String',
+        :'attachments' => :'Array<Attachment>'
       }
     end
 
@@ -42,12 +62,34 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'objectType')
-        self.object_type = attributes[:'objectType']
+      if attributes.has_key?(:'actor')
+        self.actor = attributes[:'actor']
       end
 
-      if attributes.has_key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.has_key?(:'verb')
+        self.verb = attributes[:'verb']
+      end
+
+      if attributes.has_key?(:'object')
+        self.object = attributes[:'object']
+      end
+
+      if attributes.has_key?(:'result')
+        self.result = attributes[:'result']
+      end
+
+      if attributes.has_key?(:'context')
+        self.context = attributes[:'context']
+      end
+
+      if attributes.has_key?(:'timestamp')
+        self.timestamp = attributes[:'timestamp']
+      end
+
+      if attributes.has_key?(:'attachments')
+        if (value = attributes[:'attachments']).is_a?(Array)
+          self.attachments = value
+        end
       end
     end
 
@@ -55,12 +97,16 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @object_type.nil?
-        invalid_properties.push('invalid value for "object_type", object_type cannot be nil.')
+      if @actor.nil?
+        invalid_properties.push('invalid value for "actor", actor cannot be nil.')
       end
 
-      if @id.nil?
-        invalid_properties.push('invalid value for "id", id cannot be nil.')
+      if @verb.nil?
+        invalid_properties.push('invalid value for "verb", verb cannot be nil.')
+      end
+
+      if @object.nil?
+        invalid_properties.push('invalid value for "object", object cannot be nil.')
       end
 
       invalid_properties
@@ -69,8 +115,9 @@ module Api::V0::Bindings
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @object_type.nil?
-      return false if @id.nil?
+      return false if @actor.nil?
+      return false if @verb.nil?
+      return false if @object.nil?
       true
     end
 
@@ -79,8 +126,13 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          object_type == o.object_type &&
-          id == o.id
+          actor == o.actor &&
+          verb == o.verb &&
+          object == o.object &&
+          result == o.result &&
+          context == o.context &&
+          timestamp == o.timestamp &&
+          attachments == o.attachments
     end
 
     # @see the `==` method
@@ -92,7 +144,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [object_type, id].hash
+      [actor, verb, object, result, context, timestamp, attachments].hash
     end
 
     # Builds the object from hash

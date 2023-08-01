@@ -20,7 +20,8 @@ class Api::V0::XapiSwagger
       key :oneOf, [
         { '$ref': :Activity },
         { '$ref': :Agent },
-        { '$ref': :Statement }
+        { '$ref': :StatementRef },
+        { '$ref': :SubStatement }
       ]
     end
     property :result do
@@ -39,6 +40,41 @@ class Api::V0::XapiSwagger
       key :'$ref', :Agent
     end
     property :version do
+      key :type, :string
+    end
+    property :attachments do
+      key :type, :array
+      items do
+        key :'$ref', :Attachment
+      end
+    end
+  end
+
+  swagger_schema :SubStatement do
+    key :required, [:actor, :verb, :object]
+    property :actor do
+      key :oneOf, [
+        { '$ref': :Agent },
+        { '$ref': :Group }
+      ]
+    end
+    property :verb do
+      key :'$ref', :Verb
+    end
+    property :object do
+      key :oneOf, [
+        { '$ref': :Activity },
+        { '$ref': :Agent },
+        { '$ref': :StatementRef }
+      ]
+    end
+    property :result do
+      key :'$ref', :Result
+    end
+    property :context do
+      key :'$ref', :Context
+    end
+    property :timestamp do
       key :type, :string
     end
     property :attachments do
@@ -94,7 +130,7 @@ class Api::V0::XapiSwagger
     end
   end
 
-  swagger_schema :StatementReference do
+  swagger_schema :StatementRef do
     key :required, [:objectType, :id]
     property :objectType do
       key :type, :string
@@ -154,7 +190,7 @@ class Api::V0::XapiSwagger
       key :type, :string
     end
     property :statement do
-      key :'$ref', :StatementReference
+      key :'$ref', :StatementRef
     end
     property :extensions do
       key :type, :object
