@@ -203,7 +203,10 @@
               "$ref": "Agent"
             },
             {
-              "$ref": "Statement"
+              "$ref": "StatementRef"
+            },
+            {
+              "$ref": "SubStatement"
             }
           ]
         },
@@ -223,6 +226,56 @@
           "$ref": "#/definitions/Agent"
         },
         "version": {
+          "type": "string"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      }
+    },
+    "SubStatement": {
+      "required": [
+        "actor",
+        "verb",
+        "object"
+      ],
+      "properties": {
+        "actor": {
+          "oneOf": [
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "Group"
+            }
+          ]
+        },
+        "verb": {
+          "$ref": "#/definitions/Verb"
+        },
+        "object": {
+          "oneOf": [
+            {
+              "$ref": "Activity"
+            },
+            {
+              "$ref": "Agent"
+            },
+            {
+              "$ref": "StatementRef"
+            }
+          ]
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        },
+        "context": {
+          "$ref": "#/definitions/Context"
+        },
+        "timestamp": {
           "type": "string"
         },
         "attachments": {
@@ -288,7 +341,7 @@
         }
       }
     },
-    "StatementReference": {
+    "StatementRef": {
       "required": [
         "objectType",
         "id"
@@ -362,7 +415,7 @@
           "type": "string"
         },
         "statement": {
-          "$ref": "#/definitions/StatementReference"
+          "$ref": "#/definitions/StatementRef"
         },
         "extensions": {
           "type": "object"

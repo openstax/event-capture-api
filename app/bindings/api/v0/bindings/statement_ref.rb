@@ -13,52 +13,24 @@ Swagger Codegen version: 2.4.15
 require 'date'
 
 module Api::V0::Bindings
-  class Context
-    attr_accessor :registration
+  class StatementRef
+    attr_accessor :object_type
 
-    attr_accessor :instructor
-
-    attr_accessor :team
-
-    attr_accessor :context_activities
-
-    attr_accessor :revision
-
-    attr_accessor :platform
-
-    attr_accessor :language
-
-    attr_accessor :statement
-
-    attr_accessor :extensions
+    attr_accessor :id
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'registration' => :'registration',
-        :'instructor' => :'instructor',
-        :'team' => :'team',
-        :'context_activities' => :'contextActivities',
-        :'revision' => :'revision',
-        :'platform' => :'platform',
-        :'language' => :'language',
-        :'statement' => :'statement',
-        :'extensions' => :'extensions'
+        :'object_type' => :'objectType',
+        :'id' => :'id'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'registration' => :'String',
-        :'instructor' => :'Object',
-        :'team' => :'Object',
-        :'context_activities' => :'ContextActivities',
-        :'revision' => :'String',
-        :'platform' => :'String',
-        :'language' => :'String',
-        :'statement' => :'StatementRef',
-        :'extensions' => :'Object'
+        :'object_type' => :'String',
+        :'id' => :'String'
       }
     end
 
@@ -70,40 +42,12 @@ module Api::V0::Bindings
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'registration')
-        self.registration = attributes[:'registration']
+      if attributes.has_key?(:'objectType')
+        self.object_type = attributes[:'objectType']
       end
 
-      if attributes.has_key?(:'instructor')
-        self.instructor = attributes[:'instructor']
-      end
-
-      if attributes.has_key?(:'team')
-        self.team = attributes[:'team']
-      end
-
-      if attributes.has_key?(:'contextActivities')
-        self.context_activities = attributes[:'contextActivities']
-      end
-
-      if attributes.has_key?(:'revision')
-        self.revision = attributes[:'revision']
-      end
-
-      if attributes.has_key?(:'platform')
-        self.platform = attributes[:'platform']
-      end
-
-      if attributes.has_key?(:'language')
-        self.language = attributes[:'language']
-      end
-
-      if attributes.has_key?(:'statement')
-        self.statement = attributes[:'statement']
-      end
-
-      if attributes.has_key?(:'extensions')
-        self.extensions = attributes[:'extensions']
+      if attributes.has_key?(:'id')
+        self.id = attributes[:'id']
       end
     end
 
@@ -111,12 +55,22 @@ module Api::V0::Bindings
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if @object_type.nil?
+        invalid_properties.push('invalid value for "object_type", object_type cannot be nil.')
+      end
+
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      return false if @object_type.nil?
+      return false if @id.nil?
       true
     end
 
@@ -125,15 +79,8 @@ module Api::V0::Bindings
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          registration == o.registration &&
-          instructor == o.instructor &&
-          team == o.team &&
-          context_activities == o.context_activities &&
-          revision == o.revision &&
-          platform == o.platform &&
-          language == o.language &&
-          statement == o.statement &&
-          extensions == o.extensions
+          object_type == o.object_type &&
+          id == o.id
     end
 
     # @see the `==` method
@@ -145,7 +92,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [registration, instructor, team, context_activities, revision, platform, language, statement, extensions].hash
+      [object_type, id].hash
     end
 
     # Builds the object from hash

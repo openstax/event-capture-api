@@ -90,11 +90,11 @@ record :Result, namespace: 'org.adlnet.xapi' do
   doc 'Result schema'
 end
 
-record :StatementReference, namespace: 'org.adlnet.xapi' do
+record :StatementRef, namespace: 'org.adlnet.xapi' do
   required :objectType, :string
   required :id, :string
 
-  doc 'StatementReference schema'
+  doc 'StatementRef schema'
 end
 
 record :Context, namespace: 'org.adlnet.xapi' do
@@ -105,17 +105,30 @@ record :Context, namespace: 'org.adlnet.xapi' do
   optional :revision, :string
   optional :platform, :string
   optional :language, :string
-  optional :statement, :StatementReference
+  optional :statement, :StatementRef
   optional :extensions, :map, values: :string
 
   doc 'Context schema'
+end
+
+record :SubStatement, namespace: 'org.adlnet.xapi' do
+  required :actor, :union, types: [:Agent, :Group]
+  required :verb, :Verb
+  required :objectType, :string
+  required :object, :union, types: [:Activity, :Agent, :StatementRef]
+  optional :result, :Result
+  optional :context, :Context
+  optional :timestamp, :string
+  optional :attachments, :array, items: :Attachment
+
+  doc 'Experience API (xAPI) SubStatement schema'
 end
 
 record :Statement, namespace: 'org.adlnet.xapi' do
   required :id, :string
   required :actor, :union, types: [:Agent, :Group]
   required :verb, :Verb
-  required :object, :union, types: [:Activity, :Agent, :Statement]
+  required :object, :union, types: [:Activity, :Agent, :StatementRef, :SubStatement]
   optional :result, :Result
   optional :context, :Context
   optional :timestamp, :string
