@@ -74,6 +74,14 @@
       }
     },
     {
+      "name": "target_state_change",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "context_id",
       "type": "string"
     },
