@@ -39,6 +39,13 @@ class Api::V0::EventsSwagger
           key :'$ref', :Events
         end
       end
+      parameter do
+        key :name, :Authorization
+        key :in, :header
+        key :description, 'Optional Authorization header (defaults to Cookie if absent)'
+        key :required, false
+        key :type, :string
+      end
       response 201 do
         key :description, 'Created.'
       end
