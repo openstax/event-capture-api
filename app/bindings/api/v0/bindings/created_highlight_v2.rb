@@ -103,7 +103,7 @@ module Api::V0::Bindings
         :'anchor' => :'String',
         :'color' => :'String',
         :'location_strategies' => :'String',
-        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
+        :'source_metadata' => :'InteractedElementV1SourceMetadata'
       }
     end
 

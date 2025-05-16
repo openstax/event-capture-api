@@ -88,7 +88,7 @@ module Api::V0::Bindings
         :'session_order' => :'Integer',
         :'page_id' => :'String',
         :'book_id' => :'String',
-        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
+        :'source_metadata' => :'InteractedElementV1SourceMetadata'
       }
     end
 

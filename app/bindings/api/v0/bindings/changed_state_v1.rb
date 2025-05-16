@@ -93,7 +93,7 @@ module Api::V0::Bindings
         :'state_type' => :'String',
         :'current' => :'String',
         :'previous' => :'String',
-        :'source_metadata' => :'AccessedStudyguideV1SourceMetadata'
+        :'source_metadata' => :'InteractedElementV1SourceMetadata'
       }
     end
 
