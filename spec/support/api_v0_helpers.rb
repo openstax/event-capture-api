@@ -26,42 +26,32 @@ module ApiV0Helpers
     @headers = nil
   end
 
-  def api_post(*args, &block)
-    post(*prep_request_args(args), &block)
+  def api_post(*args, **kwargs, &block)
+    post(*prep_request_args(args, kwargs), **kwargs, &block)
   end
 
-  def api_get(*args, &block)
-    get(*prep_request_args(args), &block)
+  def api_get(*args, **kwargs, &block)
+    get(*prep_request_args(args, kwargs), **kwargs, &block)
   end
 
-  def api_put(*args, &block)
-    put(*prep_request_args(args), &block)
+  def api_put(*args, **kwargs, &block)
+    put(*prep_request_args(args, kwargs), **kwargs, &block)
   end
 
-  def api_delete(*args, &block)
-    delete(*prep_request_args(args), &block)
+  def api_delete(*args, **kwargs, &block)
+    delete(*prep_request_args(args, kwargs), **kwargs, &block)
   end
 
   def add_path_prefix(args)
     args.dup.tap {|copy| copy[0] = "/api/v0/#{copy[0]}"}
   end
 
-  def prep_request_args(args)
+  def prep_request_args(args, kwargs)
+    kwargs[:headers] ||= {}
+    kwargs[:headers]['CONTENT_TYPE'] = 'application/json'
+
     args.dup.tap do |copy|
       copy[0] = "/api/v0/#{copy[0]}"
-
-      # Add the headers on to the end or merge them with existing hash
-      headers['CONTENT_TYPE'] = "application/json"
-
-      if copy.length == 1
-        copy.push({headers: headers})
-      else
-        if copy[1].is_a?(Hash)
-          copy[1][:headers] = headers.merge(copy[1][:headers] || {})
-        else
-          raise "Don't know what to do with this case"
-        end
-      end
     end
   end
 
