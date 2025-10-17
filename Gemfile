@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'rails', '~> 6.0.0'
+gem 'rails', '6.1.7.10'
 gem 'puma'
 gem 'bootsnap', require: false
 
@@ -25,7 +25,7 @@ gem 'scout_apm'
 
 # Kafka stuff
 gem 'ruby-kafka'
-gem 'avro_turf', github: 'dasch/avro_turf', ref: '6ef7a6b5458a61a9d57307ee0bb1a7fdfb3ed170'
+gem 'avro_turf'
 gem 'avro-builder'
 
 # Versioned API tools
