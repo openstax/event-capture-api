@@ -1,6 +1,7 @@
 name: Tests
 
 env:
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   RUBY_VERSION: 3.1
 
 on:
