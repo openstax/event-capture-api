@@ -7,6 +7,9 @@ gem 'rails', '6.1.7.10'
 gem 'puma'
 gem 'bootsnap', require: false
 
+# Remove this entry after Rails is updated further
+gem 'concurrent-ruby', '1.3.4'
+
 # Gives 200 OK from /ping
 gem 'openstax_healthcheck'
 
@@ -70,5 +73,3 @@ group :development do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem 'concurrent-ruby', '1.3.4'
