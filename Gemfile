@@ -66,7 +66,7 @@ end
 
 group :development do
   gem 'listen'
-  gem 'spring'
+  gem 'spring', '< 4.3'
   gem 'spring-watcher-listen'
 
   gem 'rack-mini-profiler'
