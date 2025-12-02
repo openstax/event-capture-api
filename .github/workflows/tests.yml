@@ -1,31 +1,29 @@
 name: Tests
 
 env:
-  RUBY_VERSION: 2.7
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  RUBY_VERSION: 3.1
 
 on:
   pull_request:
   push:
     branches:
       - main
-  schedule:
-    - cron: '0 0 * * 0' # weekly
 
 jobs:
   tests:
     timeout-minutes: 10
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
+          bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
       - name: Test
         env:
           ENABLE_CODECOV: 1
         run: |
-          gem install bundler
-          bundle install
           bundle exec rake setup
           bundle exec rspec

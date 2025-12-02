@@ -1,0 +1,1 @@
+class TopicNotFound < StandardError; end
