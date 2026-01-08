@@ -25,6 +25,10 @@ module Ec::StartedSession::V1
         key :description, 'The service worker state'
         key :enum, ['unsupported', 'inactive', 'active']
       end
+      property :organization_id do
+        key :type, :string
+        key :description, 'The user\'s organization ID'
+      end
     end
   end
 end
