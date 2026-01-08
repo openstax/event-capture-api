@@ -1127,7 +1127,7 @@
         },
         "organization_id": {
           "type": "string",
-          "description": "The user's organization ID"
+          "description": "The user's organization ID (Account ID from Salesforce)"
         }
       },
       "required": [

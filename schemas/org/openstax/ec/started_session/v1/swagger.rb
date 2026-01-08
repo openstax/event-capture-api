@@ -27,7 +27,7 @@ module Ec::StartedSession::V1
       end
       property :organization_id do
         key :type, :string
-        key :description, 'The user\'s organization ID'
+        key :description, 'The user\'s organization ID (Account ID from Salesforce)'
       end
     end
   end

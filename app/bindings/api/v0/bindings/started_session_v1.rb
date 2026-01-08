@@ -41,7 +41,7 @@ module Api::V0::Bindings
     # The service worker state
     attr_accessor :service_worker
 
-    # The user's organization ID
+    # The user's organization ID (Account ID from Salesforce)
     attr_accessor :organization_id
 
     class EnumAttributeValidator
