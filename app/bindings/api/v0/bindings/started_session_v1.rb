@@ -41,6 +41,9 @@ module Api::V0::Bindings
     # The service worker state
     attr_accessor :service_worker
 
+    # The user's organization ID (Account ID from Salesforce)
+    attr_accessor :organization_id
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -74,7 +77,8 @@ module Api::V0::Bindings
         :'session_uuid' => :'session_uuid',
         :'platform' => :'platform',
         :'release_id' => :'release_id',
-        :'service_worker' => :'service_worker'
+        :'service_worker' => :'service_worker',
+        :'organization_id' => :'organization_id'
       }
     end
 
@@ -89,7 +93,8 @@ module Api::V0::Bindings
         :'session_uuid' => :'String',
         :'platform' => :'String',
         :'release_id' => :'String',
-        :'service_worker' => :'String'
+        :'service_worker' => :'String',
+        :'organization_id' => :'String'
       }
     end
 
@@ -135,6 +140,10 @@ module Api::V0::Bindings
 
       if attributes.has_key?(:'service_worker')
         self.service_worker = attributes[:'service_worker']
+      end
+
+      if attributes.has_key?(:'organization_id')
+        self.organization_id = attributes[:'organization_id']
       end
     end
 
@@ -218,7 +227,8 @@ module Api::V0::Bindings
           session_uuid == o.session_uuid &&
           platform == o.platform &&
           release_id == o.release_id &&
-          service_worker == o.service_worker
+          service_worker == o.service_worker &&
+          organization_id == o.organization_id
     end
 
     # @see the `==` method
@@ -230,7 +240,7 @@ module Api::V0::Bindings
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, referrer, session_uuid, platform, release_id, service_worker].hash
+      [client_clock_occurred_at, client_clock_sent_at, type, source_uri, referrer, session_uuid, platform, release_id, service_worker, organization_id].hash
     end
 
     # Builds the object from hash

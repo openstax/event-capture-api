@@ -17,4 +17,5 @@ record :started_session_v1 do
   optional :platform, :string
   optional :release_id, :string
   optional :service_worker, :string
+  optional :organization_id, :string
 end

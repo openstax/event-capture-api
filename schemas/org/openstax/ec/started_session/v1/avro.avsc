@@ -96,6 +96,14 @@
         "string"
       ],
       "default": null
+    },
+    {
+      "name": "organization_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
     }
   ]
 }
