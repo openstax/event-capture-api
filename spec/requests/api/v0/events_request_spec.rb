@@ -159,6 +159,55 @@ RSpec.describe Api::V0::EventsController, type: :request do
       expect(response).to have_http_status(201)
     end
 
+    it 'reports an event the schema rejects and still sends the rest of the batch' do
+      allow(avro_turf).to receive(:encode) do |data, **|
+        raise Avro::SchemaValidator::ValidationError if data[:app] == 'tutor'
+
+        'encoded'
+      end
+      expect(Raven).to receive(:capture_exception)
+        .with(kind_of(Avro::SchemaValidator::ValidationError), extra: { event_type: 'org.openstax.ec.nudged_v1' })
+      expect(KafkaClient).to receive(:async_produce).once.with(data: 'encoded', topic: 'foo_topic')
+
+      post api_v0_events_path, params: attributes
+
+      expect(response).to have_http_status(201)
+    end
+
+    it 'does not swallow other errors' do
+      allow(avro_turf).to receive(:encode).and_return('encoded')
+      allow(KafkaClient).to receive(:async_produce).and_raise(Kafka::Error)
+
+      expect { post api_v0_events_path, params: attributes }.to raise_error(Kafka::Error)
+    end
+
+    context 'when an interacted_element event has a number in target_attributes' do
+      let(:interacted) do
+        {
+          'type': 'org.openstax.ec.interacted_element_v1',
+          'session_uuid': 'ed3cdd93-6688-4fcb-b5b3-da3e71052454',
+          'session_order': 3,
+          'source_uri': 'https://openstax.org/books/physics/pages/1-introduction',
+          'client_clock_occurred_at': '2020-10-06T18:14:22Z',
+          'client_clock_sent_at': '2020-10-06T18:14:22Z',
+          'target_id': 'next',
+          'target_type': 'button',
+          'target_attributes': { 'listIndex': 2 },
+          'context_id': 'toc',
+          'context_type': 'region',
+          'context_attributes': {}
+        }
+      end
+
+      it 'encodes it against the real schema and sends it' do
+        expect(KafkaClient).to receive(:async_produce).once.with(data: kind_of(String), topic: 'foo_topic')
+
+        post api_v0_events_path, params: { events: [{ data: interacted }] }, as: :json
+
+        expect(response).to have_http_status(201)
+      end
+    end
+
     it 'gives a 422 with error messages for any invalid event and sends none to Kafka' do
       expect(KafkaClient).not_to receive(:async_produce)
 

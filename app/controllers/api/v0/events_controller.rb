@@ -1,22 +1,34 @@
 # frozen_string_literal: true
 
 class Api::V0::EventsController < Api::V0::BaseController
+  # Errors that mean one event's data can't be stored. Resending won't fix them, so the event is
+  # reported and skipped, and the rest of its batch still goes to Kafka.
+  REJECTED_EVENT_ERRORS = [Avro::SchemaValidator::ValidationError, URI::InvalidURIError].freeze
+
   def create
     inbound_binding, error = bind(params.extract!(:events), Api::V0::Bindings::Events)
     render(json: error, status: error.status_code) and return if error
 
     inbound_binding.events.each do |event|
-      raw_kafka_data = KafkaData.new(api_data: event.data, controller: self)
-
-      avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data,
-                                                      schema_name: raw_kafka_data.schema_name,
-                                                      validate: true)
-
-      kafka_topic = TopicsConfig.get_topic_for_event(event)
-      KafkaClient.async_produce(data: avro_kafka_data, topic: kafka_topic)
+      produce(event)
+    rescue *REJECTED_EVENT_ERRORS => e
+      Raven.capture_exception(e, extra: { event_type: event.data.type })
     end
 
     render nothing: true, status: 201
+  end
+
+  private
+
+  def produce(event)
+    raw_kafka_data = KafkaData.new(api_data: event.data, controller: self)
+
+    avro_kafka_data = KafkaAvroTurf.instance.encode(raw_kafka_data,
+                                                    schema_name: raw_kafka_data.schema_name,
+                                                    validate: true)
+
+    kafka_topic = TopicsConfig.get_topic_for_event(event)
+    KafkaClient.async_produce(data: avro_kafka_data, topic: kafka_topic)
   end
 
   class KafkaData < HashWithIndifferentAccess
@@ -32,6 +44,7 @@ class Api::V0::EventsController < Api::V0::BaseController
 
       merge!(api_data)
 
+      stringify_map_values
       translate_started_session
       translate_source_uri
       translate_uuids
@@ -40,7 +53,24 @@ class Api::V0::EventsController < Api::V0::BaseController
 
     protected
 
+    # The schema's map<string> fields. Clients send numbers and booleans in them (listIndex: 2).
+    STRING_MAP_FIELDS = %i[target_attributes context_attributes].freeze
+
+    # What URI() rejects: anything outside RFC 3986, "[" and "]" outside an IPv6 host, and a "%"
+    # that doesn't start an escape.
+    URI_CHARACTERS_TO_ESCAPE = %r{[^A-Za-z0-9\-._~:/?#@!$&'()*+,;=%]|%(?!\h\h)}.freeze
+
     attr_reader :controller
+
+    def stringify_map_values
+      STRING_MAP_FIELDS.each do |field|
+        next unless self[field].is_a?(Hash)
+
+        self[field] = self[field].compact.transform_values do |value|
+          value.is_a?(String) ? value : value.to_json
+        end
+      end
+    end
 
     def translate_started_session
       # Capture request-level data for session starts
@@ -55,7 +85,7 @@ class Api::V0::EventsController < Api::V0::BaseController
       # URI translates anything other than nil, and the swagger schema requires
       # source_uri to be non-nil - query might be nil, though
 
-      source_uri = URI(delete(:source_uri))
+      source_uri = parse_uri(delete(:source_uri))
 
       merge!({
                scheme: source_uri.scheme,
@@ -63,6 +93,14 @@ class Api::V0::EventsController < Api::V0::BaseController
                path: source_uri.path,
                query: source_uri.query ? CGI.parse(source_uri.query) : nil
              })
+    end
+
+    # Pages opened from links pasted out of chat answers arrive with extra characters attached
+    # (".../6-1-exponential-functions](https://...)"). Escape them so the event keeps its page.
+    def parse_uri(uri)
+      URI(uri)
+    rescue URI::InvalidURIError
+      URI(uri.strip.gsub(URI_CHARACTERS_TO_ESCAPE) { |char| char.bytes.map { |byte| format('%%%02X', byte) }.join })
     end
 
     def translate_uuids

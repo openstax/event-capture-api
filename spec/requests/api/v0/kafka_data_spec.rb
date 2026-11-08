@@ -83,6 +83,41 @@ RSpec.describe Api::V0::EventsController::KafkaData do
     )
   end
 
+  context 'when the source_uri has characters URI() rejects' do
+    let(:page) { 'https://openstax.org/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions' }
+
+    before { api_data[:source_uri] = " #{page}](#{page}?utm_source=chatgpt.com)" }
+
+    it 'escapes them and keeps the page' do
+      expect(instance).to include(
+        scheme: 'https',
+        host: 'openstax.org',
+        path: "/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions%5D(https://openstax.org" \
+              '/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions',
+        query: { 'utm_source' => ['chatgpt.com)'] }
+      )
+    end
+
+    it 'escapes non-ASCII characters and stray percent signs' do
+      api_data[:source_uri] = 'https://openstax.org/books/física/100%-real'
+
+      expect(instance).to include(path: '/books/f%C3%ADsica/100%25-real')
+    end
+  end
+
+  # Map<string> fields
+  context 'when target_attributes or context_attributes hold non-string values' do
+    before do
+      api_data[:target_attributes] = { listIndex: 2, open: true, label: 'Next', missing: nil }
+      api_data[:context_attributes] = { position: { x: 1 } }
+    end
+
+    it 'turns them into strings and drops nils' do
+      expect(instance[:target_attributes]).to eq('listIndex' => '2', 'open' => 'true', 'label' => 'Next')
+      expect(instance[:context_attributes]).to eq('position' => '{"x":1}')
+    end
+  end
+
   # uuid handling
   it 'compacts the session_id' do
     expect(instance).to include(
