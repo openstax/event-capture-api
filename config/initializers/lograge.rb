@@ -10,7 +10,7 @@ Rails.application.configure do
     statements = params.key?('_json') ? Array.wrap(params['_json']) : Array.wrap(params['statement'])
 
     {
-      event_types: events.filter_map { |e| e.dig('data', 'type') if e.is_a?(Hash) }.tally.presence,
+      event_types: events.filter_map { |e| e.dig('data', 'type') if e.is_a?(Hash) && e['data'].is_a?(Hash) }.tally.presence,
       statement_count: statements.size.nonzero?
     }.compact
   end
