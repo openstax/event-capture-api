@@ -8,9 +8,13 @@ Rails.application.configure do
     params = event.payload[:params] || {}
     events = Array.wrap(params['events'])
     statements = params.key?('_json') ? Array.wrap(params['_json']) : Array.wrap(params['statement'])
+    event_types = events.filter_map do |e|
+      data = e['data'] if e.is_a?(Hash)
+      data['type'] if data.is_a?(Hash)
+    end
 
     {
-      event_types: events.filter_map { |e| e.dig('data', 'type') if e.is_a?(Hash) && e['data'].is_a?(Hash) }.tally.presence,
+      event_types: event_types.tally.presence,
       statement_count: statements.size.nonzero?
     }.compact
   end

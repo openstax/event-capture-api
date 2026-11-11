@@ -24,6 +24,23 @@ RSpec.describe 'lograge custom options' do
     )
   end
 
+  it 'skips malformed events instead of raising' do
+    params = {
+      'events' => [
+        { 'data' => 'bad' },
+        { 'data' => [] },
+        { 'data' => nil },
+        { 'data' => {} },
+        'bad',
+        { 'data' => { 'type' => 'org.openstax.ec.nudged_v1' } }
+      ]
+    }
+
+    expect(log_fields(params)).to eq(event_types: { 'org.openstax.ec.nudged_v1' => 1 })
+    expect(log_fields('events' => 'bad')).to eq({})
+    expect(log_fields('events' => { 'data' => [] })).to eq({})
+  end
+
   it 'logs how many xAPI statements a request carried' do
     expect(log_fields('_json' => [{ 'actor' => {} }, { 'actor' => {} }])).to eq(statement_count: 2)
     expect(log_fields('statement' => { 'actor' => {} })).to eq(statement_count: 1)
